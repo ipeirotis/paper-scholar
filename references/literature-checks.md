@@ -9,6 +9,10 @@ retrieval, a tool that fetches and reads the actual source text (web fetch and
 web search, or an equivalent retrieval surface). When retrieval is missing, do
 not fake the pass: say so, assert nothing about what any source contains, and
 name the missing retrieval access in `Author decisions` and stop. Without retrieval, a citation check is memory, and a memory-cited source is fabrication.
+The one thing that survives a missing retrieval surface is the host repo's
+verification ledger: past entries there are dated evidence, and reporting them
+(clearly dated, never as fresh work) is allowed even when nothing new can be
+fetched.
 
 This pass verifies citations and reports novelty leads; it never rewrites the
 manuscript's claims on its own conclusion. Its two capabilities ship in one
@@ -54,11 +58,27 @@ read can never reshape which claims get checked. Do not add claims to the list
 because a search surfaced them, and do not drop a claim because verifying it
 looks hard: an unverifiable claim is a reported outcome, not a skipped one.
 
-### 2. Verify each citation
+### 2. Consult the verification ledger
 
-For every cited claim, retrieve and read the actual source (fetch the paper, its
-abstract, or the specific section that would carry the claim). Judge whether the
-source supports the sentence as written, and classify each as one of:
+With the inventory pinned, read the host repo's verification ledger
+(`literature/verifications.md`) if one exists;
+`references/verification-ledger.md` defines the format and the reuse rules.
+Mark every inventoried claim whose latest ledger entry still applies (same
+claim text, same resolved source) as reused: it keeps its recorded verdict and
+date and is not re-fetched. Only the remaining claims go to retrieval. This
+step sits after the inventory and before the first search so the ledger can
+never reshape which claims are in scope — only which ones need fresh work.
+
+### 3. Verify each citation
+
+For every cited claim not reused from the ledger, retrieve and read the actual
+source (fetch the paper, its abstract, or the specific section that would carry
+the claim). Retrieval follows `references/source-archive.md`: resolve the
+claim's DOI (or, failing that, its stable public URL), locate a legal
+full-text copy, and archive that copy in the project's source store with its
+SHA-256 recorded. A paywalled source is a request to the author in
+`Author decisions`, never a bypass. Judge whether the source supports the
+sentence as written, and classify each as one of:
 
 - **supported**: the source states what the manuscript attributes to it; quote
   the passage that supports it
@@ -73,7 +93,7 @@ source supports the sentence as written, and classify each as one of:
   not reachable (for example only the abstract was available and it neither
   states nor contradicts the claim); say why
 
-### 3. Scan novelty and fill gaps
+### 4. Scan novelty and fill gaps
 
 For each contribution or novelty claim, search for prior or overlapping work and
 report leads, not verdicts. A lead names the candidate work and points the
@@ -84,11 +104,13 @@ would support it and offer it as a candidate citation with the passage attached.
 When a search returns nothing on point, say so: absence of a found overlap is a
 lead too, and it is not proof the claim is novel.
 
-### 4. Report
+### 5. Report and update the ledger
 
 Return the four sections described below. Mark proposed citation additions and
 recalibrated claims as candidates, attach their retrieved sources, and leave the
-adoption decision to the author.
+adoption decision to the author. Then append every fresh verification and every
+novelty scan to the ledger as dated entries per
+`references/verification-ledger.md`, and say in the report what was written.
 
 ## Integrity norms
 
@@ -96,6 +118,15 @@ adoption decision to the author.
   in this session, with title, venue, year, and the specific passage that bears
   on the use. A citation from model memory is treated as fabricated, and a
   novelty judgment from model knowledge is not a finding.
+- **Archived, not just linked.** Every source reported on names its locator (a
+  DOI cross-checked against its registrar, or a stable public URL with access
+  date) and its archived full-text copy in the project's source store
+  (`references/source-archive.md`). Links rot; the archived copy with its hash
+  is what keeps the verification auditable later.
+- **Reuse is dated.** A verdict reused from the ledger is reported with the
+  date it was earned, never presented as fresh work. Novelty scans age
+  fastest — the literature moves — so an old scan is a starting point, not a
+  current answer.
 - **Leads, not verdicts.** A novelty scan returns candidates for the author to
   judge ("X (2023) appears to do Y; read sections 3-4"), never a ruling on the
   paper's contribution. Never rewrite the manuscript's novelty claim on your own
@@ -111,7 +142,7 @@ adoption decision to the author.
 
 ## Reporting conventions
 
-- **Scope and retrieval:** name the claims checked, search boundaries, sources fetched, and access failures.
-- **Citation audit:** give one row per claim, grouped as supported, partially supported, unsupported, or unverifiable. Name the manuscript location and attach the retrieved evidence.
+- **Scope and retrieval:** name the claims checked and which were reused from the ledger, search boundaries, sources fetched and where each was archived, and access failures.
+- **Citation audit:** give one row per claim, grouped as supported, partially supported, unsupported, or unverifiable. Name the manuscript location and attach the retrieved evidence; reused rows carry their original verification date.
 - **Novelty and source leads:** name each candidate work, the apparent overlap, and what the author should read. A lead is never a novelty verdict.
 - **Author decisions:** ask one question per unsupported or unverifiable citation, candidate citation, proposed wording change, and novelty lead. The author decides what enters the manuscript.
