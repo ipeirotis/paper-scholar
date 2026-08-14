@@ -1,11 +1,13 @@
-# Agent guide: developing paper-scholar
+# Agent guide: developing chapter-and-verse
 
 This repository is a standalone agent skill for retrieval-grounded literature
 checks: verifying that a manuscript's citations support the claims attached to
 them, investigating uncited factual claims, and scanning stated contributions
-for overlapping prior work. It was extracted from the scholar lane of
-[blue-pencil](https://github.com/ipeirotis/blue-pencil) (`/paper:scholar`) so
-it can ship and evolve independently of that editorial skill.
+for overlapping prior work — it gives chapter and verse for every claim it
+checks. It was extracted from the scholar lane of
+[blue-pencil](https://github.com/ipeirotis/blue-pencil) (whose dispatch
+command is `/paper:verify-citations`, formerly `/paper:scholar`) so it can
+ship and evolve independently of that editorial skill.
 
 ## Layout
 
@@ -39,7 +41,7 @@ here. Files here describe behavior; files there are that behavior's output.
   memory-cited source is fabrication), leads-not-verdicts for novelty,
   inaccessible ≠ unsupported, never edit the manuscript or bibliography, never
   bypass paywalls.
-- Blue-pencil's `/paper:scholar` dispatches onto the same underlying protocol.
+- Blue-pencil's `/paper:verify-citations` dispatches onto the same underlying protocol.
   Behavioral changes worth sharing across the two projects should be noted in
   `tasks.md` so they can be upstreamed or downstreamed deliberately rather
   than drifting apart silently.

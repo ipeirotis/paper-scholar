@@ -1,6 +1,6 @@
 # Tasks
 
-Feature tracker for the paper-scholar skill. Agents: read this before working
+Feature tracker for the chapter-and-verse skill. Agents: read this before working
 on the repo. New requests go under **Backlog** with the date they were filed;
 when work lands, move the item to **Done** with the landing date and the files
 that implement it. Items under **Proposed** are ideas awaiting the author's
@@ -28,6 +28,15 @@ approval — do not implement them unprompted.
   by claim-text hash and source identity, with reuse rules so runs never
   redo settled work; pointed to from the host repo's `AGENTS.md`.
   (`references/verification-ledger.md`)
+
+- **2026-08-14 — Rename the skill to chapter-and-verse.** "Give chapter and
+  verse" = cite the exact authority for a claim; pairs with blue-pencil's
+  idiom naming and avoids the crowded CiteCheck/refchecker namespace. The
+  store env var became `LITERATURE_STORE` (rename-proof). Blue-pencil's
+  dispatch command was renamed `/paper:scholar` → `/paper:verify-citations`
+  (symmetric with `/paper:verify-numbers`). GitHub repo rename to
+  `ipeirotis/chapter-and-verse` is done by the owner in repo settings; old
+  URLs redirect.
 
 ## Proposed (awaiting approval)
 

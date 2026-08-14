@@ -28,7 +28,7 @@ Header, once per file:
 # Literature verifications
 
 store: literature/sources/        <!-- or gs://bucket/prefix, s3://bucket/prefix -->
-maintained-by: paper-scholar skill
+maintained-by: chapter-and-verse skill
 ```
 
 One entry per verification, newest appended last, with these exact field

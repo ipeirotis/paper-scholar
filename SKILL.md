@@ -1,9 +1,9 @@
 ---
-name: paper-scholar
+name: chapter-and-verse
 description: Verify whether sources support claims in an academic manuscript, investigate uncited factual claims, or scan a stated contribution for overlapping prior work. Use when the task requires retrieving and reading actual papers or authoritative sources, producing claim-level evidence and novelty leads. Maintains the host repo's literature archive (a full-text copy of every source read, in a configured cloud bucket or a repo folder) and a dated verification ledger so later runs reuse past results instead of re-fetching. Do not use for prose editing, citation formatting or BibTeX, number verification, data analysis, or unsupported citation judgments from memory.
 ---
 
-# Paper Scholar
+# Chapter and Verse
 
 Check manuscript claims against sources retrieved and read during the task. Treat citation verification as an evidence audit and novelty scanning as a search for leads, not a definitive priority verdict. Never silently edit the manuscript or its bibliography.
 

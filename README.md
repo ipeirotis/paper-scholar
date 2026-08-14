@@ -1,15 +1,15 @@
-# paper-scholar
+# chapter-and-verse
 
 A retrieval-grounded agent skill for verifying manuscript citations,
 investigating uncited factual claims, and finding prior-work leads relevant to
-novelty claims.
+novelty claims — it gives chapter and verse for every claim it checks.
 
 ## Install
 
 Copy or clone this repository into your agent's skills directory, for example:
 
 ```bash
-git clone https://github.com/ipeirotis/paper-scholar.git ~/.agents/skills/paper-scholar
+git clone https://github.com/ipeirotis/chapter-and-verse.git ~/.agents/skills/chapter-and-verse
 ```
 
 Then ask the agent to check specified citations or contribution claims. The
@@ -22,7 +22,7 @@ manuscript repository it runs in.
 
 - `literature/sources/` — a full-text copy of every source it read, named by
   citation key and DOI, with SHA-256 hashes recorded. If the project
-  configures a cloud store (a `PAPER_SCHOLAR_STORE` env var or a `store:`
+  configures a cloud store (a `LITERATURE_STORE` env var or a `store:`
   line naming a `gs://` or `s3://` prefix), copies go there instead.
 - `literature/verifications.md` — a dated, append-only ledger of every
   verification: the claim, its source's DOI or URL, the archived copy's hash,

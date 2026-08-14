@@ -56,7 +56,7 @@ Decide once per project, in this order, and record the choice in the ledger
 header so later runs land in the same place:
 
 1. **Explicit configuration.** A store declared by the project wins: a
-   `PAPER_SCHOLAR_STORE` environment variable, or a `store:` line in the host
+   `LITERATURE_STORE` environment variable, or a `store:` line in the host
    repo's `literature/verifications.md` header or its `AGENTS.md` literature
    section, naming a `gs://bucket/prefix` or `s3://bucket/prefix`.
 2. **Confirm access before trusting it.** Verify the tool and credentials
