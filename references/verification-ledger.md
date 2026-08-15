@@ -142,9 +142,13 @@ search. A claim's latest entry is reusable when all of these hold:
 
 A reused verdict enters the citation audit with its original date, marked as
 reused; it is never presented as fresh work. Re-verify regardless of the ledger
-when the author asks, when the claim or bibliography entry changed, or when the
-source was a URL snapshot and the claim is sensitive to the live page having
-changed.
+when the author asks or when the claim or bibliography entry changed. A
+mutable-URL snapshot gets one extra check before reuse: re-fetch the live page
+and compare it with the archived snapshot where the evidence sits — unchanged
+means the verdict reuses, changed means fresh verification, and an unreachable
+page downgrades the entry to dated history ("verified against the page as of
+<date>"), never presented as current. A DOI-identified version of record is
+stable and needs no such re-fetch.
 
 Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a

@@ -101,9 +101,12 @@ header so later runs land in the same place:
   citation — takes exactly one of two forms: with a DOI, a synthetic key
   derived from the registrar metadata (first author's family name, lowercased
   and sanitized, plus the year: `doe2023`) followed by the DOI slug; without
-  a DOI, the title slug alone — the same rule as any other keyless DOI-less
-  source — plus the snapshot suffix when the source is a mutable page. Each
-  case has one form; no source ever has two candidate paths. Snapshots of
+  a DOI, the title slug with the date-and-hash suffix always appended. A bare
+  title slug is not globally unique — two reports can sanitize to the same
+  name — so any base name lacking a citekey or DOI slug carries the suffix
+  whether the source is a mutable page or a static PDF. Each case has one
+  form; no source ever has two candidate paths, and no two sources share
+  one. Snapshots of
   mutable pages append the access date and the first 8 hex characters of the
   file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day fetches that
   differ can never share a name or overwrite each other.
