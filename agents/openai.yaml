@@ -1,4 +1,4 @@
 interface:
-  display_name: "Chapter and Verse"
+  display_name: "Citation Needed"
   short_description: "Verify citations and investigate novelty claims"
   default_prompt: "Check this manuscript citation or novelty claim against sources you retrieve and read, clearly separating evidence from leads."
