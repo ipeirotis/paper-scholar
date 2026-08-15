@@ -41,7 +41,7 @@ claim: "Smith et al. show that crowdsourced labels reach expert accuracy at one 
 claim-hash: ab12cd34ef56
 source: doi:10.1145/1234567.1234568
 version-read: version of record
-archived: literature/sources/smith2021--10.1145_1234567.1234568.pdf sha256:9f2a…
+archived: literature/sources/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf sha256:9f2a…
 license: CC-BY-4.0
 verdict: partially supported
 evidence: "labels reached expert agreement on 3 of 5 tasks" (sec. 5.1) — cost claim not addressed
@@ -77,7 +77,7 @@ notes: cost figure may come from a different paper; asked author.
 searched: <the queries and databases used>
 lead: doi:10.1234/abcd — Doe 2023, "Modeling X under Y-like constraints"
   version-read: version of record
-  archived: literature/sources/doe2023--10.1234_abcd.pdf sha256:4e7b…
+  archived: literature/sources/doe2023--10.1234_abcd-7c09d1e2.pdf sha256:4e7b…
   license: unknown
   evidence: "we model X under Y'-constraints using…" (sec. 3) — same setting, different estimator
 leads-found: 1; nothing else on point (state this explicitly when a search comes up empty)
@@ -112,7 +112,7 @@ claim: "It is well known that crowd labels converge with enough redundancy."
 claim-hash: c41f88a02b7d
 candidate-source: doi:10.5555/wxyz — Roe 2018, "Redundancy and convergence in crowd labeling"
   version-read: version of record
-  archived: literature/sources/roe2018--10.5555_wxyz.pdf sha256:8d1c…
+  archived: literature/sources/roe2018--10.5555_wxyz-1a9e44b0.pdf sha256:8d1c…
   license: restricted — author-supplied copy, private store
   evidence: "convergence holds once redundancy exceeds…" (sec. 2)
 status: candidate offered to the author; nothing inserted
@@ -149,16 +149,31 @@ archive check resolve a file through its newest relocation before comparing
 hashes:
 
 ```markdown
-## [2026-08-15T10:02Z] relocation — smith2021--10.1145_1234567.1234568.pdf
-from: literature/sources/smith2021--10.1145_1234567.1234568.pdf
-to: gs://bucket/prefix/smith2021--10.1145_1234567.1234568.pdf
+## [2026-08-15T10:02Z] relocation — smith2021--10.1145_1234567.1234568-4b1f22aa.pdf
+from: literature/sources/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf
+to: gs://bucket/prefix/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf
 sha256: 9f2a… (unchanged)
+```
+
+Successful refreshes are recorded the same append-only way: when a DOI-backed
+file reaches its refresh interval, is re-fetched, and proves unchanged, append
+a `refresh` entry so the refresh clock restarts — otherwise every later run
+would re-download a source the cadence says to leave alone. The clock for a
+file reads from its newest `refresh` entry, falling back to the original
+verification's date:
+
+```markdown
+## [2026-08-15T10:20Z] refresh — smith2021--10.1145_1234567.1234568-4b1f22aa.pdf
+checked: registrar updates none; re-fetched; sha256 unchanged (9f2a…)
 ```
 
 ## Reuse rules
 
 Consult the ledger after the claim inventory is pinned and before the first
-search. A claim's latest entry is reusable when all of these hold:
+search. Supersession is per `(claim-hash, source identity)` pair: the newest
+entry for that pair governs, so a sentence that cites two works keeps one
+live entry per work, and a newer check of one source never hides the other's.
+The governing entry is reusable when all of these hold:
 
 - the claim text still hashes to the recorded `claim-hash`;
 - the bibliography still resolves the citation to the same work: the same
@@ -212,8 +227,8 @@ current answer to this one.
 
 Entries are appended, and past entries are never edited or deleted: the
 history of what was checked, when, and against which text is the point. When a
-claim is re-verified, the newer entry supersedes the older by its heading
-timestamp — headings carry date and time (UTC) precisely so that same-day
+claim is re-verified against the same source, the newer entry for that
+claim-and-source pair supersedes the older by its heading timestamp — headings carry date and time (UTC) precisely so that same-day
 entries cannot tie ambiguously. If parallel runs both appended and the file
 conflicts, keep both sets of entries in timestamp order; should two entries
 for the same claim still carry the same timestamp with different verdicts,

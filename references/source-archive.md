@@ -104,47 +104,37 @@ header so later runs land in the same place:
 
 ## Naming and integrity
 
-- Name archived papers `<citekey>--<doi-slug>.pdf`. Build every filename
-  component — citekey, DOI slug, title slug alike — by replacing each
-  character outside `A–Z a–z 0–9 . _ -` with `_` (DOI slashes, colons, and
-  angle brackets included), so names stay portable across filesystems,
-  Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
-  Sanitization must stay collision-free without defacing every DOI: in a DOI
-  slug, `/` → `_` is the defined separator mapping and triggers nothing, and
-  a literal `_` already present in the DOI doubles to `__` so that mapping
-  stays injective; any other replaced character (a `:`, say) appends the
-  first 6 hex characters of the SHA-256 of the original component
-  (`1234:5678` becomes `1234_5678-3fa2bc`). The example DOIs contain neither
-  case, which is why their slugs carry no suffix. Lowercase every filename
-  component, and when a component was not already lowercase, append the
-  6-hex hash of its original form (`REPORT` becomes `report-b41d09`): two
-  keys differing only by case then get distinct names deterministically,
-  derived from the source's own identity — with no dependence on what the
-  archive already contains or which source was archived first. Cap every title slug at 60
-  characters so a long title cannot exceed
-  filesystem component limits; uniqueness never rests on the slug — it comes
-  from the citekey or the date-and-hash suffix.
-  Cited sources without a DOI use `<citekey>--<title-slug>` with the same
-  sanitization, so every citekey case has one deterministic base name. A
-  source not in the bibliography at all — a novelty lead, a candidate
-  citation — takes exactly one of two forms: with a DOI, a synthetic key
-  derived from the registrar metadata (first author's family name, lowercased
-  and sanitized, plus the year: `doe2023`) followed by the DOI slug; without
-  a DOI, the title slug with the date-and-hash suffix always appended. A bare
-  title slug is not globally unique — two reports can sanitize to the same
-  name — so any base name lacking a citekey or DOI slug carries the suffix
-  whether the source is a mutable page or a static PDF. Each case has one
-  form; no source ever has two candidate paths, and no two sources share
-  one. Snapshots of
-  mutable pages append the access date and the first 8 hex characters of the
-  file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day fetches that
-  differ can never share a name or overwrite each other.
+- A filename is a readable label plus a mandatory identity hash, and
+  uniqueness lives entirely in the hash, never in the label. Every archived
+  file's base name is `<key>--<slug>-<id8>`:
+  - `<key>`: the citation key, lowercased and truncated to 40 characters.
+    A source outside the bibliography uses the synthetic key (first author's
+    family name plus year from registrar metadata, `doe2023`); with no usable
+    metadata, the key part is omitted.
+  - `<slug>`: the DOI with `/` replaced by `_`, or without a DOI the title —
+    lowercased, every character outside `a-z 0-9 . _ -` replaced by `_`, and
+    truncated to 60 characters. The slug is a human-readable label only.
+  - `<id8>`: the first 8 hex characters of the SHA-256 of the source's
+    canonical identity, computed before any sanitization — the raw DOI
+    string, else the canonical URL, else the original citation key plus
+    title. Two sources whose labels collide in any way (same title, keys
+    differing only by case, DOIs that sanitize alike) still get distinct
+    names, deterministically, with no dependence on what the archive already
+    contains or which source arrived first.
+  The truncation caps bound every base name well under common 255-byte
+  filename-component limits, and the same rule covers every case — cited or
+  not, DOI or not (for example
+  `smith2021--10.1145_1234567.1234568-4b1f22aa.pdf`). Snapshots of mutable
+  pages additionally append the access date and the first 8 hex characters
+  of the file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day
+  fetches that differ can never share a name; abstract snapshots insert
+  `--abstract` before that suffix.
 - Compute the SHA-256 of every archived file and record it in the ledger entry.
   The hash is what lets a later run confirm it is looking at the same text: on
   re-download, compare hashes, and if they differ, save the new copy under the
   same date-and-hash suffix scheme as snapshots
-  (`smith2021--10.1145_1234567.1234568--2026-08-15-4e7b21aa.pdf`) instead of
-  overwriting — the original stays untouched at its recorded path so the text
+  (`smith2021--10.1145_1234567.1234568-4b1f22aa--2026-08-15-4e7b21aa.pdf`)
+  instead of overwriting — the original stays untouched at its recorded path so the text
   that was actually audited stays reopenable — and note the change in the
   ledger. A publisher silently replacing the PDF behind a DOI, or a revised
   preprint, is exactly the drift the hashes exist to catch.
