@@ -99,6 +99,9 @@ header so later runs land in the same place:
   character outside `A–Z a–z 0–9 . _ -` with `_` (DOI slashes, colons, and
   angle brackets included), so names stay portable across filesystems,
   Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
+  Cap every title slug at 60 characters so a long title cannot exceed
+  filesystem component limits; uniqueness never rests on the slug — it comes
+  from the citekey or the date-and-hash suffix.
   Cited sources without a DOI use `<citekey>--<title-slug>` with the same
   sanitization, so every citekey case has one deterministic base name. A
   source not in the bibliography at all — a novelty lead, a candidate
@@ -148,9 +151,12 @@ header so later runs land in the same place:
   rules above) containing the locator, the version consulted, the access
   date, and each quoted passage with its page or section; hash and record it
   like any other archived file, with `license: restricted — quotes only`.
-  Short attributed quotations are safe in a public repo, which is the point
-  of the fallback — and the hashed quotes file is what keeps such
-  verifications reusable.
+  The hashed quotes file is what keeps such verifications reusable. Brevity
+  and attribution make quotation defensible in many jurisdictions, not lawful
+  in all of them, so the quotes artifact follows the same storage rule as any
+  restricted material by default — private store or ignored local folder —
+  and lands in a public repo only when the author, told the basis is
+  quotation rather than a license, explicitly decides so.
 - "Private bucket" is verified, not assumed. A configured bucket counts as
   private for restricted material only after its access controls check out —
   public-access prevention or the absence of `allUsers`-style grants on GCS,
