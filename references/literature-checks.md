@@ -19,12 +19,13 @@ manuscript's claims on its own conclusion. Its two capabilities ship in one
 order, citation verification before novelty scan, because a novelty claim can
 only be judged against sources you have actually read.
 
-## Where this lane sits under the master rule
+## The verification standard
 
-The skill's master rule (never assert unverified substance) has a retrieval
-branch: a citation is verified when you retrieved and read the source in this
-session, with the passage that supports the use quoted. This lane is that
-branch, and nothing else; the integrity norms below spell out what it excludes.
+One rule governs everything here: never assert unverified substance. A
+citation counts as verified only when the source was retrieved and read — in
+this session, or in a ledgered earlier one reused under the ledger's rules —
+with the passage that supports the use quoted. The protocol below implements
+that rule and nothing else; the integrity norms spell out what it excludes.
 
 ## The protocol
 
@@ -76,12 +77,18 @@ source (fetch the paper, its abstract, or the specific section that would carry
 the claim). Retrieval follows `references/source-archive.md`: resolve the
 claim's DOI (or, failing that, its stable public URL), locate a legal
 full-text copy, and archive that copy in the project's source store with its
-SHA-256 recorded. A paywalled source is a request to the author in
-`Author decisions`, never a bypass. Judge whether the source supports the
-sentence as written, and classify each as one of:
+SHA-256 recorded. DOI resolution includes the registrar update check defined
+there: a source under retraction, erratum, or expression of concern keeps the
+verdict its text earns, but the update is flagged in the citation audit and
+`Author decisions` and recorded in the ledger entry. A paywalled source is a
+request to the author in `Author decisions`, never a bypass. Judge whether
+the source supports the sentence as written, and classify each as one of:
 
 - **supported**: the source states what the manuscript attributes to it; quote
   the passage that supports it
+- **partially supported**: the source supports part of the claim as written;
+  quote the passage behind the supported part and name the remainder the
+  source does not address
 - **unsupported**: the passage you read states something weaker than, or
   contrary to, the claim; quote what it does say and describe the gap. Reserve
   this for when you reached the text that would carry the claim: a claim missing

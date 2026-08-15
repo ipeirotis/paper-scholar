@@ -28,7 +28,7 @@ Header, once per file:
 # Literature verifications
 
 store: literature/sources/        <!-- or gs://bucket/prefix, s3://bucket/prefix -->
-maintained-by: chapter-and-verse skill
+maintained-by: citation-needed skill
 refresh-interval: 12 months       <!-- optional; DOI-backed re-fetch cadence in months, 12 when absent -->
 ```
 
@@ -43,6 +43,7 @@ source: doi:10.1145/1234567.1234568
 version-read: version of record
 archived: literature/sources/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf sha256:9f2a…
 license: CC-BY-4.0
+updates: none
 verdict: partially supported
 evidence: "labels reached expert agreement on 3 of 5 tasks" (sec. 5.1) — cost claim not addressed
 notes: cost figure may come from a different paper; asked author.
@@ -71,6 +72,16 @@ notes: cost figure may come from a different paper; asked author.
   when none was determinable (treated as restricted), or `n/a` when nothing
   was archived. This is what lets a later audit establish why a committed
   copy was permitted to be where it is.
+- `updates:` records, for DOI-backed sources, the outcome of the registrar
+  update-relation check made at verification time
+  (`references/source-archive.md`): `none`, or the relation found with its
+  target and date (`updates: retraction doi:10.1145/7654321 (2027-01-10)`).
+  URL-backed entries omit it, as do entries written before the field existed
+  — reuse is unaffected either way, since the reuse rules query the registrar
+  again whenever a DOI-backed entry is reused.
+- `maintained-by:` is informational, naming the tool that writes the file.
+  Ledgers written under this skill's earlier names (paper-scholar,
+  chapter-and-verse) remain valid and are not rewritten to rebrand them.
 - Novelty scans are logged too, since they age and their scope matters. Each
   lead carries the same source-identity, archive, and evidence fields as a
   citation entry — a lead a later run cannot reopen and re-read is not

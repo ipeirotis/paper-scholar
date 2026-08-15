@@ -1,15 +1,16 @@
-# chapter-and-verse
+# citation-needed
 
 A retrieval-grounded agent skill for verifying manuscript citations,
 investigating uncited factual claims, and finding prior-work leads relevant to
-novelty claims — it gives chapter and verse for every claim it checks.
+novelty claims — every claim either shows a source that supports it or gets
+flagged: [citation needed].
 
 ## Install
 
 Copy or clone this repository into your agent's skills directory, for example:
 
 ```bash
-git clone https://github.com/ipeirotis/chapter-and-verse.git ~/.agents/skills/chapter-and-verse
+git clone https://github.com/ipeirotis/citation-needed.git ~/.agents/skills/citation-needed
 ```
 
 Then ask the agent to check specified citations or contribution claims. The
