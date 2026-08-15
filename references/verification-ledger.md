@@ -35,7 +35,7 @@ One entry per verification, newest appended last, with these exact field
 labels so entries stay greppable by humans and machines alike:
 
 ```markdown
-## [2026-08-14] cite:smith2021 — introduction.tex:41
+## [2026-08-14T22:31Z] cite:smith2021 — introduction.tex:41
 claim: "Smith et al. show that crowdsourced labels reach expert accuracy at one tenth the cost."
 claim-hash: ab12cd34ef56
 source: doi:10.1145/1234567.1234568
@@ -61,7 +61,7 @@ notes: cost figure may come from a different paper; asked author.
   reusable evidence:
 
 ```markdown
-## [2026-08-14] novelty — "we are the first to model X under Y"
+## [2026-08-14T22:47Z] novelty — "we are the first to model X under Y"
 searched: <the queries and databases used>
 lead: doi:10.1234/abcd — Doe 2023, "Modeling X under Y-like constraints"
   version-read: version of record
@@ -69,6 +69,25 @@ lead: doi:10.1234/abcd — Doe 2023, "Modeling X under Y-like constraints"
   evidence: "we model X under Y'-constraints using…" (sec. 3) — same setting, different estimator
 leads-found: 1; nothing else on point (state this explicitly when a search comes up empty)
 ```
+
+Outcomes with no retrievable source still get entries — with explicit
+sentinels, never invented evidence, because "could not check" and "checked
+and unsupported" must stay distinguishable forever:
+
+```markdown
+## [2026-08-15T08:40Z] cite:jones2019 — related.tex:12
+claim: "…"
+claim-hash: 77ab19c02d3e
+source: unresolved — key maps to no work in the bibliography
+version-read: none
+archived: none
+verdict: unverifiable
+evidence: none — nothing was retrieved; asked the author which work this key denotes
+```
+
+A zero-lead novelty scan likewise records `lead: none — searches returned
+nothing on point` under its `searched:` line: the absence of a found overlap
+is itself a dated finding, distinct from a scan that never ran.
 
 ## Reuse rules
 
@@ -99,12 +118,21 @@ changed.
 Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a
 fresh scan, not a current answer, and state the scan date whenever one is
-reused.
+reused. Age is not the only predicate: reuse a novelty entry only when the
+manuscript's novelty claim still reads as the recorded one and the entry's
+`searched:` scope covers what the current request asks. A reworded
+contribution, a new database, or a broadened boundary gets a fresh scan
+whatever the entry's age — an old answer to a different question is not a
+current answer to this one.
 
 ## Append, never rewrite
 
 Entries are appended, and past entries are never edited or deleted: the
 history of what was checked, when, and against which text is the point. When a
-claim is re-verified, the new dated entry supersedes the old one simply by
-being later. If parallel runs both appended and the file conflicts, keep both
-sets of entries in date order.
+claim is re-verified, the newer entry supersedes the older by its heading
+timestamp — headings carry date and time (UTC) precisely so that same-day
+entries cannot tie ambiguously. If parallel runs both appended and the file
+conflicts, keep both sets of entries in timestamp order; should two entries
+for the same claim still carry the same timestamp with different verdicts,
+neither is reusable — report the conflict to the author instead of silently
+picking one.

@@ -16,11 +16,15 @@ Every source needs a locator a stranger could resolve:
   look up the registration agency first (`https://doi.org/ra/<doi>`) and
   query that agency's API — Crossref for most journal articles, DataCite for
   most datasets and reports, with mEDRA and others in the long tail — rather
-  than assuming Crossref for everything. The resolved title, venue, and year
-  must match the bibliography entry; a mismatch means the wrong DOI or a
-  fabricated reference, and it goes to `Author decisions`, not into the
-  archive. A DOI that resolves but is registered outside Crossref is a valid
-  DOI, not a suspect one.
+  than assuming Crossref for everything. The registrar's metadata must
+  identify the same work the bibliography entry describes — judged on the
+  whole record, not field-by-field equality. An abbreviated venue, an
+  online-first versus print year, or a small title typo with matching authors
+  is still the intended work: verify the claim, and flag the bibliography
+  discrepancy as a proposed correction in `Author decisions`. Only a DOI that
+  resolves to a different work, or to nothing, marks the reference wrong or
+  fabricated and keeps it out of the archive. A DOI registered outside
+  Crossref is a valid DOI, not a suspect one.
 - **Stable public URL, fallback.** For sources without a DOI (standards pages,
   arXiv abstracts, documentation, reports), record the canonical URL and the
   access date. Prefer the most durable form of the URL (an arXiv abs page over
@@ -63,10 +67,15 @@ date in the filename, since the live page can change.
 Decide once per project, in this order, and record the choice in the ledger
 header so later runs land in the same place:
 
-1. **Explicit configuration.** A store declared by the project wins: a
-   `LITERATURE_STORE` environment variable, or a `store:` line in the host
-   repo's `literature/verifications.md` header or its `AGENTS.md` literature
-   section, naming a `gs://bucket/prefix` or `s3://bucket/prefix`.
+1. **Explicit configuration.** A store declared by the project wins, and when
+   declarations disagree the order is fixed: the `store:` line in the ledger
+   header (`literature/verifications.md`) outranks the host repo's
+   `AGENTS.md` literature section, which outranks a `LITERATURE_STORE`
+   environment variable. The ledger header is where the existing archive
+   already lives, and evidence continuity beats per-run convenience. Use the
+   highest-ranked reachable declaration and report any conflict among them in
+   `Author decisions` rather than resolving it silently. Each declaration
+   names a `gs://bucket/prefix` or `s3://bucket/prefix`.
 2. **Confirm access before trusting it.** Verify the tool and credentials
    actually work (`gcloud storage ls` / `gsutil ls` for GCS, `aws s3 ls` for
    S3) before uploading. If the configured store is unreachable, fall back to
@@ -92,8 +101,13 @@ header so later runs land in the same place:
   differ can never share a name or overwrite each other.
 - Compute the SHA-256 of every archived file and record it in the ledger entry.
   The hash is what lets a later run confirm it is looking at the same text: on
-  re-download, compare hashes, and if they differ keep both copies as separate
-  dated files and note the change.
+  re-download, compare hashes, and if they differ, save the new copy under the
+  same date-and-hash suffix scheme as snapshots
+  (`smith2021--10.1145_1234567.1234568--2026-08-15-4e7b21aa.pdf`) instead of
+  overwriting — the original stays untouched at its recorded path so the text
+  that was actually audited stays reopenable — and note the change in the
+  ledger. A publisher silently replacing the PDF behind a DOI, or a revised
+  preprint, is exactly the drift the hashes exist to catch.
 
 ## Copyright and repo hygiene
 
