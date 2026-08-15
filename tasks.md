@@ -60,4 +60,12 @@ approval — do not implement them unprompted.
 
 ## Backlog
 
-(nothing filed)
+- **2026-08-15 — Extract blue-pencil's analyst lane as the facts-and-figures
+  skill.** Name approved by the author ("facts and figures": the reported
+  numbers and the literal figures — mirrors chapter-and-verse's idiom form).
+  Scope: carve `references/analysis-integrity.md` and the `paper-analyst`
+  agent out of blue-pencil into a standalone repo
+  (`ipeirotis/facts-and-figures`), couplings removed, with AGENTS.md/tasks.md
+  scaffolding like this repo's. Blue-pencil's `/paper:verify-numbers`,
+  `/paper:figures`, and `/paper:analyze` commands keep their names. Awaiting
+  go-ahead to execute.
