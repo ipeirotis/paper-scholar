@@ -78,8 +78,10 @@ header so later runs land in the same place:
    environment variable. The ledger header is where the existing archive
    already lives, and evidence continuity beats per-run convenience. Use the
    highest-ranked reachable declaration and report any conflict among them in
-   `Author decisions` rather than resolving it silently. Each declaration
-   names a `gs://bucket/prefix` or `s3://bucket/prefix`.
+   `Author decisions` rather than resolving it silently. A declaration names
+   a `gs://bucket/prefix`, an `s3://bucket/prefix`, or a repository-relative
+   path such as `literature/sources/` — the recorded form of the repo-folder
+   default, which is valid header syntax, not an error.
 2. **Confirm access before trusting it.** Verify the tool and credentials
    actually work (`gcloud storage ls` / `gsutil ls` for GCS, `aws s3 ls` for
    S3) before uploading. If the configured store is unreachable, fall back to
@@ -103,7 +105,12 @@ header so later runs land in the same place:
   changed a component, append the first 6 hex characters of the SHA-256 of
   the original component (a DOI suffix `1234:5678` becomes `1234_5678-3fa2bc`),
   so two originals differing only in disallowed characters can never map to
-  the same path. Cap every title slug at 60 characters so a long title cannot exceed
+  the same path. Judge uniqueness case-insensitively — case-insensitive
+  filesystems will — so before writing, compare the base name against the
+  existing archive ignoring case, and on a fold-collision (two citekeys
+  differing only by case, say) disambiguate the newcomer with the 6-hex hash
+  suffix of its differing original component. Cap every title slug at 60
+  characters so a long title cannot exceed
   filesystem component limits; uniqueness never rests on the slug — it comes
   from the citekey or the date-and-hash suffix.
   Cited sources without a DOI use `<citekey>--<title-slug>` with the same

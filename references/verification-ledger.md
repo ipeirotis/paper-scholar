@@ -114,10 +114,12 @@ candidate-source: doi:10.5555/wxyz — Roe 2018, "Redundancy and convergence in 
 status: candidate offered to the author; nothing inserted
 ```
 
-An `uncited` entry reuses under the same conditions as a `cite:` entry
-(matching claim-hash, validated archive). Once the author adopts the
-candidate, the claim is a cited claim: later runs check it under `cite:` with
-its new key, and the `uncited` entry stands as history.
+An `uncited` entry reuses when the claim-hash matches, the recorded
+candidate-source identity (its DOI or canonical URL) is unchanged, and the
+archived copy validates — the bibliography-identity condition does not apply
+while the claim remains uncited, since there is no citation to resolve. Once
+the author adopts the candidate, the claim is a cited claim: later runs check
+it under `cite:` with its new key, and the `uncited` entry stands as history.
 
 ## Reuse rules
 

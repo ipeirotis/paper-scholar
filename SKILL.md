@@ -36,4 +36,4 @@ Return exactly:
 3. **Novelty and source leads:** candidate work, overlap, and why the author should inspect it; never claim exhaustive novelty.
 4. **Author decisions:** flagged citation or wording candidates, requests for paywalled PDFs the author must supply, and unresolved questions. Nothing is edited automatically.
 
-Append the fresh results to the host repo's ledger as dated entries and confirm the writes landed *before* returning the report — on platforms where the report ends the turn, an append promised for afterward never happens. The report then names the files actually written (`references/verification-ledger.md`).
+Append the fresh results to the host repo's ledger as dated entries and confirm the writes landed *before* returning the report — on platforms where the report ends the turn, an append promised for afterward never happens. The report then names the files actually written — the host repo's `literature/verifications.md` and any archived copies — with the entry format and reuse rules defined in `references/verification-ledger.md`.
