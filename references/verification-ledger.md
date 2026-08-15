@@ -41,6 +41,7 @@ claim-hash: ab12cd34ef56
 source: doi:10.1145/1234567.1234568
 version-read: version of record
 archived: literature/sources/smith2021--10.1145_1234567.1234568.pdf sha256:9f2a…
+license: CC-BY-4.0
 verdict: partially supported
 evidence: "labels reached expert agreement on 3 of 5 tasks" (sec. 5.1) — cost claim not addressed
 notes: cost figure may come from a different paper; asked author.
@@ -55,6 +56,12 @@ notes: cost figure may come from a different paper; asked author.
 - `version-read` distinguishes the version of record from a preprint or an
   abstract-only read; a verdict earned on a preprint does not silently carry
   over to the published version.
+- `license:` records the redistribution authorization for the archived copy:
+  the license name when one was found (`CC-BY-4.0`), `restricted` when the
+  copy must not be redistributed and so lives in a private store, `unknown`
+  when none was determinable (treated as restricted), or `n/a` when nothing
+  was archived. This is what lets a later audit establish why a committed
+  copy was permitted to be where it is.
 - Novelty scans are logged too, since they age and their scope matters. Each
   lead carries the same source-identity, archive, and evidence fields as a
   citation entry — a lead a later run cannot reopen and re-read is not
@@ -66,6 +73,7 @@ searched: <the queries and databases used>
 lead: doi:10.1234/abcd — Doe 2023, "Modeling X under Y-like constraints"
   version-read: version of record
   archived: literature/sources/doe2023--10.1234_abcd.pdf sha256:4e7b…
+  license: unknown
   evidence: "we model X under Y'-constraints using…" (sec. 3) — same setting, different estimator
 leads-found: 1; nothing else on point (state this explicitly when a search comes up empty)
 ```
@@ -81,6 +89,7 @@ claim-hash: 77ab19c02d3e
 source: unresolved — key maps to no work in the bibliography
 version-read: none
 archived: none
+license: n/a — nothing archived
 verdict: unverifiable
 evidence: none — nothing was retrieved; asked the author which work this key denotes
 ```
@@ -99,6 +108,7 @@ claim-hash: c41f88a02b7d
 candidate-source: doi:10.5555/wxyz — Roe 2018, "Redundancy and convergence in crowd labeling"
   version-read: version of record
   archived: literature/sources/roe2018--10.5555_wxyz.pdf sha256:8d1c…
+  license: restricted — author-supplied copy, private store
   evidence: "convergence holds once redundancy exceeds…" (sec. 2)
 status: candidate offered to the author; nothing inserted
 ```

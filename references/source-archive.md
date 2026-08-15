@@ -96,12 +96,14 @@ header so later runs land in the same place:
   angle brackets included), so names stay portable across filesystems,
   Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
   Cited sources without a DOI use `<citekey>--<title-slug>` with the same
-  sanitization, so every citekey case has one deterministic base name;
-  sources with neither citekey nor DOI use the title slug alone. A source not
-  in the bibliography at all — a novelty lead, a candidate citation — derives
-  a synthetic key from the registrar metadata: the first author's family
-  name, lowercased and sanitized, plus the year (`doe2023`), with the DOI
-  slug keeping the full name unique when two synthetic keys collide. Snapshots of
+  sanitization, so every citekey case has one deterministic base name. A
+  source not in the bibliography at all — a novelty lead, a candidate
+  citation — takes exactly one of two forms: with a DOI, a synthetic key
+  derived from the registrar metadata (first author's family name, lowercased
+  and sanitized, plus the year: `doe2023`) followed by the DOI slug; without
+  a DOI, the title slug alone — the same rule as any other keyless DOI-less
+  source — plus the snapshot suffix when the source is a mutable page. Each
+  case has one form; no source ever has two candidate paths. Snapshots of
   mutable pages append the access date and the first 8 hex characters of the
   file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day fetches that
   differ can never share a name or overwrite each other.
@@ -118,8 +120,9 @@ header so later runs land in the same place:
 ## Copyright and repo hygiene
 
 - Free to read is not free to redistribute. Record the license Unpaywall or
-  the publisher reports, and commit a copy to a public repo only when that
-  license explicitly permits redistribution (CC BY and kin). A paper that is
+  the publisher reports in the ledger entry's `license:` field, and commit a
+  copy to a public repo only when that license explicitly permits
+  redistribution (CC BY and kin). A paper that is
   merely readable on the publisher's site with no such license is treated
   like a paywalled one for storage purposes: private bucket, `.gitignore`d
   local folder, or quotes and metadata only.
@@ -129,6 +132,14 @@ header so later runs land in the same place:
   alternatives are a private bucket, a `.gitignore`d local `literature/sources/`
   (archived on the author's machine but not pushed), or archiving only the
   quoted passages and metadata.
+- "Private bucket" is verified, not assumed. A configured bucket counts as
+  private for restricted material only after its access controls check out —
+  public-access prevention or the absence of `allUsers`-style grants on GCS,
+  the public-access block on S3 — because reachability and working
+  credentials prove nothing about visibility. When the check cannot be run or
+  is inconclusive, ask the author to confirm the bucket is private before
+  uploading anything rights-restricted: a publicly readable bucket
+  republishes a PDF as surely as a public repo does.
 - PDFs are binary and repos bloat: before committing any single file over
   ~10 MB, or once the archive folder crosses ~100 MB, raise Git LFS or a bucket
   with the author instead of pushing silently.
