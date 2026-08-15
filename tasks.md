@@ -18,8 +18,9 @@ approval — do not implement them unprompted.
   otherwise `literature/sources/` in the host repo. SHA-256 recorded per file.
   (`references/source-archive.md`)
 - **2026-08-14 — (c) Verifiable locators and the paywall flow.** Every source
-  needs a DOI (cross-checked against Crossref) or at minimum a stable public
-  URL with access date. Legal open-access copies are searched first
+  needs a DOI (cross-checked against its registration agency's metadata —
+  Crossref, DataCite, or whichever agency issued it) or at minimum a stable
+  public URL with access date. Legal open-access copies are searched first
   (publisher, Unpaywall, preprint servers); paywalled sources are requested
   from the author — download the PDF or print the page to PDF and place it in
   the store — never bypassed. (`references/source-archive.md`)

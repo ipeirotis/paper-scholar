@@ -49,7 +49,11 @@ Never bypass a paywall, never present credentials, and never use pirate
 mirrors. When only a paywalled copy exists, the request goes to the author in
 `Author decisions`: ask them to download the PDF through their own access (or
 print the page to PDF for web sources) and place it in the source store, naming
-the exact path expected. Until the copy arrives, the claim is verifiable only
+the exact path expected. A supplied copy is verified before it is believed:
+check its title, authors, year, and any embedded DOI against the bibliography
+and the registrar record — the same identity check a preprint gets — and send
+a mismatched or mislabeled file back to the author rather than reading it as
+evidence under the requested key. Until the copy arrives, the claim is verifiable only
 to whatever was legally reachable (usually the abstract) and is classified
 accordingly. Whatever was legally read still gets archived: snapshot the
 abstract or landing page exactly as a mutable web source (see the snapshot
@@ -130,11 +134,15 @@ header so later runs land in the same place:
   like a paywalled one for storage purposes: private bucket, `.gitignore`d
   local folder, or quotes and metadata only.
 - A paywalled or rights-restricted PDF committed to a **public** repository is
-  republication. When the host repo is public and no private bucket is
-  configured, warn the author and ask before committing such a file; the
-  alternatives are a private bucket, a `.gitignore`d local `literature/sources/`
-  (archived on the author's machine but not pushed), or archiving only the
-  quoted passages and metadata.
+  republication, and the author's consent does not change that: approval is
+  not a license. When no redistribution license exists, the public repo is
+  simply off the menu — use a private bucket, a `.gitignore`d local
+  `literature/sources/` (archived on the author's machine but not pushed), or
+  the quotes-only artifact. The one exception is an author who actually holds
+  the needed rights — their own accepted manuscript under a publisher
+  self-archiving policy, material whose copyright is theirs — and that
+  asserted basis is recorded in the entry's `license:` field, because it is
+  the authorization a later audit will need.
 - The quotes-and-metadata fallback is itself an archived artifact, not a gap
   in the archive: write `<base-name>--quotes.md` (base name per the naming
   rules above) containing the locator, the version consulted, the access

@@ -152,7 +152,14 @@ skips the per-reuse re-fetch but is not assumed immutable: when reusing it,
 query the registrar's metadata for updates (errata, corrigenda, retractions,
 replacement versions — Crossref's update-to relations). An update means
 re-fetch and re-verify, and any hash drift found on a re-fetch is handled per
-`references/source-archive.md`.
+`references/source-archive.md`. Declared updates are all the registrar can
+show; silent replacements it cannot, so DOI-backed entries also get a
+periodic content refresh: when the recorded fetch is more than a year old (or
+whatever interval the author sets in the ledger header), re-fetch the file
+once and compare hashes — drift means a new dated copy and fresh
+verification. Between refreshes the verdict still stands on the archived text
+it was earned against; the refresh bounds how long a silent replacement can
+go unnoticed.
 
 Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a
