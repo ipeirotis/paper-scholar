@@ -135,6 +135,14 @@ header so later runs land in the same place:
   alternatives are a private bucket, a `.gitignore`d local `literature/sources/`
   (archived on the author's machine but not pushed), or archiving only the
   quoted passages and metadata.
+- The quotes-and-metadata fallback is itself an archived artifact, not a gap
+  in the archive: write `<base-name>--quotes.md` (base name per the naming
+  rules above) containing the locator, the version consulted, the access
+  date, and each quoted passage with its page or section; hash and record it
+  like any other archived file, with `license: restricted — quotes only`.
+  Short attributed quotations are safe in a public repo, which is the point
+  of the fallback — and the hashed quotes file is what keeps such
+  verifications reusable.
 - "Private bucket" is verified, not assumed. A configured bucket counts as
   private for restricted material only after its access controls check out —
   public-access prevention or the absence of `allUsers`-style grants on GCS,

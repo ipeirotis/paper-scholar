@@ -147,8 +147,12 @@ mutable-URL snapshot gets one extra check before reuse: re-fetch the live page
 and compare it with the archived snapshot where the evidence sits — unchanged
 means the verdict reuses, changed means fresh verification, and an unreachable
 page downgrades the entry to dated history ("verified against the page as of
-<date>"), never presented as current. A DOI-identified version of record is
-stable and needs no such re-fetch.
+<date>"), never presented as current. A DOI-identified version of record
+skips the per-reuse re-fetch but is not assumed immutable: when reusing it,
+query the registrar's metadata for updates (errata, corrigenda, retractions,
+replacement versions — Crossref's update-to relations). An update means
+re-fetch and re-verify, and any hash drift found on a re-fetch is handled per
+`references/source-archive.md`.
 
 Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a

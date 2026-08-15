@@ -60,6 +60,15 @@ approval — do not implement them unprompted.
 
 ## Backlog
 
+- **2026-08-15 — Sync the archive and ledger behaviors with blue-pencil's
+  scholar lane.** The source archive, locator rules, verification ledger, and
+  reuse rules landed here materially extend the protocol that blue-pencil's
+  `/paper:verify-citations` also dispatches; the two copies of
+  `literature-checks.md` now differ in substance. Decide with the author
+  whether to upstream these behaviors into blue-pencil, keep them
+  standalone-only, or have blue-pencil delegate to this skill — and record
+  the decision here. Until then the implementations diverge deliberately,
+  not silently.
 - **2026-08-15 — Extract blue-pencil's analyst lane as the facts-and-figures
   skill.** Name approved by the author ("facts and figures": the reported
   numbers and the literal figures — mirrors chapter-and-verse's idiom form).

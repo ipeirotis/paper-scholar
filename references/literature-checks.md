@@ -104,13 +104,15 @@ would support it and offer it as a candidate citation with the passage attached.
 When a search returns nothing on point, say so: absence of a found overlap is a
 lead too, and it is not proof the claim is novel.
 
-### 5. Report and update the ledger
+### 5. Update the ledger, then report
 
-Return the four sections described below. Mark proposed citation additions and
-recalibrated claims as candidates, attach their retrieved sources, and leave the
-adoption decision to the author. Then append every fresh verification and every
-novelty scan to the ledger as dated entries per
-`references/verification-ledger.md`, and say in the report what was written.
+Append every fresh verification and every novelty scan to the ledger as dated
+entries per `references/verification-ledger.md`, and confirm the writes
+landed — on platforms where returning the report ends the turn, an append
+promised for afterward never happens. Then return the four sections described
+below, naming the files actually written. Mark proposed citation additions and
+recalibrated claims as candidates, attach their retrieved sources, and leave
+the adoption decision to the author.
 
 ## Integrity norms
 
