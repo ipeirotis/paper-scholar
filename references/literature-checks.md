@@ -124,9 +124,12 @@ novelty scan to the ledger as dated entries per
   model knowledge is not a finding.
 - **Archived, not just linked.** Every source reported on names its locator (a
   DOI cross-checked against its registrar, or a stable public URL with access
-  date) and its archived full-text copy in the project's source store
-  (`references/source-archive.md`). Links rot; the archived copy with its hash
-  is what keeps the verification auditable later.
+  date) and its archived copy in the project's source store — the exact
+  evidence legally preserved: the full text when obtainable, otherwise the
+  abstract or page snapshot that was read, or quoted passages and metadata
+  where redistribution rights require (`references/source-archive.md`). Links
+  rot; the archived copy with its hash is what keeps the verification
+  auditable later.
 - **Reuse is dated.** A verdict reused from the ledger is reported with the
   date it was earned, never presented as fresh work. Novelty scans age
   fastest — the literature moves — so an old scan is a starting point, not a

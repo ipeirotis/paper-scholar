@@ -97,7 +97,11 @@ header so later runs land in the same place:
   Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
   Cited sources without a DOI use `<citekey>--<title-slug>` with the same
   sanitization, so every citekey case has one deterministic base name;
-  sources with neither citekey nor DOI use the title slug alone. Snapshots of
+  sources with neither citekey nor DOI use the title slug alone. A source not
+  in the bibliography at all — a novelty lead, a candidate citation — derives
+  a synthetic key from the registrar metadata: the first author's family
+  name, lowercased and sanitized, plus the year (`doe2023`), with the DOI
+  slug keeping the full name unique when two synthetic keys collide. Snapshots of
   mutable pages append the access date and the first 8 hex characters of the
   file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day fetches that
   differ can never share a name or overwrite each other.

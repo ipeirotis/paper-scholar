@@ -89,6 +89,25 @@ A zero-lead novelty scan likewise records `lead: none — searches returned
 nothing on point` under its `searched:` line: the absence of a found overlap
 is itself a dated finding, distinct from a scan that never ran.
 
+The third capability — investigating an uncited factual claim — gets its own
+entry form, since it is neither a `cite:` verification nor a novelty scan:
+
+```markdown
+## [2026-08-15T09:02Z] uncited — methods.tex:57
+claim: "It is well known that crowd labels converge with enough redundancy."
+claim-hash: c41f88a02b7d
+candidate-source: doi:10.5555/wxyz — Roe 2018, "Redundancy and convergence in crowd labeling"
+  version-read: version of record
+  archived: literature/sources/roe2018--10.5555_wxyz.pdf sha256:8d1c…
+  evidence: "convergence holds once redundancy exceeds…" (sec. 2)
+status: candidate offered to the author; nothing inserted
+```
+
+An `uncited` entry reuses under the same conditions as a `cite:` entry
+(matching claim-hash, validated archive). Once the author adopts the
+candidate, the claim is a cited claim: later runs check it under `cite:` with
+its new key, and the `uncited` entry stands as history.
+
 ## Reuse rules
 
 Consult the ledger after the claim inventory is pinned and before the first
