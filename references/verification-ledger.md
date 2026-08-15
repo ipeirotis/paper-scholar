@@ -61,6 +61,10 @@ notes: cost figure may come from a different paper; asked author.
   locator and revision beside the label — `version-read: preprint
   (arXiv:2106.01234v2)` — because the work-level DOI resolves to the version
   of record, not to the text actually read.
+- `accessed:` records, for URL-backed sources, the date the URL was fetched
+  (`accessed: 2026-08-14`). A static file's archive name does not carry the
+  access date, so this field is where an audit learns when the URL was
+  checked; DOI-backed entries may omit it.
 - `license:` records the redistribution authorization for the archived copy:
   the license name when one was found (`CC-BY-4.0`), `restricted` when the
   copy must not be redistributed and so lives in a private store, `unknown`
@@ -121,8 +125,10 @@ status: candidate offered to the author; nothing inserted
 An `uncited` entry reuses when the claim-hash matches, the recorded
 candidate-source identity (its DOI or canonical URL) is unchanged, and the
 archived copy validates, with the same freshness checks a `cite:` entry gets
-before its evidence is presented again — the mutable-URL re-fetch, and the
-registrar-update and periodic-refresh rules for DOI-backed sources. The
+before its evidence is presented again — the mutable-URL re-fetch, the
+registrar-update and periodic-refresh rules for DOI-backed sources, and the
+version predicate (a candidate read as an abstract or preprint is retried,
+not reused, once fuller text may be available). The
 bibliography-identity condition alone does not apply while the claim remains
 uncited, since there is no citation to resolve. Once
 the author adopts the candidate, the claim is a cited claim: later runs check

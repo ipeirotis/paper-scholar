@@ -27,8 +27,9 @@ Every source needs a locator a stranger could resolve:
   Crossref is a valid DOI, not a suspect one.
 - **Stable public URL, fallback.** For sources without a DOI (standards pages,
   arXiv abstracts, documentation, reports), record the canonical URL and the
-  access date. Prefer the most durable form of the URL (an arXiv abs page over
-  a mirror, a versioned document over a landing page).
+  access date — the date goes in the ledger entry's `accessed:` field. Prefer
+  the most durable form of the URL (an arXiv abs page over a mirror, a
+  versioned document over a landing page).
 - **Neither.** A reference that resolves to no DOI and no reachable URL is
   unverifiable. Ask the author what the citation points to; do not guess.
 

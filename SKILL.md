@@ -21,7 +21,7 @@ Require a retrieval surface that can search for and fetch the actual source text
 
 ## Reuse before you retrieve
 
-Before fetching anything, read the host repo's verification ledger (`literature/verifications.md`) if it exists; `references/verification-ledger.md` defines the format and the reuse rules. A claim already verified against the same source is not re-fetched: report the prior result with its date. This is what keeps repeated runs cheap and keeps the audit trail continuous across sessions.
+Before fetching anything, read the host repo's verification ledger (`literature/verifications.md`) if it exists; `references/verification-ledger.md` defines the format and the reuse rules. A claim already verified against the same source is not re-fetched once the ledger's validation and freshness checks all pass — where a check calls for a re-fetch (a mutable URL, an elapsed refresh interval), that fetch happens first. Reused results are reported with their dates. This is what keeps repeated runs cheap and keeps the audit trail continuous across sessions.
 
 ## Run the protocol
 

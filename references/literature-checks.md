@@ -106,8 +106,10 @@ lead too, and it is not proof the claim is novel.
 
 ### 5. Update the ledger, then report
 
-Append every fresh verification and every novelty scan to the ledger as dated
-entries per `references/verification-ledger.md`, and confirm the writes
+Append every fresh verification, every uncited-claim investigation (whether a
+candidate was found or the search came up empty), and every novelty scan to
+the ledger as dated entries per `references/verification-ledger.md`, and
+confirm the writes
 landed — on platforms where returning the report ends the turn, an append
 promised for afterward never happens. Then return the four sections described
 below, naming the files actually written. Mark proposed citation additions and
