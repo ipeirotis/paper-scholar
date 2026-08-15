@@ -46,7 +46,8 @@ here. Files here describe behavior; files there are that behavior's output.
   memory-cited source is fabrication), leads-not-verdicts for novelty,
   inaccessible ≠ unsupported, never edit the manuscript or bibliography, never
   bypass paywalls.
-- Blue-pencil's `/paper:verify-citations` dispatches onto the same underlying protocol.
-  Behavioral changes worth sharing across the two projects should be noted in
-  `tasks.md` so they can be upstreamed or downstreamed deliberately rather
-  than drifting apart silently.
+- Blue-pencil's `/paper:verify-citations` began as the same protocol, but
+  the author decided (2026-08-15, recorded in `tasks.md`) that the two
+  projects evolve independently: do not track, upstream, or downstream
+  changes between them. This repo is authoritative for its own behavior,
+  and divergence from blue-pencil is accepted.

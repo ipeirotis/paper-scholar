@@ -4,7 +4,9 @@ Feature tracker for the citation-needed skill. Agents: read this before working
 on the repo. New requests go under **Backlog** with the date they were filed;
 when work lands, move the item to **Done** with the landing date and the files
 that implement it. Items under **Proposed** are ideas awaiting the author's
-approval — do not implement them unprompted.
+approval — do not implement them unprompted. Items the author has decided
+against move to **Decided, no action** with the decision recorded — do not
+reopen them without a new request.
 
 ## Done
 
@@ -101,21 +103,19 @@ approval — do not implement them unprompted.
 
 ## Backlog
 
-- **2026-08-15 — Sync the archive and ledger behaviors with blue-pencil's
-  scholar lane.** The source archive, locator rules, verification ledger, and
-  reuse rules landed here materially extend the protocol that blue-pencil's
-  `/paper:verify-citations` also dispatches; the two copies of
-  `literature-checks.md` now differ in substance. Decide with the author
-  whether to upstream these behaviors into blue-pencil, keep them
-  standalone-only, or have blue-pencil delegate to this skill — and record
-  the decision here. Until then the implementations diverge deliberately,
-  not silently.
-- **2026-08-15 — Extract blue-pencil's analyst lane as the facts-and-figures
-  skill.** Name approved by the author ("facts and figures": the reported
-  numbers and the literal figures — mirrors this skill's idiom-form naming).
-  Scope: carve `references/analysis-integrity.md` and the `paper-analyst`
-  agent out of blue-pencil into a standalone repo
-  (`ipeirotis/facts-and-figures`), couplings removed, with AGENTS.md/tasks.md
-  scaffolding like this repo's. Blue-pencil's `/paper:verify-numbers`,
-  `/paper:figures`, and `/paper:analyze` commands keep their names. Awaiting
-  go-ahead to execute.
+(empty — new requests go here with the date they were filed)
+
+## Decided, no action
+
+- **2026-08-15 — No blue-pencil sync.** The author decided the behaviors
+  landed here (source archive, locator rules, verification ledger, reuse
+  rules, retraction screen, bibliography audit) stay standalone: blue-pencil
+  is not updated, nothing is upstreamed or downstreamed, and this repo's
+  protocol evolves independently from blue-pencil's scholar lane. Divergence
+  between the two is accepted, not tracked — the standing sync note in
+  `AGENTS.md` was retired accordingly. Closes the 2026-08-15 backlog item.
+- **2026-08-15 — Facts-and-figures extraction dropped.** The author decided
+  the planned carve-out of blue-pencil's analyst lane into
+  `ipeirotis/facts-and-figures` is not needed; the backlog item is closed
+  without action. If the idea is revived, it will be tracked in its own
+  repo, not here.
