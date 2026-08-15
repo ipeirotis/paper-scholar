@@ -85,12 +85,20 @@ header so later runs land in the same place:
 2. **Confirm access before trusting it.** Verify the tool and credentials
    actually work (`gcloud storage ls` / `gsutil ls` for GCS, `aws s3 ls` for
    S3) before uploading. If the configured store is unreachable, fall back to
-   the repo folder and say so in the report rather than failing silently. A
+   the repo folder and say so in the report rather than failing silently.
+   The fallback is license-aware: rights-restricted material never falls
+   back into the repo folder of a public repository — when the private store
+   is unreachable, a restricted copy goes to the `.gitignore`d local folder
+   (verify the ignore rule actually covers the path before writing) or waits
+   for the store to return, with the outage reported; only freely
+   redistributable material takes the ordinary repo-folder fallback. A
    fallback is a per-run exception, never a new project choice: the
    configured store stays authoritative in the ledger header, the run's
    entries record the fallback paths actually used, and the report flags the
    stray copies so a later run with a working store can upload them and
-   append a dated relocation note to their entries.
+   append a dated `relocation` entry per the ledger's entry forms — the
+   archive check on reuse follows a file's newest relocation entry, so paths
+   move without rewriting history.
 3. **Repo folder fallback.** With no configured bucket, archive into
    `literature/sources/` at the host repo root.
 
@@ -101,15 +109,18 @@ header so later runs land in the same place:
   character outside `A–Z a–z 0–9 . _ -` with `_` (DOI slashes, colons, and
   angle brackets included), so names stay portable across filesystems,
   Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
-  Sanitization must stay collision-free: whenever replacement actually
-  changed a component, append the first 6 hex characters of the SHA-256 of
-  the original component (a DOI suffix `1234:5678` becomes `1234_5678-3fa2bc`),
-  so two originals differing only in disallowed characters can never map to
-  the same path. Judge uniqueness case-insensitively — case-insensitive
-  filesystems will — so before writing, compare the base name against the
-  existing archive ignoring case, and on a fold-collision (two citekeys
-  differing only by case, say) disambiguate the newcomer with the 6-hex hash
-  suffix of its differing original component. Cap every title slug at 60
+  Sanitization must stay collision-free without defacing every DOI: in a DOI
+  slug, `/` → `_` is the defined separator mapping and triggers nothing, and
+  a literal `_` already present in the DOI doubles to `__` so that mapping
+  stays injective; any other replaced character (a `:`, say) appends the
+  first 6 hex characters of the SHA-256 of the original component
+  (`1234:5678` becomes `1234_5678-3fa2bc`). The example DOIs contain neither
+  case, which is why their slugs carry no suffix. Lowercase every filename
+  component, and when a component was not already lowercase, append the
+  6-hex hash of its original form (`REPORT` becomes `report-b41d09`): two
+  keys differing only by case then get distinct names deterministically,
+  derived from the source's own identity — with no dependence on what the
+  archive already contains or which source was archived first. Cap every title slug at 60
   characters so a long title cannot exceed
   filesystem component limits; uniqueness never rests on the slug — it comes
   from the citekey or the date-and-hash suffix.

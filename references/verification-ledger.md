@@ -56,7 +56,11 @@ notes: cost figure may come from a different paper; asked author.
   move or files are renamed.
 - `version-read` distinguishes the version of record from a preprint or an
   abstract-only read; a verdict earned on a preprint does not silently carry
-  over to the published version.
+  over to the published version. When the text read is a preprint or another
+  alternative version of a DOI-bearing work, record that version's own
+  locator and revision beside the label — `version-read: preprint
+  (arXiv:2106.01234v2)` — because the work-level DOI resolves to the version
+  of record, not to the text actually read.
 - `license:` records the redistribution authorization for the archived copy:
   the license name when one was found (`CC-BY-4.0`), `restricted` when the
   copy must not be redistributed and so lives in a private store, `unknown`
@@ -120,6 +124,36 @@ archived copy validates — the bibliography-identity condition does not apply
 while the claim remains uncited, since there is no citation to resolve. Once
 the author adopts the candidate, the claim is a cited claim: later runs check
 it under `cite:` with its new key, and the `uncited` entry stands as history.
+
+When the search finds no suitable source, the entry records that outcome with
+sentinels rather than a fabricated candidate:
+
+```markdown
+## [2026-08-15T10:05Z] uncited — methods.tex:57
+claim: "It is well known that crowd labels converge with enough redundancy."
+claim-hash: c41f88a02b7d
+searched: <the queries and databases used>
+candidate-source: none — searches returned no authoritative source
+status: reported to the author; the claim currently has no supporting source
+```
+
+A no-candidate investigation ages like a novelty scan: reuse it only while
+the claim text and the recorded `searched:` scope still match and the entry
+is younger than about six months — the source that did not exist last year
+may exist now.
+
+Relocations get entries too, since past entries are never edited: when an
+archived file moves (a fallback copy uploaded to the configured store once it
+is reachable again), append a `relocation` entry, and let the reuse-time
+archive check resolve a file through its newest relocation before comparing
+hashes:
+
+```markdown
+## [2026-08-15T10:02Z] relocation — smith2021--10.1145_1234567.1234568.pdf
+from: literature/sources/smith2021--10.1145_1234567.1234568.pdf
+to: gs://bucket/prefix/smith2021--10.1145_1234567.1234568.pdf
+sha256: 9f2a… (unchanged)
+```
 
 ## Reuse rules
 
