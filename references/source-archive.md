@@ -99,7 +99,11 @@ header so later runs land in the same place:
   character outside `A–Z a–z 0–9 . _ -` with `_` (DOI slashes, colons, and
   angle brackets included), so names stay portable across filesystems,
   Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
-  Cap every title slug at 60 characters so a long title cannot exceed
+  Sanitization must stay collision-free: whenever replacement actually
+  changed a component, append the first 6 hex characters of the SHA-256 of
+  the original component (a DOI suffix `1234:5678` becomes `1234_5678-3fa2bc`),
+  so two originals differing only in disallowed characters can never map to
+  the same path. Cap every title slug at 60 characters so a long title cannot exceed
   filesystem component limits; uniqueness never rests on the slug — it comes
   from the citekey or the date-and-hash suffix.
   Cited sources without a DOI use `<citekey>--<title-slug>` with the same

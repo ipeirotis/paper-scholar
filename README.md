@@ -44,8 +44,10 @@ The skill never verifies a source from memory, distinguishes inaccessible
 sources from unsupported claims, treats novelty results as leads rather than
 verdicts, and presents citation or wording changes only as proposals for the
 author. It never edits the manuscript or its bibliography; the only files it
-writes are the `literature/` artifacts and the `AGENTS.md` pointer, and it
-announces those writes in its report.
+writes are the `literature/` artifacts and a pointer section in the repo's
+agent-instructions file (`AGENTS.md`, or `CLAUDE.md` when that is what the
+repo uses — and when the repo has neither, it proposes creating one rather
+than writing it unasked), and it announces those writes in its report.
 
 ## Development
 

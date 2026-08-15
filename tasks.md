@@ -41,10 +41,15 @@ approval — do not implement them unprompted.
 
 ## Proposed (awaiting approval)
 
-- **Retraction and erratum check.** When verifying a citation, also query
-  Crossref/Retraction Watch for retractions, errata, and expressions of
-  concern; a supported claim resting on a retracted paper deserves a flag of
-  its own.
+- **Retraction and erratum check at verification time.** When verifying a
+  citation, also query Crossref/Retraction Watch for retractions, errata, and
+  expressions of concern; a supported claim resting on a retracted paper
+  deserves a flag of its own. A narrow slice of this shipped with the ledger
+  (2026-08-15, `references/verification-ledger.md`): *reusing* a DOI-backed
+  entry checks the registrar's update relations (errata, corrigenda,
+  retractions, replacements) before the old verdict is reused, because reuse
+  correctness requires it. The full screen for newly verified citations
+  remains proposed.
 - **Bibliography metadata audit.** A cheap standalone pass: confirm every
   BibTeX entry's title/venue/year/DOI matches the real work via Crossref.
   Catches hallucinated or mangled references without full claim verification.
