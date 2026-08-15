@@ -95,7 +95,9 @@ header so later runs land in the same place:
   character outside `A–Z a–z 0–9 . _ -` with `_` (DOI slashes, colons, and
   angle brackets included), so names stay portable across filesystems,
   Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
-  Sources without a citekey use a short slug of the title. Snapshots of
+  Cited sources without a DOI use `<citekey>--<title-slug>` with the same
+  sanitization, so every citekey case has one deterministic base name;
+  sources with neither citekey nor DOI use the title slug alone. Snapshots of
   mutable pages append the access date and the first 8 hex characters of the
   file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day fetches that
   differ can never share a name or overwrite each other.

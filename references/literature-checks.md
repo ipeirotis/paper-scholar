@@ -114,10 +114,14 @@ novelty scan to the ledger as dated entries per
 
 ## Integrity norms
 
-- **Retrieved, not remembered.** Every source you report on was fetched and read
-  in this session, with title, venue, year, and the specific passage that bears
-  on the use. A citation from model memory is treated as fabricated, and a
-  novelty judgment from model knowledge is not a finding.
+- **Retrieved, not remembered.** Every source behind a fresh verdict was
+  fetched and read in this session, with title, venue, year, and the specific
+  passage that bears on the use. The one alternative is a verdict reused from
+  the ledger: its evidence was fetched and recorded in an earlier session,
+  validated against its archived copy per the reuse rules, and always
+  reported with its original date. Model memory is neither of these: a
+  citation from memory is treated as fabricated, and a novelty judgment from
+  model knowledge is not a finding.
 - **Archived, not just linked.** Every source reported on names its locator (a
   DOI cross-checked against its registrar, or a stable public URL with access
   date) and its archived full-text copy in the project's source store

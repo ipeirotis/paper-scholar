@@ -20,8 +20,10 @@ skill requires literature search and access to the actual source text.
 Verification is cumulative: the skill leaves an auditable record in the
 manuscript repository it runs in.
 
-- `literature/sources/` — a full-text copy of every source it read, named by
-  citation key and DOI, with SHA-256 hashes recorded. If the project
+- `literature/sources/` — a copy of the exact text it read for every source —
+  the full text when legally obtainable, otherwise the abstract or page
+  snapshot that was reachable — named by citation key and DOI, with SHA-256
+  hashes recorded. If the project
   configures a cloud store (a `LITERATURE_STORE` env var or a `store:`
   line naming a `gs://` or `s3://` prefix), copies go there instead.
 - `literature/verifications.md` — a dated, append-only ledger of every

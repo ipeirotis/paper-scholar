@@ -95,8 +95,10 @@ Consult the ledger after the claim inventory is pinned and before the first
 search. A claim's latest entry is reusable when all of these hold:
 
 - the claim text still hashes to the recorded `claim-hash`;
-- the bibliography still resolves the citation to the same work (same DOI, or
-  same archived file hash for DOI-less sources);
+- the bibliography still resolves the citation to the same work: the same
+  DOI, or for DOI-less sources the same canonical URL as recorded — the
+  archived copy's integrity is the separate check below, not the
+  bibliography's identity;
 - the recorded `version-read` is still the best text reachable: an entry
   earned on a preprint or an abstract-only read is retried, not reused, once
   a fuller text (the version of record, the full paper) may be available — an
