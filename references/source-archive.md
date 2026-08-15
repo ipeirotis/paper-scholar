@@ -107,7 +107,10 @@ header so later runs land in the same place:
 - A filename is a readable label plus a mandatory identity hash, and
   uniqueness lives entirely in the hash, never in the label. Every archived
   file's base name is `<key>--<slug>-<id8>`:
-  - `<key>`: the citation key, lowercased and truncated to 40 characters.
+  - `<key>`: the citation key, put through the same character rule as the
+    slug (lowercased, every character outside `a-z 0-9 . _ -` replaced by
+    `_`, so a key like `group/paper2024` cannot open a subdirectory) and
+    truncated to 40 characters.
     A source outside the bibliography uses the synthetic key (first author's
     family name plus year from registrar metadata, `doe2023`); with no usable
     metadata, the key part is omitted.

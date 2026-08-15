@@ -120,8 +120,11 @@ status: candidate offered to the author; nothing inserted
 
 An `uncited` entry reuses when the claim-hash matches, the recorded
 candidate-source identity (its DOI or canonical URL) is unchanged, and the
-archived copy validates — the bibliography-identity condition does not apply
-while the claim remains uncited, since there is no citation to resolve. Once
+archived copy validates, with the same freshness checks a `cite:` entry gets
+before its evidence is presented again — the mutable-URL re-fetch, and the
+registrar-update and periodic-refresh rules for DOI-backed sources. The
+bibliography-identity condition alone does not apply while the claim remains
+uncited, since there is no citation to resolve. Once
 the author adopts the candidate, the claim is a cited claim: later runs check
 it under `cite:` with its new key, and the `uncited` entry stands as history.
 
