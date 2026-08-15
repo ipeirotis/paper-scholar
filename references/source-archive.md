@@ -12,11 +12,15 @@ store.
 Every source needs a locator a stranger could resolve:
 
 - **DOI, preferred.** Resolve it (follow `https://doi.org/<doi>`) and
-  cross-check its metadata against the Crossref API
-  (`https://api.crossref.org/works/<doi>`) or DataCite for datasets. The
-  resolved title, venue, and year must match the bibliography entry; a mismatch
-  means the wrong DOI or a fabricated reference, and it goes to
-  `Author decisions`, not into the archive.
+  cross-check its metadata against the registrar that actually issued it:
+  look up the registration agency first (`https://doi.org/ra/<doi>`) and
+  query that agency's API — Crossref for most journal articles, DataCite for
+  most datasets and reports, with mEDRA and others in the long tail — rather
+  than assuming Crossref for everything. The resolved title, venue, and year
+  must match the bibliography entry; a mismatch means the wrong DOI or a
+  fabricated reference, and it goes to `Author decisions`, not into the
+  archive. A DOI that resolves but is registered outside Crossref is a valid
+  DOI, not a suspect one.
 - **Stable public URL, fallback.** For sources without a DOI (standards pages,
   arXiv abstracts, documentation, reports), record the canonical URL and the
   access date. Prefer the most durable form of the URL (an arXiv abs page over
@@ -43,7 +47,11 @@ mirrors. When only a paywalled copy exists, the request goes to the author in
 print the page to PDF for web sources) and place it in the source store, naming
 the exact path expected. Until the copy arrives, the claim is verifiable only
 to whatever was legally reachable (usually the abstract) and is classified
-accordingly.
+accordingly. Whatever was legally read still gets archived: snapshot the
+abstract or landing page exactly as a mutable web source (see the snapshot
+rules below), append `--abstract` before the date-and-hash suffix, and record
+it in the ledger with `version-read: abstract-only`, so even a partial
+verification points at preserved text.
 
 For non-paper web sources that are freely reachable, take the snapshot
 directly: print the page to PDF with a headless browser when one is available,
@@ -62,16 +70,26 @@ header so later runs land in the same place:
 2. **Confirm access before trusting it.** Verify the tool and credentials
    actually work (`gcloud storage ls` / `gsutil ls` for GCS, `aws s3 ls` for
    S3) before uploading. If the configured store is unreachable, fall back to
-   the repo folder and say so in the report rather than failing silently.
+   the repo folder and say so in the report rather than failing silently. A
+   fallback is a per-run exception, never a new project choice: the
+   configured store stays authoritative in the ledger header, the run's
+   entries record the fallback paths actually used, and the report flags the
+   stray copies so a later run with a working store can upload them and
+   append a dated relocation note to their entries.
 3. **Repo folder fallback.** With no configured bucket, archive into
    `literature/sources/` at the host repo root.
 
 ## Naming and integrity
 
-- Name archived papers `<citekey>--<doi-slug>.pdf`, where the DOI slug replaces
-  `/` with `_` (for example `smith2021--10.1145_1234567.1234568.pdf`). Sources
-  without a citekey use a short slug of the title; URL snapshots append the
-  access date (`--2026-08-14`).
+- Name archived papers `<citekey>--<doi-slug>.pdf`. Build every filename
+  component — citekey, DOI slug, title slug alike — by replacing each
+  character outside `A–Z a–z 0–9 . _ -` with `_` (DOI slashes, colons, and
+  angle brackets included), so names stay portable across filesystems,
+  Windows included (for example `smith2021--10.1145_1234567.1234568.pdf`).
+  Sources without a citekey use a short slug of the title. Snapshots of
+  mutable pages append the access date and the first 8 hex characters of the
+  file's own SHA-256 (`--2026-08-14-9f2a3c1d`), so two same-day fetches that
+  differ can never share a name or overwrite each other.
 - Compute the SHA-256 of every archived file and record it in the ledger entry.
   The hash is what lets a later run confirm it is looking at the same text: on
   re-download, compare hashes, and if they differ keep both copies as separate
@@ -79,8 +97,12 @@ header so later runs land in the same place:
 
 ## Copyright and repo hygiene
 
-- Open-access material (record the license Unpaywall or the publisher reports)
-  can be archived anywhere, including a public repo.
+- Free to read is not free to redistribute. Record the license Unpaywall or
+  the publisher reports, and commit a copy to a public repo only when that
+  license explicitly permits redistribution (CC BY and kin). A paper that is
+  merely readable on the publisher's site with no such license is treated
+  like a paywalled one for storage purposes: private bucket, `.gitignore`d
+  local folder, or quotes and metadata only.
 - A paywalled or rights-restricted PDF committed to a **public** repository is
   republication. When the host repo is public and no private bucket is
   configured, warn the author and ask before committing such a file; the

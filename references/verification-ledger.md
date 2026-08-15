@@ -47,18 +47,27 @@ notes: cost figure may come from a different paper; asked author.
 ```
 
 - `claim-hash` is the first 12 hex characters of the SHA-256 of the claim
-  sentence, lowercased with whitespace collapsed. Hashing the text rather than
-  keying on file and line keeps entries valid when sections move or files are
-  renamed.
+  sentence with runs of whitespace collapsed to single spaces and case
+  preserved — a case change can be a different claim (a gene name, a
+  mathematical symbol, a unit), so case is never normalized away. Hashing the
+  text rather than keying on file and line keeps entries valid when sections
+  move or files are renamed.
 - `version-read` distinguishes the version of record from a preprint or an
   abstract-only read; a verdict earned on a preprint does not silently carry
   over to the published version.
-- Novelty scans are logged too, since they age and their scope matters:
+- Novelty scans are logged too, since they age and their scope matters. Each
+  lead carries the same source-identity, archive, and evidence fields as a
+  citation entry — a lead a later run cannot reopen and re-read is not
+  reusable evidence:
 
 ```markdown
 ## [2026-08-14] novelty — "we are the first to model X under Y"
 searched: <the queries and databases used>
-leads: Doe 2023 (doi:…, sec. 3–4 overlap); nothing else on point
+lead: doi:10.1234/abcd — Doe 2023, "Modeling X under Y-like constraints"
+  version-read: version of record
+  archived: literature/sources/doe2023--10.1234_abcd.pdf sha256:4e7b…
+  evidence: "we model X under Y'-constraints using…" (sec. 3) — same setting, different estimator
+leads-found: 1; nothing else on point (state this explicitly when a search comes up empty)
 ```
 
 ## Reuse rules
@@ -69,6 +78,15 @@ search. A claim's latest entry is reusable when all of these hold:
 - the claim text still hashes to the recorded `claim-hash`;
 - the bibliography still resolves the citation to the same work (same DOI, or
   same archived file hash for DOI-less sources);
+- the recorded `version-read` is still the best text reachable: an entry
+  earned on a preprint or an abstract-only read is retried, not reused, once
+  a fuller text (the version of record, the full paper) may be available — an
+  unchanged DOI never carries a preprint verdict onto the published version;
+- the archived copy still exists at its recorded path (or in the configured
+  store) and matches its recorded SHA-256 — a verdict whose exact text can no
+  longer be reopened is not reusable. When the store cannot be checked this
+  run, the prior verdict may still be reported as dated history, but say the
+  archive went unverified rather than presenting the entry as reused;
 - the recorded verdict is supported, partially supported, or unsupported — an
   unverifiable verdict is always worth retrying, since access may have improved.
 
