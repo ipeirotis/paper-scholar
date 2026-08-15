@@ -1,9 +1,10 @@
 # citation-needed
 
 A retrieval-grounded agent skill for verifying manuscript citations,
-investigating uncited factual claims, and finding prior-work leads relevant to
-novelty claims — every claim either shows a source that supports it or gets
-flagged: [citation needed].
+investigating uncited factual claims, finding prior-work leads relevant to
+novelty claims, and auditing bibliography metadata against the DOI registrars
+to catch mangled or fabricated references — every claim either shows a source
+that supports it or gets flagged: [citation needed].
 
 ## Install
 
@@ -13,8 +14,9 @@ Copy or clone this repository into your agent's skills directory, for example:
 git clone https://github.com/ipeirotis/citation-needed.git ~/.agents/skills/citation-needed
 ```
 
-Then ask the agent to check specified citations or contribution claims. The
-skill requires literature search and access to the actual source text.
+Then ask the agent to check specified citations or contribution claims, or to
+audit the bibliography's metadata. The skill requires literature search and
+access to the actual source text.
 
 ## What it writes into your repo
 

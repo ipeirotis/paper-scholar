@@ -162,6 +162,43 @@ the claim text and the recorded `searched:` scope still match and the entry
 is younger than about six months — the source that did not exist last year
 may exist now.
 
+Bibliography audits get their own entry form, since they verify a
+reference's identity rather than a claim (`references/bibliography-audit.md`
+defines the pass and its verdicts):
+
+```markdown
+## [2026-08-15T11:12Z] bib:smith2021
+entry-hash: 9c3d21e4ab07
+source: doi:10.1145/1234567.1234568
+registrar: Crossref
+updates: none
+verdict: discrepant
+evidence: registrar title, authors, and DOI match the entry; year is 2021 in
+  the entry, 2020 in the registrar record (online-first) — correction proposed
+```
+
+- `entry-hash` is the first 12 hex characters of the SHA-256 of the
+  bibliography entry's source text (the BibTeX entry or reference-list item)
+  with runs of whitespace collapsed to single spaces and case preserved —
+  the same hashing rule as `claim-hash`, so an edited entry is audited fresh
+  automatically.
+- `source:` names the DOI the entry carries; for a DOI-less entry it names
+  what the audit actually checked — the registrar record matched by search
+  (`source: doi:10.1234/abcd — matched by search; proposed addition`), the
+  entry's own URL (with `accessed:`), or `none found`.
+- There is no `archived:` line: nothing is fetched beyond registrar metadata
+  or the entry's own page, and the registrar fields quoted in `evidence:`
+  are what a later audit needs.
+
+A `bib:` entry reuses when the bibliography entry's current text still
+hashes to the recorded `entry-hash` and the verdict is `confirmed` or
+`discrepant` — and reuse re-queries the registrar's update relations exactly
+as a DOI-backed `cite:` reuse does, so a retraction surfaces even for a
+settled entry. `mismatched` and `unconfirmed` verdicts are always retried —
+registrar coverage grows and the author may have supplied context — with the
+prior outcome still reported as dated history. Supersession for `bib:`
+entries is by `entry-hash`: the newest entry for a hash governs.
+
 Relocations get entries too, since past entries are never edited: when an
 archived file moves (a fallback copy uploaded to the configured store once it
 is reachable again), append a `relocation` entry, and let the reuse-time

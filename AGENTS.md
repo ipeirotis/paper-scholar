@@ -17,6 +17,9 @@ citation-needed — old references to those names denote this repo.
   depth to `references/`.
 - `references/literature-checks.md` — the core protocol: inventory claims,
   consult the ledger, verify citations, scan novelty, report.
+- `references/bibliography-audit.md` — the standalone metadata audit: does
+  each bibliography entry identify a real work, checked against the DOI
+  registrars; no sources read, no claims judged.
 - `references/source-archive.md` — locator (DOI/URL) requirements, legal
   full-text retrieval, and where archived copies go (bucket or repo folder).
 - `references/verification-ledger.md` — the dated results ledger written into

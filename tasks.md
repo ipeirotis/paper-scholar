@@ -68,11 +68,21 @@ approval — do not implement them unprompted.
   (`references/source-archive.md`, `references/literature-checks.md`,
   `references/verification-ledger.md`)
 
+- **2026-08-15 — Bibliography metadata audit.** Fourth capability, approved
+  by the author: a cheap standalone pass confirming each bibliography entry
+  identifies a real work — its DOI resolved and compared whole-record against
+  the registrar per the source-archive tolerance rules, DOI-less entries
+  matched by registrar search or their own URL, update relations screened
+  along the way. Verdicts confirmed / discrepant / mismatched / unconfirmed
+  (registrar absence is a question for the author, never a fabrication
+  verdict on its own); results ledgered as `bib:` entries keyed by
+  entry-hash; corrections and DOI additions only ever proposed. The trigger
+  description now excludes "citation style formatting" rather than all
+  BibTeX work. (`references/bibliography-audit.md`, `SKILL.md`,
+  `references/verification-ledger.md`, `AGENTS.md`, `README.md`)
+
 ## Proposed (awaiting approval)
 
-- **Bibliography metadata audit.** A cheap standalone pass: confirm every
-  BibTeX entry's title/venue/year/DOI matches the real work via Crossref.
-  Catches hallucinated or mangled references without full claim verification.
 - **Version-of-record reconciliation.** When a claim was verified against a
   preprint, detect when the published version appears and prompt re-checking
   the claims whose evidence sat in sections that changed. The reuse-time
