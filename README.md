@@ -16,8 +16,9 @@ git clone https://github.com/ipeirotis/citation-needed.git ~/.agents/skills/cita
 ```
 
 Then ask the agent to check specified citations or contribution claims, or to
-audit the bibliography's metadata. The skill requires literature search and
-access to the actual source text.
+audit the bibliography's metadata. Checking claims requires literature search
+and access to the actual source text; a bibliography audit needs only live
+access to the DOI registrars and any URLs the entries carry.
 
 ## Usage
 
