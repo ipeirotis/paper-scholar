@@ -27,7 +27,12 @@ Every source needs a locator a stranger could resolve:
   Crossref is a valid DOI, not a suspect one. While at the registrar, check
   the work's update relations — retractions, errata, corrigenda, expressions
   of concern (Crossref's update metadata incorporates the Retraction Watch
-  database). An update never blocks verification — the verdict still comes
+  database). Check both directions where the registrar supports it: the work
+  record's own update fields (Crossref's `updated-by`) and a reverse query
+  for notices declaring an update to this DOI (Crossref's
+  `filter=updates:<doi>`), because the relation is often deposited only on
+  the later notice and the original record alone can miss it. An update
+  never blocks verification — the verdict still comes
   from reading the text — but it travels with the verdict: record it in the
   ledger entry's `updates:` field and raise it in `Author decisions`, because
   a supported claim resting on a retracted source deserves a flag of its own.

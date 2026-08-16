@@ -88,7 +88,11 @@ the source supports the sentence as written, and classify each as one of:
   the passage that supports it
 - **partially supported**: the source supports part of the claim as written;
   quote the passage behind the supported part and name the remainder the
-  source does not address
+  source does not address. Like unsupported, this verdict requires having
+  reached the text that would carry the remainder: when only an abstract was
+  reachable and it is silent on the rest of the claim, classify the claim as
+  unverifiable and note what the reachable text did support — partial
+  support is never granted from silence
 - **unsupported**: the passage you read states something weaker than, or
   contrary to, the claim; quote what it does say and describe the gap. Reserve
   this for when you reached the text that would carry the claim: a claim missing

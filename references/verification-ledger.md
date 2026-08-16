@@ -178,10 +178,12 @@ evidence: registrar title, authors, and DOI match the entry; year is 2021 in
 ```
 
 - `entry-hash` is the first 12 hex characters of the SHA-256 of the
-  bibliography entry's source text (the BibTeX entry or reference-list item)
-  with runs of whitespace collapsed to single spaces and case preserved —
-  the same hashing rule as `claim-hash`, so an edited entry is audited fresh
-  automatically.
+  bibliography entry's effective source text — the BibTeX entry or
+  reference-list item with any `@string`, `crossref`, or `xdata` indirection
+  expanded to the referenced values, so editing a shared definition
+  re-audits every entry that inherits from it — with runs of whitespace
+  collapsed to single spaces and case preserved, the same hashing rule as
+  `claim-hash`. An edited entry is audited fresh automatically.
 - `source:` names the DOI the entry carries; for a DOI-less entry it names
   what the audit actually checked — the registrar record matched by search
   (`source: doi:10.1234/abcd — matched by search; proposed addition`), the
@@ -194,7 +196,13 @@ A `bib:` entry reuses when the bibliography entry's current text still
 hashes to the recorded `entry-hash` and the verdict is `confirmed` or
 `discrepant` — and reuse re-queries the registrar's update relations exactly
 as a DOI-backed `cite:` reuse does, so a retraction surfaces even for a
-settled entry. `mismatched` and `unconfirmed` verdicts are always retried —
+settled entry. The same staleness checks apply in miniature: a verdict
+earned from the entry's own URL gets the mutable-URL re-fetch before reuse
+(an unreachable page downgrades it to dated history), and a
+registrar-backed verdict older than the header's `refresh-interval:` is
+re-compared against a freshly fetched registrar record before reuse, since
+metadata can be corrected without any update relation being deposited.
+`mismatched` and `unconfirmed` verdicts are always retried —
 registrar coverage grows and the author may have supplied context — with the
 prior outcome still reported as dated history. Supersession for `bib:`
 entries is by `entry-hash`: the newest entry for a hash governs.
@@ -259,7 +267,8 @@ page downgrades the entry to dated history ("verified against the page as of
 <date>"), never presented as current. A DOI-identified version of record
 skips the per-reuse re-fetch but is not assumed immutable: when reusing it,
 query the registrar's metadata for updates (errata, corrigenda, retractions,
-replacement versions — Crossref's update-to relations). An update means
+replacement versions — Crossref's update relations, checked in both
+directions per `references/source-archive.md`). An update means
 re-fetch and re-verify, and any hash drift found on a re-fetch is handled per
 `references/source-archive.md`. Declared updates are all the registrar can
 show; silent replacements it cannot, so DOI-backed entries also get a
