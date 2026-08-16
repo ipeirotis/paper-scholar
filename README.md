@@ -22,8 +22,9 @@ audit the bibliography's metadata, or to sweep the verification ledger for
 preprints that have since been published. Checking claims requires literature
 search and access to the actual source text; a bibliography audit needs only
 live access to the DOI registrars and any URLs the entries carry; a version
-sweep needs the registrars plus access to fetch the newly published text it
-diffs.
+sweep needs the detection channels its targets require — the registrars for
+DOI-backed sources, a plain fetch for URL-backed ones — plus access to
+fetch the fuller text it diffs.
 
 ## Usage
 

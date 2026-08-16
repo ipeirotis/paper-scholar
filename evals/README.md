@@ -2,10 +2,14 @@
 
 Test fixtures with known-good, known-bad, partially supported, and
 unverifiable citations, used to benchmark the skill's classifications and
-catch regressions via the skill-creator eval loop (`evals.json` holds the
-prompts and assertions; run it with the `skill-creator` skill, which spawns
-with-skill and baseline runs, grades the assertions, and builds the review
-viewer). Results and workspaces stay outside this repo.
+catch regressions via the skill-creator eval loop. `evals.json` holds the
+prompts and assertions; the runner is the **Anthropic `skill-creator`
+skill** (not part of this repo), whose loop spawns one with-skill and one
+baseline subagent per eval, grades each assertion per its
+`agents/grader.md`, aggregates with its `scripts/aggregate_benchmark.py`,
+and builds the review viewer with its `eval-viewer/generate_review.py`. On
+platforms without that skill, the same loop can be run by hand from those
+four steps. Results and workspaces stay outside this repo.
 
 ## Ground truth provenance
 
