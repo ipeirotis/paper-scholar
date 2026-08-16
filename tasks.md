@@ -42,9 +42,10 @@ reopen them without a new request.
   URLs redirect.
 
 - **2026-08-15 — Rename the skill to citation-needed.** Final name in the
-  paper-scholar → chapter-and-verse → citation-needed sequence: "[citation
-  needed]" is the universally recognized flag for an unsupported claim, which
-  is exactly what the skill hunts. The GitHub repo is
+  paper-scholar → chapter-and-verse → citation-needed sequence, superseding
+  the chapter-and-verse rename above: the author judged that name hard to
+  remember, and "[citation needed]" is the Wikipedia tag every academic
+  already knows — resolving it is literally the skill's job. The GitHub repo is
   `ipeirotis/citation-needed` (old URLs redirect). `LITERATURE_STORE` and all
   host-repo artifact paths were already rename-proof; host ledgers written
   under earlier names stay valid, since `maintained-by:` is informational.

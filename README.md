@@ -3,8 +3,9 @@
 A retrieval-grounded agent skill for verifying manuscript citations,
 investigating uncited factual claims, finding prior-work leads relevant to
 novelty claims, and auditing bibliography metadata against the DOI registrars
-to catch mangled or fabricated references — every claim either shows a source
-that supports it or gets flagged: [citation needed].
+to catch mangled or fabricated references — it resolves every
+"[citation needed]" in your manuscript against sources it actually retrieves
+and reads.
 
 ## Install
 
@@ -17,6 +18,29 @@ git clone https://github.com/ipeirotis/citation-needed.git ~/.agents/skills/cita
 Then ask the agent to check specified citations or contribution claims, or to
 audit the bibliography's metadata. The skill requires literature search and
 access to the actual source text.
+
+## Usage
+
+In Claude Code the skill name is the command — `/citation-needed` — and what
+you hand it selects the capability:
+
+```
+/citation-needed paper.tex                       # audit every citation in the manuscript
+/citation-needed sections/related.tex            # audit one section's citations
+/citation-needed refs.bib                        # audit the bibliography's metadata
+/citation-needed "It is well known that crowd labels converge with redundancy."
+                                                 # find a source for an uncited claim
+/citation-needed "We are the first to model X under Y."
+                                                 # scan the claimed contribution for prior work
+```
+
+A manuscript or section file gets a citation audit; a bibliography file gets
+a metadata audit against the DOI registrars; a quoted factual claim gets a
+source investigation; a contribution statement gets a novelty scan.
+When the scope is ambiguous, the skill asks one focused question before
+retrieving anything. On agents without slash commands, plain requests work
+the same way ("check whether the citations in section 3 support their
+claims").
 
 ## What it writes into your repo
 

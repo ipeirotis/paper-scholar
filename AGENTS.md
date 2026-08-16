@@ -3,9 +3,9 @@
 This repository is a standalone agent skill for retrieval-grounded literature
 checks: verifying that a manuscript's citations support the claims attached to
 them, investigating uncited factual claims, and scanning stated contributions
-for overlapping prior work — every claim either shows a source that supports
-it or gets flagged: [citation needed]. It was extracted from the scholar lane
-of [blue-pencil](https://github.com/ipeirotis/blue-pencil) (whose dispatch
+for overlapping prior work — it resolves every "[citation needed]" against
+sources it actually retrieves and reads. It was extracted from the scholar
+lane of [blue-pencil](https://github.com/ipeirotis/blue-pencil) (whose dispatch
 command is `/paper:verify-citations`, formerly `/paper:scholar`) so it can
 ship and evolve independently of that editorial skill. The skill was named
 paper-scholar at extraction, then chapter-and-verse, before settling on
