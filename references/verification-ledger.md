@@ -30,8 +30,11 @@ Header, once per file:
 store: literature/sources/        <!-- or gs://bucket/prefix, s3://bucket/prefix -->
 maintained-by: citation-needed skill
 refresh-interval: 12 months       <!-- optional; DOI-backed re-fetch cadence in months, 12 when absent -->
-companion: literature/verifications.jsonl   <!-- optional; derived JSONL view for tooling -->
 ```
+
+A fresh ledger gets exactly this header — the opt-in `companion:` line
+(defined at the end of this file) is added only when the author enables
+the JSONL companion, never as part of the default header.
 
 One entry per verification, newest appended last, with these exact field
 labels so entries stay greppable by humans and machines alike:
@@ -315,8 +318,11 @@ status: recorded; a later sweep may re-ask after ~6 months
   redone — provided its `claims:` list still covers every governing entry
   resting on that baseline. A claim verified against the baseline after the
   sweep reopens the target: the next sweep maps the new dependencies
-  against the already-archived fuller text and recorded diff (no
-  re-detection or re-fetch needed) and appends a fresh entry. An entry
+  against the already-archived fuller text and recorded diff — no
+  re-detection needed, but the standing freshness screens below apply to a
+  reopened entry exactly as to a skipped one, so a stale or changed fuller
+  text is re-fetched before any new claim is classified against it — and
+  appends a fresh entry. An entry
   whose `updates:` line records a failed check is likewise not fully
   standing: the next sweep re-runs the registrar update screen — nothing
   else — and appends the outcome, the same healing a DOI-backed citation
