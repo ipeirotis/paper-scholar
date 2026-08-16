@@ -66,7 +66,10 @@ than about six months — unless the author explicitly asks for a full
 re-sweep. A dependency ledgered against a reconciled baseline after its
 sweep reopens only the mapping step: once the ledger's standing freshness
 screens pass, the archived fuller text and recorded diff serve as-is and
-the new claims are classified against them. A
+the new claims are classified against them. For a URL-backed target, a
+recent `none found` never suppresses the canonical-URL re-fetch itself —
+only the broader detection channels stay cached — so such a target enters
+the sweep for that one check even inside the window. A
 text-unreachable result dies early: the requested copy arriving in the
 source store reopens the target at once, without waiting out the window.
 
@@ -87,6 +90,10 @@ Check the cheapest authoritative signal first, per target:
   fallback, held to the bibliography audit's confidence standard: only a
   record that confidently identifies the same work counts, and a near-miss
   goes to the author as a question, never silently adopted as a match.
+  More than one confident publication relation — a conference version and
+  a later journal version, say — is likewise never silently resolved:
+  record every match in the `vor` entry, classify the target ambiguous,
+  and ask the author which version governs before any comparison runs.
 - **A target that already carries the work-level DOI** — the preprint was
   read because the version of record was not legally reachable — is already
   published. For it, detection means checking whether a legal full text is
@@ -134,6 +141,13 @@ new text against the validated archived copy, at two granularities:
   entry's quoted `evidence:` passage in the new text. Found materially
   unchanged, wherever it moved, means the claim is *intact*; reworded in
   substance, or not found at all, means *affected*.
+
+A quotes-only artifact — the `--quotes.md` fallback of
+`references/source-archive.md` — is never a full baseline, however cleanly
+its hash validates: it preserves selected passages, not the text's
+structure. For such a baseline, skip the section-level comparison and
+report it as unavailable; classify dependents by the evidence-passage
+lookup alone, locating each preserved quotation in the new text.
 
 When publication is established but the text is not legally reachable, do
 not bypass: the outcome is recorded as published with the text unreachable,

@@ -271,7 +271,11 @@ status: recorded; a later sweep may re-ask after ~6 months
 - `published:` names the found version-of-record DOI — or, for a URL-backed
   target, the canonical URL now serving the fuller text, with the fetch date
   in the entry's `accessed:` field — and the channel that established it, or
-  `none found` with the channels checked. `none found` is recorded only when
+  `none found` with the channels checked. When more than one authoritative
+  publication relation exists (a conference version and a later journal
+  version, say), record every match: the target is ambiguous, the choice of
+  governing version goes to `Author decisions`, and no comparison runs
+  until the author decides. `none found` is recorded only when
   every applicable channel actually ran: a transient channel failure
   (timeout, rate limit, outage) is recorded as `detection incomplete`,
   naming the failed channels — an outcome the next sweep retries, never a
@@ -425,6 +429,14 @@ companion, in the same order, and the report names both files among the
 writes. With no `companion:` line, no JSONL is written — that is the
 default.
 
+- **The path is validated before anything is written.** The `companion:`
+  value must resolve to a repository-relative, non-symlink path inside the
+  host repo, ending in `.jsonl`, and distinct from the manuscript, the
+  bibliography, and every other existing file that is not already the
+  companion. A value failing any of these checks gets nothing written —
+  created, backfilled, or regenerated — and is reported in
+  `Author decisions` instead: the rule that the skill never overwrites the
+  author's files outranks the header.
 - **Derived, never authoritative.** Runs consult only the Markdown ledger —
   reuse rules, supersession, and archive checks never read the companion.
   The JSONL is a view for external tooling: whenever the two disagree (a
