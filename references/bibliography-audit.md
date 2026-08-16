@@ -28,9 +28,13 @@ the `.bib` files the manuscript names (`\bibliography{}`,
 `\addbibresource{}`), an inline `thebibliography` block, or the reference
 list of a non-LaTeX manuscript. Record each entry's citation key, its claimed
 fields (title, authors, venue, year, DOI, URL), and its `entry-hash`
-(defined in `references/verification-ledger.md`). Do not drop an entry
-because it looks hard to check: an unconfirmed entry is a reported outcome,
-not a skipped one.
+(defined in `references/verification-ledger.md`). An entry with no explicit
+key — an author-year reference list, for example — gets a synthetic key in
+the source-archive convention, the first author's family name plus year
+(`doe2023`), as its `bib:` label; identity and supersession rest on
+`entry-hash`, so the label needs to be readable, not unique. Do not drop an
+entry because it looks hard to check: an unconfirmed entry is a reported
+outcome, not a skipped one.
 
 ### 2. Consult the ledger
 

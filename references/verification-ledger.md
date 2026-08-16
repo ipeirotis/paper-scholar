@@ -74,11 +74,16 @@ notes: cost figure may come from a different paper; asked author.
   copy was permitted to be where it is.
 - `updates:` records, for DOI-backed sources, the outcome of the registrar
   update-relation check made at verification time
-  (`references/source-archive.md`): `none`, or the relation found with its
-  target and date (`updates: retraction doi:10.1145/7654321 (2027-01-10)`).
-  URL-backed entries omit it, as do entries written before the field existed
-  — reuse is unaffected either way, since the reuse rules query the registrar
-  again whenever a DOI-backed entry is reused.
+  (`references/source-archive.md`): `none`, the relation found with its
+  target and date (`updates: retraction doi:10.1145/7654321 (2027-01-10)`),
+  or `check failed (<reason>)` when the source text was read but the update
+  query itself could not complete (timeout, rate limit, registrar outage) —
+  never `none` for a check that did not actually run. A failed check leaves
+  the evidence-based verdict standing, is surfaced in the report as an
+  incomplete retraction screen, and heals on the next reuse, since the reuse
+  rules query the registrar again whenever a DOI-backed entry is reused.
+  URL-backed entries omit the field, as do entries written before it
+  existed.
 - `maintained-by:` is informational, naming the tool that writes the file.
   Ledgers written under this skill's earlier names (paper-scholar,
   chapter-and-verse) remain valid and are not rewritten to rebrand them.

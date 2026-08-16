@@ -18,7 +18,7 @@ If the request does not identify the manuscript claims, bibliography entries, or
 
 ## Gate the work
 
-Require a retrieval surface that can search for and fetch the actual source text — for the bibliography audit, live registrar metadata. If a source cannot be accessed, classify it as unverifiable; never substitute memory, a search snippet, or another paper's characterization. Ledger entries are the one exception: a past verification recorded in the host repo's ledger is dated evidence, not memory, and may be reported even when retrieval is unavailable — always with its date, never as fresh work.
+Require a retrieval surface that can search for and fetch the actual source text — for the bibliography audit, live registrar metadata. If a source cannot be accessed, classify the claim as unverifiable — in a bibliography audit, the entry as unconfirmed; never substitute memory, a search snippet, or another paper's characterization. Ledger entries are the one exception: a past verification recorded in the host repo's ledger is dated evidence, not memory, and may be reported even when retrieval is unavailable — always with its date, never as fresh work.
 
 ## Reuse before you retrieve
 
@@ -37,6 +37,6 @@ Return exactly:
 3. **Novelty and source leads:** candidate work, overlap, and why the author should inspect it; never claim exhaustive novelty.
 4. **Author decisions:** flagged citation or wording candidates, requests for paywalled PDFs the author must supply, and unresolved questions. Nothing is edited automatically.
 
-A bibliography audit keeps this structure but replaces section 2 with the entry-level audit table and omits section 3, per `references/bibliography-audit.md`.
+A bibliography audit instead returns exactly the three sections defined in `references/bibliography-audit.md`: **Scope and lookups**, **Bibliography audit** (the entry-level table), and **Author decisions**.
 
 Append the fresh results to the host repo's ledger as dated entries and confirm the writes landed *before* returning the report — on platforms where the report ends the turn, an append promised for afterward never happens. The report then names the files actually written — the host repo's `literature/verifications.md` and any archived copies — with the entry format and reuse rules defined in `references/verification-ledger.md`.
