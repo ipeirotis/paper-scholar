@@ -32,6 +32,10 @@ maintained-by: citation-needed skill
 refresh-interval: 12 months       <!-- optional; DOI-backed re-fetch cadence in months, 12 when absent -->
 ```
 
+A fresh ledger gets exactly this header — the opt-in `companion:` line
+(defined at the end of this file) is added only when the author enables
+the JSONL companion, never as part of the default header.
+
 One entry per verification, newest appended last, with these exact field
 labels so entries stay greppable by humans and machines alike:
 
@@ -130,6 +134,7 @@ entry form, since it is neither a `cite:` verification nor a novelty scan:
 ## [2026-08-15T09:02Z] uncited — methods.tex:57
 claim: "It is well known that crowd labels converge with enough redundancy."
 claim-hash: c41f88a02b7d
+searched: <the queries and databases used>
 candidate-source: doi:10.5555/wxyz — Roe 2018, "Redundancy and convergence in crowd labeling"
   version-read: version of record
   archived: literature/sources/roe2018--10.5555_wxyz-1a9e44b0.pdf sha256:8d1c…
@@ -237,6 +242,110 @@ verification's date:
 checked: registrar updates none; re-fetched; sha256 unchanged (9f2a…)
 ```
 
+Version sweeps (`references/version-reconciliation.md`) get their own entry
+form, keyed by source identity and baseline — one entry per swept baseline
+group, so a work read as two different revisions or snapshots yields two,
+whatever the outcomes — recording what the sweep detected and which claims
+it touches:
+
+```markdown
+## [2026-08-16T09:12Z] vor — arXiv:2106.05432
+version-read: preprint (arXiv:2106.05432v2) — baseline sha256:4e7b…
+published: doi:10.1109/tkde.2026.998877 — Crossref is-preprint-of relation
+updates: none
+archived: literature/sources/lee2026--10.1109_tkde.2026.998877-8e02d4b1.pdf sha256:66c0…
+license: CC-BY-4.0
+changed: sec. 5 rewritten; sec. 7 added; abstract reworded; later sections renumbered +1
+claims: 19f3c07be2a4 affected — evidence sat in old sec. 5.1, passage reworded;
+  5d80aa41c9e7 intact — passage unchanged, now sec. 3
+status: re-checks proposed to the author; no verdict changed
+```
+
+```markdown
+## [2026-08-16T09:12Z] vor — arXiv:2107.04567
+version-read: preprint (arXiv:2107.04567v1) — baseline sha256:9c31…
+published: none found — checked arXiv journal-ref, Crossref relations, bibliographic search
+status: recorded; a later sweep may re-ask after ~6 months
+```
+
+- `published:` names the found version-of-record DOI — or, for a URL-backed
+  target, the canonical URL now serving the fuller text, with the fetch date
+  in the entry's `accessed:` field — and the channel that established it, or
+  `none found` with the channels checked. When more than one authoritative
+  publication relation exists (a conference version and a later journal
+  version, say), record every match: the target is ambiguous, the choice of
+  governing version goes to `Author decisions`, and no comparison runs
+  until the author decides. `none found` is recorded only when
+  every applicable channel actually ran: a transient channel failure
+  (timeout, rate limit, outage) is recorded as `detection incomplete`,
+  naming the failed channels — an outcome the next sweep retries, never a
+  negative result that stands. When
+  publication is established but only a paywalled copy exists, the found DOI
+  is recorded with `text not legally reachable`: the paywall flow runs, and
+  every dependent claim is affected pending the text.
+- `changed:` is the section-level summary of the comparison; `claims:` lists
+  each governing dependent entry resting on the source — identified by
+  claim-hash for `cite:` and `uncited` entries, and by its normalized
+  novelty claim (the heading with timestamp and `novelty — ` prefix
+  stripped) for a novelty lead, whose form carries no claim-hash — marked
+  `affected` or
+  `intact` per the evidence-passage lookup. `updates:` carries the registrar
+  update-relation outcome with the same semantics as a `cite:` entry.
+- When the archived text the verdicts were earned on is confirmed missing
+  or fails its SHA-256 check, the entry records an unreconcilable outcome
+  in place of a comparison — `changed: not comparable — archived text
+  failed its integrity check` — with every dependent claim `affected` and
+  the broken archive raised in `Author decisions`. A store that simply
+  cannot be checked this run (an outage, missing credentials) defers the
+  comparison instead: the entry records the found publication with the
+  diff pending, the outage is reported, and the next sweep completes the
+  comparison — unreconcilable requires a confirmed missing file or hash
+  mismatch, never an unreachable store. An unreconcilable entry is never
+  treated as found-and-diffed: it stands as the dated record that
+  publication was found, and the source leaves sweep scope only when
+  re-verification lands fresh entries against the new text.
+- A `vor` entry never changes a verdict. Supersession is by source identity
+  plus the baseline read — the `version-read:` label together with the
+  baseline sha256 it records: the newest entry for that pair governs, so a
+  work verified against two different revisions, or two same-label
+  snapshots with different hashes, keeps one governing entry per baseline,
+  each comparing against the text its claims' verdicts were earned on. A `none found` outcome stands
+  for about six months — publication lag is months, not days — so a sweep
+  inside that window skips the target unless the author asks for a full
+  re-sweep; a `text not legally reachable` outcome ages the same way, since
+  open access appears on embargo timescales — but it is invalidated at once
+  when the requested copy arrives in the source store: an author-supplied
+  text is diffed on the next sweep or verification run, never held to the
+  window. A URL-backed target's `none found` carries no shelf for its
+  canonical URL either — that re-fetch is a single request, so every sweep
+  re-runs it and a changed page invalidates the cached outcome; only the
+  broader detection channels stay cached. A `detection incomplete` outcome
+  never stands: the next sweep retries it. A found-and-diffed entry is not
+  redone — provided its `claims:` list still covers every governing entry
+  resting on that baseline. A claim verified against the baseline after the
+  sweep reopens the target: the next sweep maps the new dependencies
+  against the already-archived fuller text and recorded diff — no
+  re-detection needed, but the standing freshness screens below apply to a
+  reopened entry exactly as to a skipped one, so a stale or changed fuller
+  text is re-fetched before any new claim is classified against it — and
+  appends a fresh entry. An entry
+  whose `updates:` line records a failed check is likewise not fully
+  standing: the next sweep re-runs the registrar update screen — nothing
+  else — and appends the outcome, the same healing a DOI-backed citation
+  reuse gives its own failed screen. Standing is freshness-screened even
+  when the last check succeeded, exactly as reusing a `cite:` entry is:
+  before a sweep honors a found-and-diffed entry, re-query the registrar
+  update relations for every DOI in the entry's version chain — the
+  baseline's own DOI and each publication DOI, since notices attach to
+  either side — and, when the found version's recorded fetch is older than
+  the header's `refresh-interval:`, re-fetch and hash-compare the file per
+  the refresh rules above, since silent replacements never surface as
+  update relations; a URL-backed fuller text's page is re-fetched as well. A newly deposited retraction or erratum,
+  a changed page, or hash drift ends the standing, is flagged to the
+  author, and yields a fresh entry. The bridge
+  stands until re-verification lands fresh entries with `version-read:
+  version of record` against the source, which drops it out of sweep scope.
+
 ## Reuse rules
 
 Consult the ledger after the claim inventory is pinned and before the first
@@ -253,7 +362,13 @@ The governing entry is reusable when all of these hold:
 - the recorded `version-read` is still the best text reachable: an entry
   earned on a preprint or an abstract-only read is retried, not reused, once
   a fuller text (the version of record, the full paper) may be available — an
-  unchanged DOI never carries a preprint verdict onto the published version;
+  unchanged DOI never carries a preprint verdict onto the published version.
+  When this predicate forces the retry, consult the `vor` entry governing
+  this entry's own baseline — matched by source identity plus the recorded
+  `version-read` and archived hash, never by source alone — first: a version
+  sweep may already have archived the fuller text and recorded where the
+  evidence passage moved, turning the retry into a targeted read instead of
+  a fresh hunt;
 - the archived copy still exists at its recorded path (or in the configured
   store) and matches its recorded SHA-256 — a verdict whose exact text can no
   longer be reopened is not reusable. When the store cannot be checked this
@@ -287,7 +402,13 @@ go unnoticed.
 Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a
 fresh scan, not a current answer, and state the scan date whenever one is
-reused. Age is not the only predicate: reuse a novelty entry only when the
+reused. Supersession for novelty entries is by the quoted novelty claim
+itself — the heading text after stripping the timestamp and the
+`novelty — ` prefix, with runs of whitespace collapsed, since the form
+carries no claim-hash and heading timestamps never repeat: the newest scan
+for that normalized claim governs, and only the governing scan's leads
+count as live dependencies anywhere else (the version sweep included) — an
+older scan's leads are history, never current dependencies. Age is not the only predicate: reuse a novelty entry only when the
 manuscript's novelty claim still reads as the recorded one and the entry's
 `searched:` scope covers what the current request asks. A reworded
 contribution, a new database, or a broadened boundary gets a fresh scan
@@ -305,3 +426,60 @@ conflicts, keep both sets of entries in timestamp order; should two entries
 for the same claim still carry the same timestamp with different verdicts,
 neither is reusable — report the conflict to the author instead of silently
 picking one.
+
+## Machine-readable companion (JSONL)
+
+The Markdown ledger is the record, and its stable field labels keep it
+greppable; nothing more is required. When other tooling needs to consume
+results without parsing Markdown, the project declares a companion file in
+the ledger header (`companion: literature/verifications.jsonl`). While that
+line is present, every ledger append also appends the matching lines to the
+companion, in the same order, and the report names both files among the
+writes. With no `companion:` line, no JSONL is written — that is the
+default.
+
+- **The path is validated before anything is written.** The `companion:`
+  value must resolve to a repository-relative, non-symlink path inside the
+  host repo, ending in `.jsonl`, and distinct from the manuscript, the
+  bibliography, and every other existing file that is not already the
+  companion. A value failing any of these checks gets nothing written —
+  created, backfilled, or regenerated — and is reported in
+  `Author decisions` instead: the rule that the skill never overwrites the
+  author's files outranks the header.
+- **Derived, never authoritative.** Runs consult only the Markdown ledger —
+  reuse rules, supersession, and archive checks never read the companion.
+  The JSONL is a view for external tooling: whenever the two disagree (a
+  failed write, a merge that touched one file, a conflicted companion),
+  regenerate the JSONL from the Markdown in full; never edit the Markdown
+  to match the JSONL. The append-only rule protects the Markdown record —
+  the companion, being derived, may be regenerated wholesale.
+- **Enablement and backfill.** The author can ask the skill to enable the
+  companion, or add the `companion:` header line by hand; either way, the
+  next run creates the file and backfills one line per existing entry, in
+  ledger order, before appending fresh work — a companion missing half the
+  ledger is a trap for tooling. Adding the header line is an announced
+  infrastructure edit, like the `AGENTS.md` pointer, never a silent one.
+- **Line format.** One JSON object per ledger entry, one entry per line:
+  - `ts`: the heading timestamp, verbatim (`2026-08-14T22:31Z`);
+  - `type`: the entry form — `cite`, `uncited`, `novelty`, `bib`,
+    `relocation`, `refresh`, or `vor`;
+  - `heading`: the heading text after the timestamp, verbatim
+    (`cite:smith2021 — introduction.tex:41`);
+  - one key per field label, spelled exactly as in the Markdown (hyphens
+    preserved: `claim-hash`, `version-read`), holding the value verbatim
+    with continuation lines joined by single spaces — verbatim includes any
+    surrounding quotes, which are part of the value, not Markdown syntax;
+  - indented sub-fields flatten onto the same object — except under a
+    repeatable label: a novelty entry's `lead:` blocks become a `leads`
+    array (the one renamed key), one object per lead carrying the lead
+    line under `lead` plus its indented sub-fields.
+
+```json
+{"ts":"2026-08-14T22:31Z","type":"cite","heading":"cite:smith2021 — introduction.tex:41","claim":"\"Smith et al. show that crowdsourced labels reach expert accuracy at one tenth the cost.\"","claim-hash":"ab12cd34ef56","source":"doi:10.1145/1234567.1234568","version-read":"version of record","archived":"literature/sources/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf sha256:9f2a…","license":"CC-BY-4.0","updates":"none","verdict":"partially supported","evidence":"\"labels reached expert agreement on 3 of 5 tasks\" (sec. 5.1) — cost claim not addressed","notes":"cost figure may come from a different paper; asked author."}
+```
+
+Lines are appended, never edited, exactly like the entries they mirror;
+supersession stays a reader concern, resolved by `ts` under the reuse
+rules above. A conflicted or stale companion after parallel runs is
+repaired the same way as any drift: merge the Markdown per the rules in
+the previous section, then regenerate the JSONL from it.

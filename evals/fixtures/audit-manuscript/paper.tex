@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{natbib}
+\title{Notes on Annotation Quality and Neural Architectures}
+\author{A. Author}
+\begin{document}
+\maketitle
+
+\section{Background}
+
+Attention-based architectures have displaced recurrence in machine
+translation. The Transformer's big model achieves a BLEU score of 28.4 on
+the WMT 2014 English-to-German translation task~\citep{vaswani2017}.
+Remarkably, the Transformer required substantially more training compute
+than the best prior recurrent models to reach this quality~\citep{vaswani2017}.
+
+Pre-trained bidirectional encoders transfer broadly: BERT reaches a GLUE
+benchmark score of 80.5\% while also substantially reducing annotation
+costs in industrial deployments~\citep{devlin2019}.
+
+\section{Annotation quality}
+
+Snow et al.\ show that combining labels from a small number of non-expert
+annotators can match expert-level annotation quality on several natural
+language tasks~\citep{snow2008}. Adaptive task routing can reduce labeling
+cost by over a third~\citep{kellner2021}.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

@@ -1,0 +1,60 @@
+{
+  "skill_name": "citation-needed",
+  "evals": [
+    {
+      "id": 0,
+      "name": "audit-manuscript",
+      "prompt": "Check whether the citations in paper.tex support their claims.",
+      "expected_output": "A citation audit classifying: the Transformer 28.4 BLEU claim as supported; the Transformer needs-more-compute claim as unsupported (the paper states a fraction of prior training costs); the BERT GLUE-80.5-plus-annotation-costs claim as partially supported (cost half unaddressed); the Snow et al. non-expert-quality claim as supported; the kellner2021 claim as unverifiable (key resolves to no work). The manuscript and bibliography are not edited; a dated ledger is written at literature/verifications.md; every verdict earned from a retrieved source quotes evidence with a resolvable locator, while the unverifiable kellner2021 entry records explicit none sentinels instead of invented evidence.",
+      "files": [
+        "fixtures/audit-manuscript/paper.tex",
+        "fixtures/audit-manuscript/refs.bib"
+      ],
+      "assertions": [
+        "Transformer BLEU-28.4 claim is classified supported, quoting the paper's 28.4 BLEU statement as evidence",
+        "Transformer needs-more-training-compute claim is classified unsupported, citing the paper's 'fraction of the training costs' statement as the contradiction",
+        "BERT GLUE-80.5-plus-annotation-costs claim is classified partially supported, naming the annotation-cost half as unaddressed by the paper",
+        "Snow et al. non-expert-quality claim is classified supported with evidence from the retrieved paper",
+        "kellner2021 claim is classified unverifiable because the key resolves to no bibliography entry (not unsupported)",
+        "paper.tex and refs.bib in the host copy are byte-identical to the fixtures (nothing was edited)",
+        "Host copy contains literature/verifications.md with dated entries covering the checked claims",
+        "Report separates findings from proposals (an Author decisions section exists and no change is applied)"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "bib-audit",
+      "prompt": "Audit the bibliography metadata in refs.bib -- I want to know whether each entry identifies a real work and whether the fields are right.",
+      "expected_output": "An entry-level audit classifying: sheng2008 as confirmed (clean Crossref record); vaswani2017 as discrepant (entry year 2018 vs registrar 2017; correction proposed, not applied); liu2019 as mismatched (its DOI resolves to Devlin et al., NAACL 2019, a different work); snow2008 as discrepant (Crossref DOI 10.3115/1613715.1613751 exists though the Anthology page omits it; the DOI is proposed as an addition); ramanathan2014 as unconfirmed, phrased as a question for the author rather than a fabrication verdict. refs.bib is not edited; bib: ledger entries are appended.",
+      "files": [
+        "fixtures/bib-audit/refs.bib"
+      ],
+      "assertions": [
+        "sheng2008 is classified confirmed against its registrar record",
+        "vaswani2017 is classified discrepant, with the year 2018-vs-2017 difference reported as a proposed correction (not applied)",
+        "liu2019 is classified mismatched, with the report stating its DOI actually resolves to the Devlin et al. NAACL 2019 paper",
+        "snow2008 is classified discrepant with its Crossref DOI (10.3115/1613715.1613751) proposed as an addition, not applied",
+        "ramanathan2014 is classified unconfirmed and raised as a question for the author, not ruled fabricated on registrar absence alone",
+        "refs.bib in the host copy is byte-identical to the fixture (nothing was edited)",
+        "Host copy contains a ledger with dated bib: entries for the audited references",
+        "Report has the three bibliography-audit sections: Scope and lookups, Bibliography audit, Author decisions"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "uncited-claim",
+      "prompt": "Find a source I could cite for this claim in my notes (notes.md): 'It is well known that repeated labeling improves label quality when annotators are noisy.'",
+      "expected_output": "At least one on-topic candidate source (e.g., Sheng, Provost & Ipeirotis, KDD 2008, doi:10.1145/1401890.1401965, or comparable repeated-labeling work) offered as a proposal with a resolvable locator and a quoted supporting passage from text actually retrieved. Nothing is inserted into notes.md; an uncited ledger entry is appended with the claim hash and search scope.",
+      "files": [
+        "fixtures/uncited-claim/notes.md"
+      ],
+      "assertions": [
+        "At least one on-topic candidate source about repeated labeling / label quality is offered with a resolvable DOI or URL",
+        "A supporting passage is quoted from text that was actually retrieved during the run (not asserted from memory)",
+        "notes.md in the host copy is byte-identical to the fixture (no citation was inserted)",
+        "The candidate is presented as a proposal for the author to adopt, not applied automatically",
+        "Host copy contains a ledger with a dated uncited entry recording the claim and the search performed"
+      ]
+    }
+  ]
+}
