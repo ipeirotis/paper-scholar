@@ -67,7 +67,10 @@ manuscript repository it runs in.
   verification: the claim, its source's DOI or URL, the archived copy's hash,
   the verdict, and the supporting passage. Later runs reuse these entries
   instead of re-fetching, and your repo's `AGENTS.md` gets a short pointer
-  section so other agents find them.
+  section so other agents find them. If the ledger header declares a
+  `companion:` file, a derived `literature/verifications.jsonl` is kept in
+  lockstep — one JSON object per entry — for other tooling to consume; the
+  Markdown remains the authoritative record.
 
 Every source needs a publicly verifiable DOI or at minimum a stable URL. For
 paywalled sources the skill asks you to supply the PDF (via your own access,

@@ -101,11 +101,19 @@ reopen them without a new request.
   `references/verification-ledger.md`, `references/literature-checks.md`,
   `SKILL.md`, `README.md`, `AGENTS.md`, `agents/openai.yaml`)
 
-## Proposed (awaiting approval)
+- **2026-08-16 — Machine-readable ledger companion.** Approved by the
+  author: an opt-in `companion:` line in the ledger header keeps a derived
+  JSONL beside `verifications.md` — one JSON object per entry, `ts`, `type`,
+  and `heading` plus keys copied verbatim from the Markdown field labels,
+  appended in the same write as every Markdown append and backfilled when
+  first enabled. The Markdown stays the record: runs never read the
+  companion, and on any disagreement the JSONL is regenerated from the
+  Markdown, never the reverse. Without the header line nothing changes —
+  the stable field labels keep the Markdown greppable, as before.
+  (`references/verification-ledger.md`, `SKILL.md`, `README.md`,
+  `AGENTS.md`)
 
-- **Machine-readable ledger companion.** Emit a JSONL alongside
-  `verifications.md` if other tooling needs to consume results; the stable
-  field labels make the Markdown greppable in the meantime.
+## Proposed (awaiting approval)
 - **Eval suite.** Test manuscripts with known-good, known-bad, and
   unverifiable citations to benchmark the skill's classifications and catch
   regressions (skill-creator eval loop), plus trigger-description

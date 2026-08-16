@@ -26,7 +26,7 @@ citation-needed — old references to those names denote this repo.
 - `references/source-archive.md` — locator (DOI/URL) requirements, legal
   full-text retrieval, and where archived copies go (bucket or repo folder).
 - `references/verification-ledger.md` — the dated results ledger written into
-  host repos, and its reuse rules.
+  host repos, its reuse rules, and the opt-in JSONL companion for tooling.
 - `agents/openai.yaml` — interface metadata for non-Claude agent platforms.
 - `tasks.md` — the feature tracker (see below).
 

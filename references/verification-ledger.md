@@ -30,6 +30,7 @@ Header, once per file:
 store: literature/sources/        <!-- or gs://bucket/prefix, s3://bucket/prefix -->
 maintained-by: citation-needed skill
 refresh-interval: 12 months       <!-- optional; DOI-backed re-fetch cadence in months, 12 when absent -->
+companion: literature/verifications.jsonl   <!-- optional; derived JSONL view for tooling -->
 ```
 
 One entry per verification, newest appended last, with these exact field
@@ -352,3 +353,52 @@ conflicts, keep both sets of entries in timestamp order; should two entries
 for the same claim still carry the same timestamp with different verdicts,
 neither is reusable — report the conflict to the author instead of silently
 picking one.
+
+## Machine-readable companion (JSONL)
+
+The Markdown ledger is the record, and its stable field labels keep it
+greppable; nothing more is required. When other tooling needs to consume
+results without parsing Markdown, the project declares a companion file in
+the ledger header (`companion: literature/verifications.jsonl`). While that
+line is present, every ledger append also appends the matching lines to the
+companion, in the same order, and the report names both files among the
+writes. With no `companion:` line, no JSONL is written — that is the
+default.
+
+- **Derived, never authoritative.** Runs consult only the Markdown ledger —
+  reuse rules, supersession, and archive checks never read the companion.
+  The JSONL is a view for external tooling: whenever the two disagree (a
+  failed write, a merge that touched one file, a conflicted companion),
+  regenerate the JSONL from the Markdown in full; never edit the Markdown
+  to match the JSONL. The append-only rule protects the Markdown record —
+  the companion, being derived, may be regenerated wholesale.
+- **Enablement and backfill.** The author can ask the skill to enable the
+  companion, or add the `companion:` header line by hand; either way, the
+  next run creates the file and backfills one line per existing entry, in
+  ledger order, before appending fresh work — a companion missing half the
+  ledger is a trap for tooling. Adding the header line is an announced
+  infrastructure edit, like the `AGENTS.md` pointer, never a silent one.
+- **Line format.** One JSON object per ledger entry, one entry per line:
+  - `ts`: the heading timestamp, verbatim (`2026-08-14T22:31Z`);
+  - `type`: the entry form — `cite`, `uncited`, `novelty`, `bib`,
+    `relocation`, `refresh`, or `vor`;
+  - `heading`: the heading text after the timestamp, verbatim
+    (`cite:smith2021 — introduction.tex:41`);
+  - one key per field label, spelled exactly as in the Markdown (hyphens
+    preserved: `claim-hash`, `version-read`), holding the value verbatim
+    with continuation lines joined by single spaces — verbatim includes any
+    surrounding quotes, which are part of the value, not Markdown syntax;
+  - indented sub-fields flatten onto the same object — except under a
+    repeatable label: a novelty entry's `lead:` blocks become a `leads`
+    array (the one renamed key), one object per lead carrying the lead
+    line under `lead` plus its indented sub-fields.
+
+```json
+{"ts":"2026-08-14T22:31Z","type":"cite","heading":"cite:smith2021 — introduction.tex:41","claim":"\"Smith et al. show that crowdsourced labels reach expert accuracy at one tenth the cost.\"","claim-hash":"ab12cd34ef56","source":"doi:10.1145/1234567.1234568","version-read":"version of record","archived":"literature/sources/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf sha256:9f2a…","license":"CC-BY-4.0","updates":"none","verdict":"partially supported","evidence":"\"labels reached expert agreement on 3 of 5 tasks\" (sec. 5.1) — cost claim not addressed","notes":"cost figure may come from a different paper; asked author."}
+```
+
+Lines are appended, never edited, exactly like the entries they mirror;
+supersession stays a reader concern, resolved by `ts` under the reuse
+rules above. A conflicted or stale companion after parallel runs is
+repaired the same way as any drift: merge the Markdown per the rules in
+the previous section, then regenerate the JSONL from it.
