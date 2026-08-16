@@ -20,6 +20,9 @@ citation-needed — old references to those names denote this repo.
 - `references/bibliography-audit.md` — the standalone metadata audit: does
   each bibliography entry identify a real work, checked against the DOI
   registrars; no sources read, no claims judged.
+- `references/version-reconciliation.md` — the proactive version sweep:
+  detect when a source read as a preprint or partial text has a published or
+  fuller version, diff the texts, and prompt re-checks; no verdict changes.
 - `references/source-archive.md` — locator (DOI/URL) requirements, legal
   full-text retrieval, and where archived copies go (bucket or repo folder).
 - `references/verification-ledger.md` — the dated results ledger written into

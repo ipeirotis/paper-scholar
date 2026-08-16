@@ -237,6 +237,49 @@ verification's date:
 checked: registrar updates none; re-fetched; sha256 unchanged (9f2a…)
 ```
 
+Version sweeps (`references/version-reconciliation.md`) get their own entry
+form, keyed by source identity — one entry per swept source, whatever the
+outcome, recording what the sweep detected and which claims it touches:
+
+```markdown
+## [2026-08-16T09:12Z] vor — arXiv:2106.05432
+version-read: preprint (arXiv:2106.05432v2)
+published: doi:10.1109/tkde.2026.998877 — Crossref is-preprint-of relation
+updates: none
+archived: literature/sources/lee2026--10.1109_tkde.2026.998877-8e02d4b1.pdf sha256:66c0…
+license: CC-BY-4.0
+changed: sec. 5 rewritten; sec. 7 added; abstract reworded; later sections renumbered +1
+claims: 19f3c07be2a4 affected — evidence sat in old sec. 5.1, passage reworded;
+  5d80aa41c9e7 intact — passage unchanged, now sec. 3
+status: re-checks proposed to the author; no verdict changed
+```
+
+```markdown
+## [2026-08-16T09:12Z] vor — arXiv:2107.04567
+version-read: preprint (arXiv:2107.04567v1)
+published: none found — checked arXiv journal-ref, Crossref relations, bibliographic search
+status: recorded; a later sweep may re-ask after ~6 months
+```
+
+- `published:` names the found version-of-record DOI and the channel that
+  established it, or `none found` with the channels checked. When
+  publication is established but only a paywalled copy exists, the found DOI
+  is recorded with `text not legally reachable`: the paywall flow runs, and
+  every dependent claim is affected pending the text.
+- `changed:` is the section-level summary of the comparison; `claims:` lists
+  each governing claim-hash resting on the source, `affected` or `intact`
+  per the evidence-passage lookup. `updates:` carries the registrar
+  update-relation outcome with the same semantics as a `cite:` entry.
+- A `vor` entry never changes a verdict. Supersession is by source identity:
+  the newest `vor` entry for a source governs. A `none found` outcome stands
+  for about six months — publication lag is months, not days — so a sweep
+  inside that window skips the target unless the author asks for a full
+  re-sweep; a `text not legally reachable` outcome ages the same way, since
+  open access appears on embargo timescales. A found-and-diffed entry is not
+  redone: it stands as the bridge until re-verification lands fresh entries
+  with `version-read: version of record` against the source, which drops it
+  out of sweep scope.
+
 ## Reuse rules
 
 Consult the ledger after the claim inventory is pinned and before the first
@@ -253,7 +296,11 @@ The governing entry is reusable when all of these hold:
 - the recorded `version-read` is still the best text reachable: an entry
   earned on a preprint or an abstract-only read is retried, not reused, once
   a fuller text (the version of record, the full paper) may be available — an
-  unchanged DOI never carries a preprint verdict onto the published version;
+  unchanged DOI never carries a preprint verdict onto the published version.
+  When this predicate forces the retry, consult the source's newest `vor`
+  entry first: a version sweep may already have archived the fuller text and
+  recorded where the evidence passage moved, turning the retry into a
+  targeted read instead of a fresh hunt;
 - the archived copy still exists at its recorded path (or in the configured
   store) and matches its recorded SHA-256 — a verdict whose exact text can no
   longer be reopened is not reusable. When the store cannot be checked this

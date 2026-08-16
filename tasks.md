@@ -84,16 +84,25 @@ reopen them without a new request.
   BibTeX work. (`references/bibliography-audit.md`, `SKILL.md`,
   `references/verification-ledger.md`, `AGENTS.md`, `README.md`)
 
+- **2026-08-16 — Version-of-record reconciliation (proactive half).** Fifth
+  capability, approved by the author: a ledger sweep that detects when a
+  source read as a preprint or partial text has a published or fuller
+  version — registrar preprint relations, arXiv journal-ref, bibliographic
+  search, with the update-relations screen along the way — archives the new
+  text when legally reachable, diffs it against the archived read at section
+  and evidence-passage granularity, and proposes re-checks for claims whose
+  evidence changed; intact claims keep their dated verdicts, and no verdict
+  ever changes in a sweep. Results ledgered as dated `vor` entries keyed by
+  source identity (none-found results stand ~6 months); verification runs
+  use the newest `vor` entry as a bridge when the version predicate blocks
+  reuse, and offer the sweep for out-of-scope preprint reads instead of
+  pulling them in. The reuse-time slice had already shipped in the ledger
+  rules (2026-08-14). (`references/version-reconciliation.md`,
+  `references/verification-ledger.md`, `references/literature-checks.md`,
+  `SKILL.md`, `README.md`, `AGENTS.md`, `agents/openai.yaml`)
+
 ## Proposed (awaiting approval)
 
-- **Version-of-record reconciliation.** When a claim was verified against a
-  preprint, detect when the published version appears and prompt re-checking
-  the claims whose evidence sat in sections that changed. The reuse-time
-  slice already ships in the ledger's rules (`references/verification-ledger.md`):
-  a verdict earned on a preprint or abstract-only read is retried, not
-  reused, once fuller text may be available. What remains proposed is the
-  proactive half — detecting publication without waiting for a reuse attempt
-  and pointing the author at the sections that changed.
 - **Machine-readable ledger companion.** Emit a JSONL alongside
   `verifications.md` if other tooling needs to consume results; the stable
   field labels make the Markdown greppable in the meantime.

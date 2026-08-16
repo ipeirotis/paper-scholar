@@ -70,6 +70,15 @@ date and is not re-fetched. Only the remaining claims go to retrieval. This
 step sits after the inventory and before the first search so the ledger can
 never reshape which claims are in scope — only which ones need fresh work.
 
+Two version-sweep touchpoints (`references/version-reconciliation.md`)
+belong to this step. When the version predicate blocks a reuse — a preprint
+or abstract-only read with fuller text possibly available — the source's
+newest `vor` entry may already hold the archived fuller text and the
+evidence passage's new location, turning the forced retry into a targeted
+read. And when the ledger holds preprint- or abstract-read entries on
+sources outside the current scope, they are not pulled in: offer a version
+sweep in `Author decisions` instead.
+
 ### 3. Verify each citation
 
 For every cited claim not reused from the ledger, retrieve and read the actual
