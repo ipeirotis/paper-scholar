@@ -169,10 +169,13 @@ returning the report. Then report exactly three sections:
   still-standing `vor` entry, detection channels queried, and lookups that
   failed.
 - **Version reconciliation:** one row per swept baseline group — what was
-  read and what was found, and how; when a version was found, the section-level
-  changes (or the unreconcilable outcome when the archived text failed its
-  integrity check) and each dependent claim marked affected or intact; a
-  none-found row records the channels checked instead.
+  read and what was found, and how; when a version was found and compared,
+  the section-level changes (or the unreconcilable outcome when the
+  archived text failed its integrity check) and each dependent claim marked
+  affected or intact; a diff-pending row — a found version whose baseline
+  store was unreachable this run — names the found version and leaves its
+  dependencies unclassified until the next sweep completes the comparison;
+  a none-found row records the channels checked instead.
 - **Author decisions:** each re-check proposal, each paywalled
   version-of-record request, each ambiguous publication match as a question,
   any retraction or erratum the update screen surfaced, and any newer

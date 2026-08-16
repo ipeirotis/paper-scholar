@@ -323,10 +323,13 @@ status: recorded; a later sweep may re-ask after ~6 months
   reuse gives its own failed screen. Standing is freshness-screened even
   when the last check succeeded, exactly as reusing a `cite:` entry is:
   before a sweep honors a found-and-diffed entry, re-query a DOI-backed
-  found version's registrar update relations and re-fetch a URL-backed
-  fuller text's page — a newly deposited retraction or erratum, or a
-  changed page, ends the standing, is flagged to the author, and yields a
-  fresh entry. The bridge
+  found version's registrar update relations — and, when its recorded
+  fetch is older than the header's `refresh-interval:`, re-fetch and
+  hash-compare the file per the refresh rules above, since silent
+  replacements never surface as update relations — and re-fetch a
+  URL-backed fuller text's page. A newly deposited retraction or erratum,
+  a changed page, or hash drift ends the standing, is flagged to the
+  author, and yields a fresh entry. The bridge
   stands until re-verification lands fresh entries with `version-read:
   version of record` against the source, which drops it out of sweep scope.
 
