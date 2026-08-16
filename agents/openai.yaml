@@ -1,4 +1,4 @@
 interface:
   display_name: "Citation Needed"
-  short_description: "Verify citations and investigate novelty claims"
-  default_prompt: "Check this manuscript citation or novelty claim against sources you retrieve and read, clearly separating evidence from leads."
+  short_description: "Verify citations, audit bibliographies, scan novelty"
+  default_prompt: "Check this manuscript citation or novelty claim against sources you retrieve and read — or audit the bibliography's metadata against the DOI registrars — clearly separating evidence from leads."

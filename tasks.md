@@ -4,7 +4,9 @@ Feature tracker for the citation-needed skill. Agents: read this before working
 on the repo. New requests go under **Backlog** with the date they were filed;
 when work lands, move the item to **Done** with the landing date and the files
 that implement it. Items under **Proposed** are ideas awaiting the author's
-approval — do not implement them unprompted.
+approval — do not implement them unprompted. Items the author has decided
+against move to **Decided, no action** with the decision recorded — do not
+reopen them without a new request.
 
 ## Done
 
@@ -30,12 +32,6 @@ approval — do not implement them unprompted.
   redo settled work; pointed to from the host repo's `AGENTS.md`.
   (`references/verification-ledger.md`)
 
-- **2026-08-15 — Rename the skill to citation-needed.** The author judged
-  chapter-and-verse hard to remember; "[citation needed]" is the Wikipedia
-  tag every academic already knows, and resolving it is literally the
-  skill's job. Supersedes the chapter-and-verse rename below; the GitHub
-  repo rename to `ipeirotis/citation-needed` is done by the owner in repo
-  settings.
 - **2026-08-14 — Rename the skill to chapter-and-verse.** "Give chapter and
   verse" = cite the exact authority for a claim; pairs with blue-pencil's
   idiom naming and avoids the crowded CiteCheck/refchecker namespace. The
@@ -45,23 +41,59 @@ approval — do not implement them unprompted.
   `ipeirotis/chapter-and-verse` is done by the owner in repo settings; old
   URLs redirect.
 
+- **2026-08-15 — Rename the skill to citation-needed.** Final name in the
+  paper-scholar → chapter-and-verse → citation-needed sequence, superseding
+  the chapter-and-verse rename above: the author judged that name hard to
+  remember, and "[citation needed]" is the Wikipedia tag every academic
+  already knows — resolving it is literally the skill's job. The GitHub repo is
+  `ipeirotis/citation-needed` (old URLs redirect). `LITERATURE_STORE` and all
+  host-repo artifact paths were already rename-proof; host ledgers written
+  under earlier names stay valid, since `maintained-by:` is informational.
+  (`SKILL.md`, `README.md`, `AGENTS.md`, `tasks.md`, `agents/openai.yaml`,
+  `references/verification-ledger.md`)
+
+- **2026-08-15 — Global consistency pass after the slim-out and renames.**
+  Aligned the verdict taxonomy — `literature-checks.md` step 3 now defines
+  all four verdicts including *partially supported*, which SKILL.md, the
+  reporting conventions, the ledger examples, and the reuse rules already
+  used — and replaced the leftover blue-pencil framing ("this lane", "the
+  master rule") with standalone wording.
+  (`references/literature-checks.md`)
+
+- **2026-08-15 — Retraction and erratum check at verification time.** Fresh
+  DOI-backed verifications now check the registrar's update relations —
+  retractions, errata, corrigenda, expressions of concern; Crossref's update
+  metadata incorporates the Retraction Watch database — at DOI resolution,
+  flag the update with the verdict in the citation audit and `Author
+  decisions`, and record it in the entry's `updates:` field. The reuse-side
+  slice had already shipped with the ledger (2026-08-15): reusing a
+  DOI-backed entry re-queries the registrar before the old verdict stands.
+  (`references/source-archive.md`, `references/literature-checks.md`,
+  `references/verification-ledger.md`)
+
+- **2026-08-15 — Bibliography metadata audit.** Fourth capability, approved
+  by the author: a cheap standalone pass confirming each bibliography entry
+  identifies a real work — its DOI resolved and compared whole-record against
+  the registrar per the source-archive tolerance rules, DOI-less entries
+  matched by registrar search or their own URL, update relations screened
+  along the way. Verdicts confirmed / discrepant / mismatched / unconfirmed
+  (registrar absence is a question for the author, never a fabrication
+  verdict on its own); results ledgered as `bib:` entries keyed by
+  entry-hash; corrections and DOI additions only ever proposed. The trigger
+  description now excludes "citation style formatting" rather than all
+  BibTeX work. (`references/bibliography-audit.md`, `SKILL.md`,
+  `references/verification-ledger.md`, `AGENTS.md`, `README.md`)
+
 ## Proposed (awaiting approval)
 
-- **Retraction and erratum check at verification time.** When verifying a
-  citation, also query Crossref/Retraction Watch for retractions, errata, and
-  expressions of concern; a supported claim resting on a retracted paper
-  deserves a flag of its own. A narrow slice of this shipped with the ledger
-  (2026-08-15, `references/verification-ledger.md`): *reusing* a DOI-backed
-  entry checks the registrar's update relations (errata, corrigenda,
-  retractions, replacements) before the old verdict is reused, because reuse
-  correctness requires it. The full screen for newly verified citations
-  remains proposed.
-- **Bibliography metadata audit.** A cheap standalone pass: confirm every
-  BibTeX entry's title/venue/year/DOI matches the real work via Crossref.
-  Catches hallucinated or mangled references without full claim verification.
 - **Version-of-record reconciliation.** When a claim was verified against a
   preprint, detect when the published version appears and prompt re-checking
-  the claims whose evidence sat in sections that changed.
+  the claims whose evidence sat in sections that changed. The reuse-time
+  slice already ships in the ledger's rules (`references/verification-ledger.md`):
+  a verdict earned on a preprint or abstract-only read is retried, not
+  reused, once fuller text may be available. What remains proposed is the
+  proactive half — detecting publication without waiting for a reuse attempt
+  and pointing the author at the sections that changed.
 - **Machine-readable ledger companion.** Emit a JSONL alongside
   `verifications.md` if other tooling needs to consume results; the stable
   field labels make the Markdown greppable in the meantime.
@@ -72,21 +104,19 @@ approval — do not implement them unprompted.
 
 ## Backlog
 
-- **2026-08-15 — Sync the archive and ledger behaviors with blue-pencil's
-  scholar lane.** The source archive, locator rules, verification ledger, and
-  reuse rules landed here materially extend the protocol that blue-pencil's
-  `/paper:verify-citations` also dispatches; the two copies of
-  `literature-checks.md` now differ in substance. Decide with the author
-  whether to upstream these behaviors into blue-pencil, keep them
-  standalone-only, or have blue-pencil delegate to this skill — and record
-  the decision here. Until then the implementations diverge deliberately,
-  not silently.
-- **2026-08-15 — Extract blue-pencil's analyst lane as the facts-and-figures
-  skill.** Name approved by the author ("facts and figures": the reported
-  numbers and the literal figures).
-  Scope: carve `references/analysis-integrity.md` and the `paper-analyst`
-  agent out of blue-pencil into a standalone repo
-  (`ipeirotis/facts-and-figures`), couplings removed, with AGENTS.md/tasks.md
-  scaffolding like this repo's. Blue-pencil's `/paper:verify-numbers`,
-  `/paper:figures`, and `/paper:analyze` commands keep their names. Awaiting
-  go-ahead to execute.
+(empty — new requests go here with the date they were filed)
+
+## Decided, no action
+
+- **2026-08-15 — No blue-pencil sync.** The author decided the behaviors
+  landed here (source archive, locator rules, verification ledger, reuse
+  rules, retraction screen, bibliography audit) stay standalone: blue-pencil
+  is not updated, nothing is upstreamed or downstreamed, and this repo's
+  protocol evolves independently from blue-pencil's scholar lane. Divergence
+  between the two is accepted, not tracked — the standing sync note in
+  `AGENTS.md` was retired accordingly. Closes the 2026-08-15 backlog item.
+- **2026-08-15 — Facts-and-figures extraction dropped.** The author decided
+  the planned carve-out of blue-pencil's analyst lane into
+  `ipeirotis/facts-and-figures` is not needed; the backlog item is closed
+  without action. If the idea is revived, it will be tracked in its own
+  repo, not here.

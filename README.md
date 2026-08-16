@@ -1,9 +1,11 @@
 # citation-needed
 
 A retrieval-grounded agent skill for verifying manuscript citations,
-investigating uncited factual claims, and finding prior-work leads relevant to
-novelty claims — it resolves every "[citation needed]" in your manuscript
-against sources it actually retrieves and reads.
+investigating uncited factual claims, finding prior-work leads relevant to
+novelty claims, and auditing bibliography metadata against the DOI registrars
+to catch mangled or fabricated references — it resolves every
+"[citation needed]" in your manuscript against sources it actually retrieves
+and reads.
 
 ## Install
 
@@ -13,8 +15,10 @@ Copy or clone this repository into your agent's skills directory, for example:
 git clone https://github.com/ipeirotis/citation-needed.git ~/.agents/skills/citation-needed
 ```
 
-Then ask the agent to check specified citations or contribution claims. The
-skill requires literature search and access to the actual source text.
+Then ask the agent to check specified citations or contribution claims, or to
+audit the bibliography's metadata. Checking claims requires literature search
+and access to the actual source text; a bibliography audit needs only live
+access to the DOI registrars and any URLs the entries carry.
 
 ## Usage
 
@@ -24,14 +28,16 @@ you hand it selects the capability:
 ```
 /citation-needed paper.tex                       # audit every citation in the manuscript
 /citation-needed sections/related.tex            # audit one section's citations
+/citation-needed refs.bib                        # audit the bibliography's metadata
 /citation-needed "It is well known that crowd labels converge with redundancy."
                                                  # find a source for an uncited claim
 /citation-needed "We are the first to model X under Y."
                                                  # scan the claimed contribution for prior work
 ```
 
-A manuscript or section file gets a citation audit; a quoted factual claim
-gets a source investigation; a contribution statement gets a novelty scan.
+A manuscript or section file gets a citation audit; a bibliography file gets
+a metadata audit against the DOI registrars; a quoted factual claim gets a
+source investigation; a contribution statement gets a novelty scan.
 When the scope is ambiguous, the skill asks one focused question before
 retrieving anything. On agents without slash commands, plain requests work
 the same way ("check whether the citations in section 3 support their

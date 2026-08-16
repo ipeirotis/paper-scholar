@@ -4,10 +4,12 @@ This repository is a standalone agent skill for retrieval-grounded literature
 checks: verifying that a manuscript's citations support the claims attached to
 them, investigating uncited factual claims, and scanning stated contributions
 for overlapping prior work — it resolves every "[citation needed]" against
-sources it actually retrieves and reads. It was extracted from the scholar lane of
-[blue-pencil](https://github.com/ipeirotis/blue-pencil) (whose dispatch
+sources it actually retrieves and reads. It was extracted from the scholar
+lane of [blue-pencil](https://github.com/ipeirotis/blue-pencil) (whose dispatch
 command is `/paper:verify-citations`, formerly `/paper:scholar`) so it can
-ship and evolve independently of that editorial skill.
+ship and evolve independently of that editorial skill. The skill was named
+paper-scholar at extraction, then chapter-and-verse, before settling on
+citation-needed — old references to those names denote this repo.
 
 ## Layout
 
@@ -15,6 +17,9 @@ ship and evolve independently of that editorial skill.
   depth to `references/`.
 - `references/literature-checks.md` — the core protocol: inventory claims,
   consult the ledger, verify citations, scan novelty, report.
+- `references/bibliography-audit.md` — the standalone metadata audit: does
+  each bibliography entry identify a real work, checked against the DOI
+  registrars; no sources read, no claims judged.
 - `references/source-archive.md` — locator (DOI/URL) requirements, legal
   full-text retrieval, and where archived copies go (bucket or repo folder).
 - `references/verification-ledger.md` — the dated results ledger written into
@@ -41,7 +46,8 @@ here. Files here describe behavior; files there are that behavior's output.
   memory-cited source is fabrication), leads-not-verdicts for novelty,
   inaccessible ≠ unsupported, never edit the manuscript or bibliography, never
   bypass paywalls.
-- Blue-pencil's `/paper:verify-citations` dispatches onto the same underlying protocol.
-  Behavioral changes worth sharing across the two projects should be noted in
-  `tasks.md` so they can be upstreamed or downstreamed deliberately rather
-  than drifting apart silently.
+- Blue-pencil's `/paper:verify-citations` began as the same protocol, but
+  the author decided (2026-08-15, recorded in `tasks.md`) that the two
+  projects evolve independently: do not track, upstream, or downstream
+  changes between them. This repo is authoritative for its own behavior,
+  and divergence from blue-pencil is accepted.

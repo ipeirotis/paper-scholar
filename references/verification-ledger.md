@@ -43,6 +43,7 @@ source: doi:10.1145/1234567.1234568
 version-read: version of record
 archived: literature/sources/smith2021--10.1145_1234567.1234568-4b1f22aa.pdf sha256:9f2a…
 license: CC-BY-4.0
+updates: none
 verdict: partially supported
 evidence: "labels reached expert agreement on 3 of 5 tasks" (sec. 5.1) — cost claim not addressed
 notes: cost figure may come from a different paper; asked author.
@@ -71,6 +72,21 @@ notes: cost figure may come from a different paper; asked author.
   when none was determinable (treated as restricted), or `n/a` when nothing
   was archived. This is what lets a later audit establish why a committed
   copy was permitted to be where it is.
+- `updates:` records, for DOI-backed sources, the outcome of the registrar
+  update-relation check made at verification time
+  (`references/source-archive.md`): `none`, the relation found with its
+  target and date (`updates: retraction doi:10.1145/7654321 (2027-01-10)`),
+  or `check failed (<reason>)` when the source text was read but the update
+  query itself could not complete (timeout, rate limit, registrar outage) —
+  never `none` for a check that did not actually run. A failed check leaves
+  the evidence-based verdict standing, is surfaced in the report as an
+  incomplete retraction screen, and heals on the next reuse, since the reuse
+  rules query the registrar again whenever a DOI-backed entry is reused.
+  URL-backed entries omit the field, as do entries written before it
+  existed.
+- `maintained-by:` is informational, naming the tool that writes the file.
+  Ledgers written under this skill's earlier names (paper-scholar,
+  chapter-and-verse) remain valid and are not rewritten to rebrand them.
 - Novelty scans are logged too, since they age and their scope matters. Each
   lead carries the same source-identity, archive, and evidence fields as a
   citation entry — a lead a later run cannot reopen and re-read is not
@@ -151,6 +167,51 @@ the claim text and the recorded `searched:` scope still match and the entry
 is younger than about six months — the source that did not exist last year
 may exist now.
 
+Bibliography audits get their own entry form, since they verify a
+reference's identity rather than a claim (`references/bibliography-audit.md`
+defines the pass and its verdicts):
+
+```markdown
+## [2026-08-15T11:12Z] bib:smith2021
+entry-hash: 9c3d21e4ab07
+source: doi:10.1145/1234567.1234568
+registrar: Crossref
+updates: none
+verdict: discrepant
+evidence: registrar title, authors, and DOI match the entry; year is 2021 in
+  the entry, 2020 in the registrar record (online-first) — correction proposed
+```
+
+- `entry-hash` is the first 12 hex characters of the SHA-256 of the
+  bibliography entry's effective source text — the BibTeX entry or
+  reference-list item with any `@string`, `crossref`, or `xdata` indirection
+  expanded to the referenced values, so editing a shared definition
+  re-audits every entry that inherits from it — with runs of whitespace
+  collapsed to single spaces and case preserved, the same hashing rule as
+  `claim-hash`. An edited entry is audited fresh automatically.
+- `source:` names the DOI the entry carries; for a DOI-less entry it names
+  what the audit actually checked — the registrar record matched by search
+  (`source: doi:10.1234/abcd — matched by search; proposed addition`), the
+  entry's own URL (with `accessed:`), or `none found`.
+- There is no `archived:` line: nothing is fetched beyond registrar metadata
+  or the entry's own page, and the registrar fields quoted in `evidence:`
+  are what a later audit needs.
+
+A `bib:` entry reuses when the bibliography entry's current text still
+hashes to the recorded `entry-hash` and the verdict is `confirmed` or
+`discrepant` — and reuse re-queries the registrar's update relations exactly
+as a DOI-backed `cite:` reuse does, so a retraction surfaces even for a
+settled entry. The same staleness checks apply in miniature: a verdict
+earned from the entry's own URL gets the mutable-URL re-fetch before reuse
+(an unreachable page downgrades it to dated history), and a
+registrar-backed verdict older than the header's `refresh-interval:` is
+re-compared against a freshly fetched registrar record before reuse, since
+metadata can be corrected without any update relation being deposited.
+`mismatched` and `unconfirmed` verdicts are always retried —
+registrar coverage grows and the author may have supplied context — with the
+prior outcome still reported as dated history. Supersession for `bib:`
+entries is by `entry-hash`: the newest entry for a hash governs.
+
 Relocations get entries too, since past entries are never edited: when an
 archived file moves (a fallback copy uploaded to the configured store once it
 is reachable again), append a `relocation` entry, and let the reuse-time
@@ -211,7 +272,8 @@ page downgrades the entry to dated history ("verified against the page as of
 <date>"), never presented as current. A DOI-identified version of record
 skips the per-reuse re-fetch but is not assumed immutable: when reusing it,
 query the registrar's metadata for updates (errata, corrigenda, retractions,
-replacement versions — Crossref's update-to relations). An update means
+replacement versions — Crossref's update relations, checked in both
+directions per `references/source-archive.md`). An update means
 re-fetch and re-verify, and any hash drift found on a re-fetch is handled per
 `references/source-archive.md`. Declared updates are all the registrar can
 show; silent replacements it cannot, so DOI-backed entries also get a
