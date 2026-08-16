@@ -108,8 +108,12 @@ Check the cheapest authoritative signal first, per target:
   changed page invalidates that cached outcome.
 
 While at the registrar, run the update-relations screen from
-`references/source-archive.md` on whichever DOI is in hand — a retraction or
-erratum surfacing during a sweep is flagged exactly as at verification time.
+`references/source-archive.md` on every DOI in the version chain — the
+baseline's own DOI (a preprint's registrar DOI included) and each detected
+publication DOI — because retraction and erratum notices attach to one
+side of the chain or the other, and a reverse query for one identifier
+does not cover notices targeting the rest. A retraction or erratum
+surfacing during a sweep is flagged exactly as at verification time.
 A target with no publication found is a dated finding, not a failure: record
 which channels were checked.
 
@@ -139,8 +143,11 @@ new text against the validated archived copy, at two granularities:
   Renumbering alone is mapping, not change — record the map.
 - **Evidence passages**, for the per-claim decision: locate each dependent
   entry's quoted `evidence:` passage in the new text. Found materially
-  unchanged, wherever it moved, means the claim is *intact*; reworded in
-  substance, or not found at all, means *affected*.
+  unchanged, wherever it moved — and with its surrounding paragraph free of
+  newly added or altered qualifiers, limitations, or corrections bearing on
+  the claim — means the claim is *intact*; a passage reworded in substance,
+  not found at all, or intact only with changed surrounding context that
+  bears on the claim, means *affected*.
 
 A quotes-only artifact — the `--quotes.md` fallback of
 `references/source-archive.md` — is never a full baseline, however cleanly
@@ -160,7 +167,8 @@ it no passage can be confirmed intact.
 
 Classify every claim resting on the source — by claim-hash for `cite:` and
 `uncited` entries; a novelty lead, whose entry form carries no claim-hash,
-is identified by its entry heading, the quoted novelty claim. Neither class
+is identified by its normalized novelty claim: the heading with the
+timestamp and `novelty — ` prefix stripped, whitespace collapsed. Neither class
 changes a verdict now:
 
 - An **affected** claim — evidence reworded, moved out of recognition, or in

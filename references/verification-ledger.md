@@ -285,8 +285,10 @@ status: recorded; a later sweep may re-ask after ~6 months
   every dependent claim is affected pending the text.
 - `changed:` is the section-level summary of the comparison; `claims:` lists
   each governing dependent entry resting on the source — identified by
-  claim-hash for `cite:` and `uncited` entries, and by its entry heading for
-  a novelty lead, whose form carries no claim-hash — marked `affected` or
+  claim-hash for `cite:` and `uncited` entries, and by its normalized
+  novelty claim (the heading with timestamp and `novelty — ` prefix
+  stripped) for a novelty lead, whose form carries no claim-hash — marked
+  `affected` or
   `intact` per the evidence-passage lookup. `updates:` carries the registrar
   update-relation outcome with the same semantics as a `cite:` entry.
 - When the archived text the verdicts were earned on is confirmed missing
@@ -400,11 +402,12 @@ Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a
 fresh scan, not a current answer, and state the scan date whenever one is
 reused. Supersession for novelty entries is by the quoted novelty claim
-itself — the entry heading, with runs of whitespace collapsed, since the
-form carries no claim-hash: the newest scan for that claim governs, and
-only the governing scan's leads count as live dependencies anywhere else
-(the version sweep included) — an older scan's leads are history, never
-current dependencies. Age is not the only predicate: reuse a novelty entry only when the
+itself — the heading text after stripping the timestamp and the
+`novelty — ` prefix, with runs of whitespace collapsed, since the form
+carries no claim-hash and heading timestamps never repeat: the newest scan
+for that normalized claim governs, and only the governing scan's leads
+count as live dependencies anywhere else (the version sweep included) — an
+older scan's leads are history, never current dependencies. Age is not the only predicate: reuse a novelty entry only when the
 manuscript's novelty claim still reads as the recorded one and the entry's
 `searched:` scope covers what the current request asks. A reworded
 contribution, a new database, or a broadened boundary gets a fresh scan
