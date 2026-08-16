@@ -50,22 +50,36 @@ fresh work.
 - **Entry has no DOI.** Search the registrars for the work (Crossref's
   bibliographic query on title, authors, and year; DataCite for datasets and
   reports). A record that confidently identifies the same work yields its
-  DOI as a proposed addition. When the entry carries a URL instead, fetch it
-  and check the page's own metadata against the entry.
+  DOI as a proposed addition — and, now that a DOI is in hand, the same
+  update-relations screen the DOI-bearing branch runs: a retraction does
+  not become invisible because the entry omitted its DOI. When the entry
+  carries a URL instead, fetch it and check the page's own metadata against
+  the entry; only an authoritative page — the publisher's, an institutional
+  repository or preprint server, a standards body, official documentation —
+  can confirm the work, because a personal or otherwise author-controlled
+  page can assert whatever its author typed. A non-authoritative page
+  corroborates but leaves the entry `unconfirmed`.
 - Classify each entry as one of:
   - **confirmed**: a registrar record — or, for a DOI-less entry, its own
-    reachable URL — identifies the same work with materially matching fields
+    authoritative URL — identifies the same work with materially matching
+    fields and nothing to correct
   - **discrepant**: same work, but fields differ (wrong year, misspelled
     author, renamed venue, missing DOI); each difference becomes a proposed
-    correction in `Author decisions`
-  - **mismatched**: the DOI resolves to a different work or to nothing, or
-    the registrar record contradicts the entry across the whole record; the
-    reference is wrong as it stands and may be fabricated — report what the
-    locator actually resolved to
-  - **unconfirmed**: no DOI, no registrar record found, no reachable URL.
-    Registrar coverage is incomplete — books, theses, workshop papers, and
-    older or non-English venues are routinely absent — so `unconfirmed` is
-    a question for the author, never a fabrication verdict on its own.
+    correction in `Author decisions`. A registrar match whose only gap is
+    the entry's omitted DOI is discrepant, not confirmed — the discovered
+    DOI stays a visible proposal until the author adopts it
+  - **mismatched**: the DOI resolves to a different work, or the registrar
+    authoritatively reports it unregistered (a DOI-not-found answer, not a
+    transient error), or the registrar record contradicts the entry across
+    the whole record; the reference is wrong as it stands and may be
+    fabricated — report what the locator actually resolved to
+  - **unconfirmed**: no DOI, no registrar record found, no reachable
+    authoritative URL — or the lookup itself failed transiently (timeout,
+    rate limit, registrar outage); record which in the entry. Registrar
+    coverage is incomplete — books, theses, workshop papers, and older or
+    non-English venues are routinely absent — and a transient failure is
+    evidence of nothing, so `unconfirmed` is a question for the author or a
+    retry on the next run, never a fabrication verdict on its own.
 
 ### 4. Update the ledger, then report
 
