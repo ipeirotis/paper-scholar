@@ -49,8 +49,13 @@ retrying an unverifiable verdict is a verification run's job under the
 reuse rules, not the sweep's. Entries of
 every form participate — `cite:`, `uncited`, and novelty leads all record
 `version-read`, and each is a dated reliance on a specific text. Dedupe by
-source identity: one target per work, carrying the claim-hashes and evidence
-locations of everything that rests on it. Skip a target whose newest `vor`
+source identity, but never collapse distinct baselines: entries verified
+against different revisions or snapshots of the same work (a v1 versus a v2
+preprint read, two dated page snapshots) group by source identity plus the
+recorded `version-read` and archived hash — one comparison group per
+baseline, each carrying the claim-hashes and evidence locations of what
+rests on that baseline, because a claim is only ever classified against the
+text its verdict was earned on. Skip a target whose newest `vor`
 entry still stands under the ledger's reuse rules — a publication already
 found and diffed, or a none-found or text-unreachable result younger than
 about six months — unless the author explicitly asks for a full re-sweep.
@@ -150,10 +155,11 @@ returning the report. Then report exactly three sections:
 - **Scope and detection:** targets swept, targets skipped under a
   still-standing `vor` entry, detection channels queried, and lookups that
   failed.
-- **Version reconciliation:** one row per swept source — what was read, what
-  was found and how, the section-level changes (or the unreconcilable
-  outcome when the archived text failed its integrity check), and each
-  dependent claim marked affected or intact.
+- **Version reconciliation:** one row per swept source — what was read and
+  what was found, and how; when a version was found, the section-level
+  changes (or the unreconcilable outcome when the archived text failed its
+  integrity check) and each dependent claim marked affected or intact; a
+  none-found row records the channels checked instead.
 - **Author decisions:** each re-check proposal, each paywalled
   version-of-record request, each ambiguous publication match as a question,
   any retraction or erratum the update screen surfaced, and any newer

@@ -263,8 +263,10 @@ published: none found — checked arXiv journal-ref, Crossref relations, bibliog
 status: recorded; a later sweep may re-ask after ~6 months
 ```
 
-- `published:` names the found version-of-record DOI and the channel that
-  established it, or `none found` with the channels checked. When
+- `published:` names the found version-of-record DOI — or, for a URL-backed
+  target, the canonical URL now serving the fuller text, with the fetch date
+  in the entry's `accessed:` field — and the channel that established it, or
+  `none found` with the channels checked. When
   publication is established but only a paywalled copy exists, the found DOI
   is recorded with `text not legally reachable`: the paywall flow runs, and
   every dependent claim is affected pending the text.
@@ -282,8 +284,11 @@ status: recorded; a later sweep may re-ask after ~6 months
   treated as found-and-diffed: it stands as the dated record that
   publication was found, and the source leaves sweep scope only when
   re-verification lands fresh entries against the new text.
-- A `vor` entry never changes a verdict. Supersession is by source identity:
-  the newest `vor` entry for a source governs. A `none found` outcome stands
+- A `vor` entry never changes a verdict. Supersession is by source identity
+  plus the baseline read (the recorded `version-read:`): the newest entry
+  for that pair governs, so a work verified against two different revisions
+  keeps one governing entry per baseline, each comparing against the text
+  its claims' verdicts were earned on. A `none found` outcome stands
   for about six months — publication lag is months, not days — so a sweep
   inside that window skips the target unless the author asks for a full
   re-sweep; a `text not legally reachable` outcome ages the same way, since
