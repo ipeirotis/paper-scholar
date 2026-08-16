@@ -127,6 +127,19 @@ A zero-lead novelty scan likewise records `lead: none — searches returned
 nothing on point` under its `searched:` line: the absence of a found overlap
 is itself a dated finding, distinct from a scan that never ran.
 
+An attempted novelty scan that did not finish records that distinction rather
+than masquerading as a zero-lead result:
+
+```markdown
+## [2026-08-16T16:48Z] novelty — "we are the first to model X under Y"
+searched: incomplete — <queries or channels attempted>; <failure>
+lead: not assessed — search did not run to completion
+status: search incomplete; nonreusable
+```
+
+This entry is audit history only: it never satisfies reuse, irrespective of
+age or matching scope, and the next applicable run retries the search.
+
 The third capability — investigating an uncited factual claim — gets its own
 entry form, since it is neither a `cite:` verification nor a novelty scan:
 
@@ -171,6 +184,17 @@ A no-candidate investigation ages like a novelty scan: reuse it only while
 the claim text and the recorded `searched:` scope still match and the entry
 is younger than about six months — the source that did not exist last year
 may exist now.
+
+If an uncited-claim search did not finish, use
+`candidate-source: not assessed — search did not run to completion` and
+`status: search incomplete; nonreusable`, with the attempted queries and actual
+failure on `searched:`. It is audit history, not a no-candidate finding, and the
+next applicable run retries it. Uncited-search attempts supersede at the claim
+level, not at the candidate-source level: for a matching `claim-hash`, only the
+latest entry governs reuse. Thus a newer incomplete entry invalidates every
+older candidate or no-candidate result for that claim, even though its
+`candidate-source` sentinel differs, and forces the promised retry. After a
+completed retry, that newer completed entry becomes the governing result.
 
 Bibliography audits get their own entry form, since they verify a
 reference's identity rather than a claim (`references/bibliography-audit.md`

@@ -43,6 +43,12 @@ ledger's rules (`references/verification-ledger.md`); only the rest go to
 lookup. Reused verdicts are reported with their original dates, never as
 fresh work.
 
+For the remaining entries, use the orchestration rules in
+`references/parallel-retrieval.md`: when subagents are available, dispatch one
+worker per entry concurrently up to the platform limit. The coordinator
+validates every returned registrar comparison and is the only ledger writer;
+without subagents, check the same entry units sequentially.
+
 ### 3. Check each remaining entry
 
 - **Entry has a DOI.** Resolve it and cross-check the registrar's record per
