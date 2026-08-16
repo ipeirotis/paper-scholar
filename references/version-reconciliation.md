@@ -55,8 +55,8 @@ preprint read, two dated page snapshots) group by source identity plus the
 recorded `version-read` and archived hash — one comparison group per
 baseline, each carrying the claim-hashes and evidence locations of what
 rests on that baseline, because a claim is only ever classified against the
-text its verdict was earned on. Skip a target whose newest `vor`
-entry still stands under the ledger's reuse rules — a publication already
+text its verdict was earned on. Skip a target — a baseline group — whose
+own governing `vor` entry still stands under the ledger's reuse rules — a publication already
 found and diffed whose `claims:` list still covers every governing entry
 resting on the baseline, or a none-found or text-unreachable result younger
 than about six months — unless the author explicitly asks for a full

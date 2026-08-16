@@ -94,9 +94,9 @@ reopen them without a new request.
   evidence changed; intact claims keep their dated verdicts, and no verdict
   ever changes in a sweep. Results ledgered as dated `vor` entries keyed by
   source identity (none-found results stand ~6 months); verification runs
-  use the newest `vor` entry as a bridge when the version predicate blocks
-  reuse, and offer the sweep for out-of-scope preprint reads instead of
-  pulling them in. The reuse-time slice had already shipped in the ledger
+  use the baseline's governing `vor` entry as a bridge when the version
+  predicate blocks reuse, and offer the sweep for out-of-scope preprint
+  reads instead of pulling them in. The reuse-time slice had already shipped in the ledger
   rules (2026-08-14). (`references/version-reconciliation.md`,
   `references/verification-ledger.md`, `references/literature-checks.md`,
   `SKILL.md`, `README.md`, `AGENTS.md`, `agents/openai.yaml`)

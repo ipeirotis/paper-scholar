@@ -322,10 +322,12 @@ The governing entry is reusable when all of these hold:
   earned on a preprint or an abstract-only read is retried, not reused, once
   a fuller text (the version of record, the full paper) may be available — an
   unchanged DOI never carries a preprint verdict onto the published version.
-  When this predicate forces the retry, consult the source's newest `vor`
-  entry first: a version sweep may already have archived the fuller text and
-  recorded where the evidence passage moved, turning the retry into a
-  targeted read instead of a fresh hunt;
+  When this predicate forces the retry, consult the `vor` entry governing
+  this entry's own baseline — matched by source identity plus the recorded
+  `version-read` and archived hash, never by source alone — first: a version
+  sweep may already have archived the fuller text and recorded where the
+  evidence passage moved, turning the retry into a targeted read instead of
+  a fresh hunt;
 - the archived copy still exists at its recorded path (or in the configured
   store) and matches its recorded SHA-256 — a verdict whose exact text can no
   longer be reopened is not reusable. When the store cannot be checked this

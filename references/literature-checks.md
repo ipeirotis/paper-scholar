@@ -72,10 +72,11 @@ never reshape which claims are in scope — only which ones need fresh work.
 
 Two version-sweep touchpoints (`references/version-reconciliation.md`)
 belong to this step. When the version predicate blocks a reuse — a preprint
-or abstract-only read with fuller text possibly available — the source's
-newest `vor` entry may already hold the archived fuller text and the
-evidence passage's new location, turning the forced retry into a targeted
-read. And when the ledger holds preprint- or abstract-read entries on
+or abstract-only read with fuller text possibly available — the `vor` entry
+governing that read's baseline (matched by source identity plus the
+recorded `version-read` and archived hash) may already hold the archived
+fuller text and the evidence passage's new location, turning the forced
+retry into a targeted read. And when the ledger holds preprint- or abstract-read entries on
 sources outside the current scope, they are not pulled in: offer a version
 sweep in `Author decisions` instead.
 
