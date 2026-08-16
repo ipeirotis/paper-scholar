@@ -32,7 +32,7 @@ carried an empty title field on the verification date, for example).
 | `sheng2008` | confirmed | Crossref `10.1145/1401890.1401965`: "Get another label? …", Sheng/Provost/Ipeirotis, KDD 2008, ACM — complete record, fields match |
 | `vaswani2017` | discrepant | DataCite `10.48550/arXiv.1706.03762`: year 2017; the entry deliberately says 2018 — year correction expected as a proposal |
 | `liu2019` | mismatched | Its DOI `10.18653/v1/N19-1423` resolves to Devlin et al., NAACL 2019 (Crossref: first author Devlin, 2019; title field empty on verification date) — not the fabricated database-tuning paper the entry describes |
-| `snow2008` | confirmed | No DOI exists (ACL Anthology D08-1027 lists none); the entry's Anthology URL is an authoritative page confirming the work |
+| `snow2008` | discrepant | Crossref DOI `10.3115/1613715.1613751` exists for the work ("Cheap and fast---but is it good?", Snow, EMNLP '08) even though the ACL Anthology page displays no DOI — a registrar match whose only gap is the entry's omitted DOI is discrepant, with the DOI proposed as an addition. *Corrected 2026-08-16 after the first eval run: the initial expectation ("confirmed via URL") checked only the Anthology page, not a registrar search — the skill's own protocol out-verified the fixture author.* |
 | `ramanathan2014` | unconfirmed | Fabricated entry; Crossref bibliographic search returns no plausible match — expected verdict is a question for the author, never a fabrication ruling on absence alone |
 
 ### `fixtures/uncited-claim/`

@@ -25,7 +25,7 @@
       "id": 1,
       "name": "bib-audit",
       "prompt": "Audit the bibliography metadata in refs.bib -- I want to know whether each entry identifies a real work and whether the fields are right.",
-      "expected_output": "An entry-level audit classifying: sheng2008 as confirmed (clean Crossref record); vaswani2017 as discrepant (entry year 2018 vs registrar 2017; correction proposed, not applied); liu2019 as mismatched (its DOI resolves to Devlin et al., NAACL 2019, a different work); snow2008 as confirmed via its ACL Anthology page (no DOI exists); ramanathan2014 as unconfirmed, phrased as a question for the author rather than a fabrication verdict. refs.bib is not edited; bib: ledger entries are appended.",
+      "expected_output": "An entry-level audit classifying: sheng2008 as confirmed (clean Crossref record); vaswani2017 as discrepant (entry year 2018 vs registrar 2017; correction proposed, not applied); liu2019 as mismatched (its DOI resolves to Devlin et al., NAACL 2019, a different work); snow2008 as discrepant (Crossref DOI 10.3115/1613715.1613751 exists though the Anthology page omits it; the DOI is proposed as an addition); ramanathan2014 as unconfirmed, phrased as a question for the author rather than a fabrication verdict. refs.bib is not edited; bib: ledger entries are appended.",
       "files": [
         "fixtures/bib-audit/refs.bib"
       ],
@@ -33,7 +33,7 @@
         "sheng2008 is classified confirmed against its registrar record",
         "vaswani2017 is classified discrepant, with the year 2018-vs-2017 difference reported as a proposed correction (not applied)",
         "liu2019 is classified mismatched, with the report stating its DOI actually resolves to the Devlin et al. NAACL 2019 paper",
-        "snow2008 is classified confirmed via its ACL Anthology page, not left unconfirmed",
+        "snow2008 is classified discrepant with its Crossref DOI (10.3115/1613715.1613751) proposed as an addition, not applied",
         "ramanathan2014 is classified unconfirmed and raised as a question for the author, not ruled fabricated on registrar absence alone",
         "refs.bib in the host copy is byte-identical to the fixture (nothing was edited)",
         "Host copy contains a ledger with dated bib: entries for the audited references",
