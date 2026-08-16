@@ -334,12 +334,13 @@ status: recorded; a later sweep may re-ask after ~6 months
   else — and appends the outcome, the same healing a DOI-backed citation
   reuse gives its own failed screen. Standing is freshness-screened even
   when the last check succeeded, exactly as reusing a `cite:` entry is:
-  before a sweep honors a found-and-diffed entry, re-query a DOI-backed
-  found version's registrar update relations — and, when its recorded
-  fetch is older than the header's `refresh-interval:`, re-fetch and
-  hash-compare the file per the refresh rules above, since silent
-  replacements never surface as update relations — and re-fetch a
-  URL-backed fuller text's page. A newly deposited retraction or erratum,
+  before a sweep honors a found-and-diffed entry, re-query the registrar
+  update relations for every DOI in the entry's version chain — the
+  baseline's own DOI and each publication DOI, since notices attach to
+  either side — and, when the found version's recorded fetch is older than
+  the header's `refresh-interval:`, re-fetch and hash-compare the file per
+  the refresh rules above, since silent replacements never surface as
+  update relations; a URL-backed fuller text's page is re-fetched as well. A newly deposited retraction or erratum,
   a changed page, or hash drift ends the standing, is flagged to the
   author, and yields a fresh entry. The bridge
   stands until re-verification lands fresh entries with `version-read:
