@@ -131,6 +131,7 @@ entry form, since it is neither a `cite:` verification nor a novelty scan:
 ## [2026-08-15T09:02Z] uncited — methods.tex:57
 claim: "It is well known that crowd labels converge with enough redundancy."
 claim-hash: c41f88a02b7d
+searched: <the queries and databases used>
 candidate-source: doi:10.5555/wxyz — Roe 2018, "Redundancy and convergence in crowd labeling"
   version-read: version of record
   archived: literature/sources/roe2018--10.5555_wxyz-1a9e44b0.pdf sha256:8d1c…
@@ -268,15 +269,20 @@ status: recorded; a later sweep may re-ask after ~6 months
   is recorded with `text not legally reachable`: the paywall flow runs, and
   every dependent claim is affected pending the text.
 - `changed:` is the section-level summary of the comparison; `claims:` lists
-  each governing claim-hash resting on the source, `affected` or `intact`
-  per the evidence-passage lookup. `updates:` carries the registrar
+  each governing dependent entry resting on the source — identified by
+  claim-hash for `cite:` and `uncited` entries, and by its entry heading for
+  a novelty lead, whose form carries no claim-hash — marked `affected` or
+  `intact` per the evidence-passage lookup. `updates:` carries the registrar
   update-relation outcome with the same semantics as a `cite:` entry.
 - A `vor` entry never changes a verdict. Supersession is by source identity:
   the newest `vor` entry for a source governs. A `none found` outcome stands
   for about six months — publication lag is months, not days — so a sweep
   inside that window skips the target unless the author asks for a full
   re-sweep; a `text not legally reachable` outcome ages the same way, since
-  open access appears on embargo timescales. A found-and-diffed entry is not
+  open access appears on embargo timescales — but it is invalidated at once
+  when the requested copy arrives in the source store: an author-supplied
+  text is diffed on the next sweep or verification run, never held to the
+  window. A found-and-diffed entry is not
   redone: it stands as the bridge until re-verification lands fresh entries
   with `version-read: version of record` against the source, which drops it
   out of sweep scope.

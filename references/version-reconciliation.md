@@ -54,6 +54,8 @@ locations of everything that rests on it. Skip a target whose newest `vor`
 entry still stands under the ledger's reuse rules — a publication already
 found and diffed, or a none-found or text-unreachable result younger than
 about six months — unless the author explicitly asks for a full re-sweep.
+A text-unreachable result dies early: the requested copy arriving in the
+source store reopens the target at once, without waiting out the window.
 
 ### 2. Detect the published or fuller version
 
@@ -77,6 +79,11 @@ Check the cheapest authoritative signal first, per target:
   published. For it, detection means checking whether a legal full text is
   reachable now: the publisher's link from DOI resolution, Unpaywall, an
   embargo that has lapsed.
+- **A URL-backed target** — an abstract-only or partial snapshot of a
+  source with no DOI — gets its canonical URL re-fetched: the page may now
+  expose or link the fuller text it once withheld. Compare what comes back
+  against the archived snapshot under the source-archive snapshot rules
+  before treating anything as new.
 
 While at the registrar, run the update-relations screen from
 `references/source-archive.md` on whichever DOI is in hand — a retraction or
@@ -88,8 +95,13 @@ which channels were checked.
 
 When a published or fuller version exists and a legal copy is reachable,
 retrieve and archive it under `references/source-archive.md` — naming, hash,
-license, and store selection as usual. Then compare it against the archived
-text the verdicts were earned on, at two granularities:
+license, and store selection as usual. Before comparing, validate the old
+side per the ledger's archive check: the archived text the verdicts were
+earned on must still exist at its recorded path (following relocation
+entries) and match its recorded SHA-256. A target whose old text cannot be
+reopened is reported as unreconcilable in `Author decisions` — never diffed
+against a reconstructed stand-in. Then compare the new text against that
+validated archived copy, at two granularities:
 
 - **Sections**, for the summary: which were rewritten, added, or removed.
   Renumbering alone is mapping, not change — record the map.
@@ -107,7 +119,9 @@ it no passage can be confirmed intact.
 
 ### 4. Map the dependent claims
 
-Classify every claim resting on the source, by claim-hash. Neither class
+Classify every claim resting on the source — by claim-hash for `cite:` and
+`uncited` entries; a novelty lead, whose entry form carries no claim-hash,
+is identified by its entry heading, the quoted novelty claim. Neither class
 changes a verdict now:
 
 - An **affected** claim — evidence reworded, moved out of recognition, or in

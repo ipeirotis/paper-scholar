@@ -5,7 +5,7 @@
       "id": 0,
       "name": "audit-manuscript",
       "prompt": "Check whether the citations in paper.tex support their claims.",
-      "expected_output": "A citation audit classifying: the Transformer 28.4 BLEU claim as supported; the Transformer needs-more-compute claim as unsupported (the paper states a fraction of prior training costs); the BERT GLUE-80.5-plus-annotation-costs claim as partially supported (cost half unaddressed); the Snow et al. non-expert-quality claim as supported; the kellner2021 claim as unverifiable (key resolves to no work). The manuscript and bibliography are not edited; a dated ledger is written at literature/verifications.md; every fresh verdict quotes evidence with a resolvable locator.",
+      "expected_output": "A citation audit classifying: the Transformer 28.4 BLEU claim as supported; the Transformer needs-more-compute claim as unsupported (the paper states a fraction of prior training costs); the BERT GLUE-80.5-plus-annotation-costs claim as partially supported (cost half unaddressed); the Snow et al. non-expert-quality claim as supported; the kellner2021 claim as unverifiable (key resolves to no work). The manuscript and bibliography are not edited; a dated ledger is written at literature/verifications.md; every verdict earned from a retrieved source quotes evidence with a resolvable locator, while the unverifiable kellner2021 entry records explicit none sentinels instead of invented evidence.",
       "files": [
         "fixtures/audit-manuscript/paper.tex",
         "fixtures/audit-manuscript/refs.bib"
