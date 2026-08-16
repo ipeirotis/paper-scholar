@@ -28,6 +28,10 @@ citation-needed — old references to those names denote this repo.
 - `references/verification-ledger.md` — the dated results ledger written into
   host repos, its reuse rules, and the opt-in JSONL companion for tooling.
 - `agents/openai.yaml` — interface metadata for non-Claude agent platforms.
+- `evals/` — the eval suite: fixture manuscripts and bibliographies with
+  verified ground truth (`evals/README.md` records the provenance),
+  `evals.json` prompts and assertions for the skill-creator eval loop.
+  Run results and workspaces stay outside this repo.
 - `tasks.md` — the feature tracker (see below).
 
 ## Two repos to keep straight

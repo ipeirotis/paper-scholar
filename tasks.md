@@ -113,15 +113,31 @@ reopen them without a new request.
   (`references/verification-ledger.md`, `SKILL.md`, `README.md`,
   `AGENTS.md`)
 
+- **2026-08-16 — Eval suite.** Approved by the author: fixture manuscripts
+  and bibliographies with known-good, known-bad, partially supported, and
+  unverifiable citations, exercising the citation audit, the bibliography
+  audit, and the uncited-claim investigation. Expected verdicts were pinned
+  against the live sources and registrars on 2026-08-16 — never model
+  memory — with provenance recorded in `evals/README.md` (including two
+  facts memory had wrong: the Snow et al. anthology ID and an empty title
+  field in the BERT Crossref record). Runs use the skill-creator eval loop
+  (with-skill vs. no-skill baseline, graded assertions on classification
+  accuracy, integrity, and the audit trail); results and workspaces stay
+  outside the repo. The trigger-description-optimization slice is
+  deliberately deferred to the Backlog until behavior settles.
+  (`evals/evals.json`, `evals/fixtures/`, `evals/README.md`, `AGENTS.md`)
+
 ## Proposed (awaiting approval)
-- **Eval suite.** Test manuscripts with known-good, known-bad, and
-  unverifiable citations to benchmark the skill's classifications and catch
-  regressions (skill-creator eval loop), plus trigger-description
-  optimization once behavior settles.
+
+(empty — ideas awaiting the author's approval go here)
 
 ## Backlog
 
-(empty — new requests go here with the date they were filed)
+- **2026-08-16 — Trigger-description optimization.** The deferred second
+  half of the eval-suite item: optimize the `SKILL.md` trigger description
+  with the skill-creator description-optimization loop once the skill's
+  behavior has settled (three features landed 2026-08-16 alone; let the
+  dust clear first).
 
 ## Decided, no action
 
