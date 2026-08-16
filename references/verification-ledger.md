@@ -245,7 +245,7 @@ outcome, recording what the sweep detected and which claims it touches:
 
 ```markdown
 ## [2026-08-16T09:12Z] vor — arXiv:2106.05432
-version-read: preprint (arXiv:2106.05432v2)
+version-read: preprint (arXiv:2106.05432v2) — baseline sha256:4e7b…
 published: doi:10.1109/tkde.2026.998877 — Crossref is-preprint-of relation
 updates: none
 archived: literature/sources/lee2026--10.1109_tkde.2026.998877-8e02d4b1.pdf sha256:66c0…
@@ -258,7 +258,7 @@ status: re-checks proposed to the author; no verdict changed
 
 ```markdown
 ## [2026-08-16T09:12Z] vor — arXiv:2107.04567
-version-read: preprint (arXiv:2107.04567v1)
+version-read: preprint (arXiv:2107.04567v1) — baseline sha256:9c31…
 published: none found — checked arXiv journal-ref, Crossref relations, bibliographic search
 status: recorded; a later sweep may re-ask after ~6 months
 ```
@@ -285,10 +285,11 @@ status: recorded; a later sweep may re-ask after ~6 months
   publication was found, and the source leaves sweep scope only when
   re-verification lands fresh entries against the new text.
 - A `vor` entry never changes a verdict. Supersession is by source identity
-  plus the baseline read (the recorded `version-read:`): the newest entry
-  for that pair governs, so a work verified against two different revisions
-  keeps one governing entry per baseline, each comparing against the text
-  its claims' verdicts were earned on. A `none found` outcome stands
+  plus the baseline read — the `version-read:` label together with the
+  baseline sha256 it records: the newest entry for that pair governs, so a
+  work verified against two different revisions, or two same-label
+  snapshots with different hashes, keeps one governing entry per baseline,
+  each comparing against the text its claims' verdicts were earned on. A `none found` outcome stands
   for about six months — publication lag is months, not days — so a sweep
   inside that window skips the target unless the author asks for a full
   re-sweep; a `text not legally reachable` outcome ages the same way, since
@@ -296,9 +297,13 @@ status: recorded; a later sweep may re-ask after ~6 months
   when the requested copy arrives in the source store: an author-supplied
   text is diffed on the next sweep or verification run, never held to the
   window. A found-and-diffed entry is not
-  redone: it stands as the bridge until re-verification lands fresh entries
-  with `version-read: version of record` against the source, which drops it
-  out of sweep scope.
+  redone — provided its `claims:` list still covers every governing entry
+  resting on that baseline. A claim verified against the baseline after the
+  sweep reopens the target: the next sweep maps the new dependencies
+  against the already-archived fuller text and recorded diff (no
+  re-detection or re-fetch needed) and appends a fresh entry. The bridge
+  stands until re-verification lands fresh entries with `version-read:
+  version of record` against the source, which drops it out of sweep scope.
 
 ## Reuse rules
 

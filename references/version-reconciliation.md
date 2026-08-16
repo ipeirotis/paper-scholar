@@ -57,9 +57,13 @@ baseline, each carrying the claim-hashes and evidence locations of what
 rests on that baseline, because a claim is only ever classified against the
 text its verdict was earned on. Skip a target whose newest `vor`
 entry still stands under the ledger's reuse rules — a publication already
-found and diffed, or a none-found or text-unreachable result younger than
-about six months — unless the author explicitly asks for a full re-sweep.
-A text-unreachable result dies early: the requested copy arriving in the
+found and diffed whose `claims:` list still covers every governing entry
+resting on the baseline, or a none-found or text-unreachable result younger
+than about six months — unless the author explicitly asks for a full
+re-sweep. A dependency ledgered against a reconciled baseline after its
+sweep reopens only the mapping step: the archived fuller text and recorded
+diff serve as-is, and the new claims are classified against them. A
+text-unreachable result dies early: the requested copy arriving in the
 source store reopens the target at once, without waiting out the window.
 
 ### 2. Detect the published or fuller version
