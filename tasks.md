@@ -10,6 +10,17 @@ reopen them without a new request.
 
 ## Done
 
+- **2026-08-16 — Parallel retrieval orchestration.** After the inventory and
+  ledger-reuse boundary, citation checks now launch one subagent per distinct
+  source (sharing one retrieval across all claims citing it); bibliography
+  audits launch one per entry, novelty work one per independent question, and
+  version sweeps one per baseline group, up to the platform's worker limit.
+  The coordinator validates results and exclusively writes the ledger, with a
+  documented sequential fallback when subagents are unavailable.
+  (`references/parallel-retrieval.md`, `references/literature-checks.md`,
+  `references/bibliography-audit.md`, `references/version-reconciliation.md`,
+  `SKILL.md`)
+
 - **2026-08 — Extract the scholar lane from blue-pencil into a standalone
   skill.** Core protocol carried over with blue-pencil couplings removed.
   (`SKILL.md`, `references/literature-checks.md`)

@@ -70,6 +70,13 @@ date and is not re-fetched. Only the remaining claims go to retrieval. This
 step sits after the inventory and before the first search so the ledger can
 never reshape which claims are in scope — only which ones need fresh work.
 
+Group the fresh cited claims by distinct resolved source and dispatch one
+worker per source under `references/parallel-retrieval.md` when subagents are
+available. Give a source worker all claims attached to that work so it retrieves
+the text only once. Dispatch uncited and novelty searches one per independent
+claim or search question. The coordinator validates the results and remains the
+only ledger writer; without subagents, execute the same units sequentially.
+
 Two version-sweep touchpoints (`references/version-reconciliation.md`)
 belong to this step. When the version predicate blocks a reuse — a preprint
 or abstract-only read with fuller text possibly available — the `vor` entry

@@ -73,6 +73,12 @@ the sweep for that one check even inside the window. A
 text-unreachable result dies early: the requested copy arriving in the
 source store reopens the target at once, without waiting out the window.
 
+Dispatch each remaining baseline group as one independent worker under
+`references/parallel-retrieval.md` when subagents are available, concurrently
+up to the platform limit. The coordinator validates the detection and diff
+results, maps all returned dependencies exactly once, and remains the only
+ledger writer; without subagents, sweep the same baseline units sequentially.
+
 ### 2. Detect the published or fuller version
 
 Check the cheapest authoritative signal first, per target:
