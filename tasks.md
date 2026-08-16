@@ -17,9 +17,12 @@ reopen them without a new request.
   version sweeps one per baseline group, up to the platform's worker limit.
   Citation workers finish before novelty and uncited-claim workers begin, so
   later searches can use cited-source evidence; incomplete searches are
-  explicitly nonreusable rather than recorded as zero-lead findings. The
-  coordinator validates results and exclusively writes the ledger, with a
-  documented sequential fallback when subagents are unavailable.
+  explicitly nonreusable rather than recorded as zero-lead findings, and a
+  newer incomplete uncited search supersedes older claim-level results. Timed-
+  out workers must be cancelled and confirmed terminated before retry or
+  takeover so archive writers cannot overlap. The coordinator validates
+  results and exclusively writes the ledger, with a documented sequential
+  fallback when subagents are unavailable.
   (`references/parallel-retrieval.md`, `references/literature-checks.md`,
   `references/bibliography-audit.md`, `references/version-reconciliation.md`,
   `references/verification-ledger.md`, `SKILL.md`)

@@ -189,7 +189,12 @@ If an uncited-claim search did not finish, use
 `candidate-source: not assessed — search did not run to completion` and
 `status: search incomplete; nonreusable`, with the attempted queries and actual
 failure on `searched:`. It is audit history, not a no-candidate finding, and the
-next applicable run retries it.
+next applicable run retries it. Uncited-search attempts supersede at the claim
+level, not at the candidate-source level: for a matching `claim-hash`, only the
+latest entry governs reuse. Thus a newer incomplete entry invalidates every
+older candidate or no-candidate result for that claim, even though its
+`candidate-source` sentinel differs, and forces the promised retry. After a
+completed retry, that newer completed entry becomes the governing result.
 
 Bibliography audits get their own entry form, since they verify a
 reference's identity rather than a claim (`references/bibliography-audit.md`

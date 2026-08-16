@@ -69,8 +69,13 @@ collide before accepting a result.
 
 ## Failure and integrity handling
 
-A failed or timed-out worker is not a skipped reference. Retry that unit once
-when useful, then complete it in the coordinator if possible. Otherwise report
+A failed or timed-out worker is not a skipped reference. On timeout, the
+coordinator must cancel the worker and wait until termination is confirmed
+before it retries, takes over, or accepts any result for that unit. If the
+runtime cannot confirm termination, do not start a second writer for the same
+archive path: quarantine the unit as incomplete and leave its staging path out
+of the accepted archive. Retry a terminated unit once when useful, then
+complete it in the coordinator if possible. Otherwise report
 `unverifiable` for citation verification, `unconfirmed` for a bibliography
 audit, or `detection incomplete` for a version sweep, with the actual failure.
 For an uncited-claim investigation or novelty scan, record **search incomplete
