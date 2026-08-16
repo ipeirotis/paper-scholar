@@ -240,8 +240,10 @@ checked: registrar updates none; re-fetched; sha256 unchanged (9f2a…)
 ```
 
 Version sweeps (`references/version-reconciliation.md`) get their own entry
-form, keyed by source identity — one entry per swept source, whatever the
-outcome, recording what the sweep detected and which claims it touches:
+form, keyed by source identity and baseline — one entry per swept baseline
+group, so a work read as two different revisions or snapshots yields two,
+whatever the outcomes — recording what the sweep detected and which claims
+it touches:
 
 ```markdown
 ## [2026-08-16T09:12Z] vor — arXiv:2106.05432
@@ -266,7 +268,11 @@ status: recorded; a later sweep may re-ask after ~6 months
 - `published:` names the found version-of-record DOI — or, for a URL-backed
   target, the canonical URL now serving the fuller text, with the fetch date
   in the entry's `accessed:` field — and the channel that established it, or
-  `none found` with the channels checked. When
+  `none found` with the channels checked. `none found` is recorded only when
+  every applicable channel actually ran: a transient channel failure
+  (timeout, rate limit, outage) is recorded as `detection incomplete`,
+  naming the failed channels — an outcome the next sweep retries, never a
+  negative result that stands. When
   publication is established but only a paywalled copy exists, the found DOI
   is recorded with `text not legally reachable`: the paywall flow runs, and
   every dependent claim is affected pending the text.
@@ -276,11 +282,16 @@ status: recorded; a later sweep may re-ask after ~6 months
   a novelty lead, whose form carries no claim-hash — marked `affected` or
   `intact` per the evidence-passage lookup. `updates:` carries the registrar
   update-relation outcome with the same semantics as a `cite:` entry.
-- When the archived text the verdicts were earned on is missing or fails
-  its SHA-256 check, the entry records an unreconcilable outcome in place
-  of a comparison — `changed: not comparable — archived text failed its
-  integrity check` — with every dependent claim `affected` and the broken
-  archive raised in `Author decisions`. An unreconcilable entry is never
+- When the archived text the verdicts were earned on is confirmed missing
+  or fails its SHA-256 check, the entry records an unreconcilable outcome
+  in place of a comparison — `changed: not comparable — archived text
+  failed its integrity check` — with every dependent claim `affected` and
+  the broken archive raised in `Author decisions`. A store that simply
+  cannot be checked this run (an outage, missing credentials) defers the
+  comparison instead: the entry records the found publication with the
+  diff pending, the outage is reported, and the next sweep completes the
+  comparison — unreconcilable requires a confirmed missing file or hash
+  mismatch, never an unreachable store. An unreconcilable entry is never
   treated as found-and-diffed: it stands as the dated record that
   publication was found, and the source leaves sweep scope only when
   re-verification lands fresh entries against the new text.
@@ -296,12 +307,20 @@ status: recorded; a later sweep may re-ask after ~6 months
   open access appears on embargo timescales — but it is invalidated at once
   when the requested copy arrives in the source store: an author-supplied
   text is diffed on the next sweep or verification run, never held to the
-  window. A found-and-diffed entry is not
+  window. A URL-backed target's `none found` carries no shelf for its
+  canonical URL either — that re-fetch is a single request, so every sweep
+  re-runs it and a changed page invalidates the cached outcome; only the
+  broader detection channels stay cached. A `detection incomplete` outcome
+  never stands: the next sweep retries it. A found-and-diffed entry is not
   redone — provided its `claims:` list still covers every governing entry
   resting on that baseline. A claim verified against the baseline after the
   sweep reopens the target: the next sweep maps the new dependencies
   against the already-archived fuller text and recorded diff (no
-  re-detection or re-fetch needed) and appends a fresh entry. The bridge
+  re-detection or re-fetch needed) and appends a fresh entry. An entry
+  whose `updates:` line records a failed check is likewise not fully
+  standing: the next sweep re-runs the registrar update screen — nothing
+  else — and appends the outcome, the same healing a DOI-backed citation
+  reuse gives its own failed screen. The bridge
   stands until re-verification lands fresh entries with `version-read:
   version of record` against the source, which drops it out of sweep scope.
 

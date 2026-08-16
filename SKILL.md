@@ -19,7 +19,7 @@ If the request does not identify the manuscript claims, bibliography entries, or
 
 ## Gate the work
 
-Require a retrieval surface that can search for and fetch the actual source text — for the bibliography audit, live registrar metadata; the version sweep needs both, registrar metadata to detect a published version and text retrieval to diff it. If a source cannot be accessed, classify the claim as unverifiable — in a bibliography audit, the entry as unconfirmed; never substitute memory, a search snippet, or another paper's characterization. Ledger entries are the one exception: a past verification recorded in the host repo's ledger is dated evidence, not memory, and may be reported even when retrieval is unavailable — always with its date, never as fresh work.
+Require a retrieval surface that can search for and fetch the actual source text — for the bibliography audit, live registrar metadata; the version sweep needs the detection channels its targets require (registrar metadata for DOI-backed targets, plain fetch for URL-backed ones) plus text retrieval to diff, sweeping what it can reach and reporting the rest as unswept. If a source cannot be accessed, classify the claim as unverifiable — in a bibliography audit, the entry as unconfirmed; never substitute memory, a search snippet, or another paper's characterization. Ledger entries are the one exception: a past verification recorded in the host repo's ledger is dated evidence, not memory, and may be reported even when retrieval is unavailable — always with its date, never as fresh work.
 
 ## Reuse before you retrieve
 

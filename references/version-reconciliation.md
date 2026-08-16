@@ -13,12 +13,15 @@ without waiting for a reuse attempt.
 A sweep detects and proposes; it never issues, revises, or retires a
 verdict.
 
-**Gate condition.** Live retrieval, as for every capability: the sweep
-queries registrar metadata (DOI resolution, the registration agencies' APIs,
-preprint servers) and fetches the new text when one appears. Without that
-access, do not fake the pass — report the missing access in
-`Author decisions` and stop; ledgered past sweeps remain reportable as dated
-history. The sweep also needs a ledger: with no
+**Gate condition.** Live retrieval, as for every capability — but the
+channels a sweep needs follow from its targets: DOI-bearing and
+preprint-registered targets need registrar metadata (DOI resolution, the
+registration agencies' APIs, preprint servers), while URL-backed targets
+need only the fetch, plus text retrieval to diff whatever is found. When a
+channel is missing, sweep the targets whose channels are available and
+report the rest as unswept for lack of access — never fake their
+detection; with no channel available at all, stop. Ledgered past sweeps
+remain reportable as dated history either way. The sweep also needs a ledger: with no
 `literature/verifications.md` in the host repo, or none of its entries read
 as less than the version of record, there is nothing to sweep — report that
 outcome plainly rather than inventing targets.
@@ -92,7 +95,9 @@ Check the cheapest authoritative signal first, per target:
   source with no DOI — gets its canonical URL re-fetched: the page may now
   expose or link the fuller text it once withheld. Compare what comes back
   against the archived snapshot under the source-archive snapshot rules
-  before treating anything as new.
+  before treating anything as new. This re-fetch is one request and runs
+  on every sweep: a standing `none found` entry never suppresses it, and a
+  changed page invalidates that cached outcome.
 
 While at the registrar, run the update-relations screen from
 `references/source-archive.md` on whichever DOI is in hand — a retraction or
@@ -107,8 +112,12 @@ retrieve and archive it under `references/source-archive.md` — naming, hash,
 license, and store selection as usual. Before comparing, validate the old
 side per the ledger's archive check: the archived text the verdicts were
 earned on must still exist at its recorded path (following relocation
-entries) and match its recorded SHA-256. A target whose old text cannot be
-reopened is **unreconcilable**: never diff against a reconstructed
+entries) and match its recorded SHA-256. When the store holding the
+baseline simply cannot be checked this run (an outage, missing
+credentials), the comparison is deferred, not failed: record the detection
+outcome with the diff pending, report the outage, and let the next sweep
+complete it. A target whose old text is confirmed missing or fails the
+hash check is **unreconcilable**: never diff against a reconstructed
 stand-in. Its `vor` entry records that outcome in place of a comparison
 (entry form in `references/verification-ledger.md`) — the found publication
 and the newly archived text still stand, every dependent claim is treated
@@ -151,16 +160,16 @@ changes a verdict now:
 
 ### 5. Update the ledger, then report
 
-Append one dated `vor` entry per swept source — found, none-found, and
-text-unreachable outcomes alike (entry form and reuse rules in
+Append one dated `vor` entry per swept baseline group — found, none-found,
+and text-unreachable outcomes alike (entry form and reuse rules in
 `references/verification-ledger.md`) — and confirm the writes landed before
 returning the report. Then report exactly three sections:
 
 - **Scope and detection:** targets swept, targets skipped under a
   still-standing `vor` entry, detection channels queried, and lookups that
   failed.
-- **Version reconciliation:** one row per swept source — what was read and
-  what was found, and how; when a version was found, the section-level
+- **Version reconciliation:** one row per swept baseline group — what was
+  read and what was found, and how; when a version was found, the section-level
   changes (or the unreconcilable outcome when the archived text failed its
   integrity check) and each dependent claim marked affected or intact; a
   none-found row records the channels checked instead.
