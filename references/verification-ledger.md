@@ -274,6 +274,14 @@ status: recorded; a later sweep may re-ask after ~6 months
   a novelty lead, whose form carries no claim-hash — marked `affected` or
   `intact` per the evidence-passage lookup. `updates:` carries the registrar
   update-relation outcome with the same semantics as a `cite:` entry.
+- When the archived text the verdicts were earned on is missing or fails
+  its SHA-256 check, the entry records an unreconcilable outcome in place
+  of a comparison — `changed: not comparable — archived text failed its
+  integrity check` — with every dependent claim `affected` and the broken
+  archive raised in `Author decisions`. An unreconcilable entry is never
+  treated as found-and-diffed: it stands as the dated record that
+  publication was found, and the source leaves sweep scope only when
+  re-verification lands fresh entries against the new text.
 - A `vor` entry never changes a verdict. Supersession is by source identity:
   the newest `vor` entry for a source governs. A `none found` outcome stands
   for about six months — publication lag is months, not days — so a sweep

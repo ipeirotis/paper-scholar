@@ -99,9 +99,15 @@ license, and store selection as usual. Before comparing, validate the old
 side per the ledger's archive check: the archived text the verdicts were
 earned on must still exist at its recorded path (following relocation
 entries) and match its recorded SHA-256. A target whose old text cannot be
-reopened is reported as unreconcilable in `Author decisions` — never diffed
-against a reconstructed stand-in. Then compare the new text against that
-validated archived copy, at two granularities:
+reopened is **unreconcilable**: never diff against a reconstructed
+stand-in. Its `vor` entry records that outcome in place of a comparison
+(entry form in `references/verification-ledger.md`) — the found publication
+and the newly archived text still stand, every dependent claim is treated
+as affected, since nothing can be confirmed intact without the text the
+verdicts were earned on, and the broken archive itself is raised in
+`Author decisions`. Re-checking those claims is fresh verification against
+the new text, not a targeted diff. For a reconcilable target, compare the
+new text against the validated archived copy, at two granularities:
 
 - **Sections**, for the summary: which were rewritten, added, or removed.
   Renumbering alone is mapping, not change — record the map.
@@ -145,8 +151,9 @@ returning the report. Then report exactly three sections:
   still-standing `vor` entry, detection channels queried, and lookups that
   failed.
 - **Version reconciliation:** one row per swept source — what was read, what
-  was found and how, the section-level changes, and each dependent claim
-  marked affected or intact.
+  was found and how, the section-level changes (or the unreconcilable
+  outcome when the archived text failed its integrity check), and each
+  dependent claim marked affected or intact.
 - **Author decisions:** each re-check proposal, each paywalled
   version-of-record request, each ambiguous publication match as a question,
   any retraction or erratum the update screen surfaced, and any newer
