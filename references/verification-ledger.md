@@ -399,7 +399,12 @@ go unnoticed.
 Novelty scans go stale in a way citation checks do not — the literature moves.
 Treat a novelty entry older than about six months as a starting point for a
 fresh scan, not a current answer, and state the scan date whenever one is
-reused. Age is not the only predicate: reuse a novelty entry only when the
+reused. Supersession for novelty entries is by the quoted novelty claim
+itself — the entry heading, with runs of whitespace collapsed, since the
+form carries no claim-hash: the newest scan for that claim governs, and
+only the governing scan's leads count as live dependencies anywhere else
+(the version sweep included) — an older scan's leads are history, never
+current dependencies. Age is not the only predicate: reuse a novelty entry only when the
 manuscript's novelty claim still reads as the recorded one and the entry's
 `searched:` scope covers what the current request asks. A reworded
 contribution, a new database, or a broadened boundary gets a fresh scan
