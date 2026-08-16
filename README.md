@@ -1,19 +1,41 @@
-# chapter-and-verse
+# citation-needed
 
 A retrieval-grounded agent skill for verifying manuscript citations,
 investigating uncited factual claims, and finding prior-work leads relevant to
-novelty claims — it gives chapter and verse for every claim it checks.
+novelty claims — it resolves every "[citation needed]" in your manuscript
+against sources it actually retrieves and reads.
 
 ## Install
 
 Copy or clone this repository into your agent's skills directory, for example:
 
 ```bash
-git clone https://github.com/ipeirotis/chapter-and-verse.git ~/.agents/skills/chapter-and-verse
+git clone https://github.com/ipeirotis/citation-needed.git ~/.agents/skills/citation-needed
 ```
 
 Then ask the agent to check specified citations or contribution claims. The
 skill requires literature search and access to the actual source text.
+
+## Usage
+
+In Claude Code the skill name is the command — `/citation-needed` — and what
+you hand it selects the capability:
+
+```
+/citation-needed paper.tex                       # audit every citation in the manuscript
+/citation-needed sections/related.tex            # audit one section's citations
+/citation-needed "It is well known that crowd labels converge with redundancy."
+                                                 # find a source for an uncited claim
+/citation-needed "We are the first to model X under Y."
+                                                 # scan the claimed contribution for prior work
+```
+
+A manuscript or section file gets a citation audit; a quoted factual claim
+gets a source investigation; a contribution statement gets a novelty scan.
+When the scope is ambiguous, the skill asks one focused question before
+retrieving anything. On agents without slash commands, plain requests work
+the same way ("check whether the citations in section 3 support their
+claims").
 
 ## What it writes into your repo
 

@@ -1,10 +1,10 @@
-# Agent guide: developing chapter-and-verse
+# Agent guide: developing citation-needed
 
 This repository is a standalone agent skill for retrieval-grounded literature
 checks: verifying that a manuscript's citations support the claims attached to
 them, investigating uncited factual claims, and scanning stated contributions
-for overlapping prior work — it gives chapter and verse for every claim it
-checks. It was extracted from the scholar lane of
+for overlapping prior work — it resolves every "[citation needed]" against
+sources it actually retrieves and reads. It was extracted from the scholar lane of
 [blue-pencil](https://github.com/ipeirotis/blue-pencil) (whose dispatch
 command is `/paper:verify-citations`, formerly `/paper:scholar`) so it can
 ship and evolve independently of that editorial skill.

@@ -1,6 +1,6 @@
 # Tasks
 
-Feature tracker for the chapter-and-verse skill. Agents: read this before working
+Feature tracker for the citation-needed skill. Agents: read this before working
 on the repo. New requests go under **Backlog** with the date they were filed;
 when work lands, move the item to **Done** with the landing date and the files
 that implement it. Items under **Proposed** are ideas awaiting the author's
@@ -30,6 +30,12 @@ approval — do not implement them unprompted.
   redo settled work; pointed to from the host repo's `AGENTS.md`.
   (`references/verification-ledger.md`)
 
+- **2026-08-15 — Rename the skill to citation-needed.** The author judged
+  chapter-and-verse hard to remember; "[citation needed]" is the Wikipedia
+  tag every academic already knows, and resolving it is literally the
+  skill's job. Supersedes the chapter-and-verse rename below; the GitHub
+  repo rename to `ipeirotis/citation-needed` is done by the owner in repo
+  settings.
 - **2026-08-14 — Rename the skill to chapter-and-verse.** "Give chapter and
   verse" = cite the exact authority for a claim; pairs with blue-pencil's
   idiom naming and avoids the crowded CiteCheck/refchecker namespace. The
@@ -77,7 +83,7 @@ approval — do not implement them unprompted.
   not silently.
 - **2026-08-15 — Extract blue-pencil's analyst lane as the facts-and-figures
   skill.** Name approved by the author ("facts and figures": the reported
-  numbers and the literal figures — mirrors chapter-and-verse's idiom form).
+  numbers and the literal figures).
   Scope: carve `references/analysis-integrity.md` and the `paper-analyst`
   agent out of blue-pencil into a standalone repo
   (`ipeirotis/facts-and-figures`), couplings removed, with AGENTS.md/tasks.md
