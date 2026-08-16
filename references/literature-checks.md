@@ -73,9 +73,12 @@ never reshape which claims are in scope — only which ones need fresh work.
 Group the fresh cited claims by distinct resolved source and dispatch one
 worker per source under `references/parallel-retrieval.md` when subagents are
 available. Give a source worker all claims attached to that work so it retrieves
-the text only once. Dispatch uncited and novelty searches one per independent
-claim or search question. The coordinator validates the results and remains the
-only ledger writer; without subagents, execute the same units sequentially.
+the text only once. Wait for and validate every citation-source result before
+dispatching uncited and novelty searches, one per independent claim or search
+question, with the relevant cited-source evidence available to those workers.
+This preserves the required citation-before-novelty order while parallelizing
+within each stage. The coordinator remains the only ledger writer; without
+subagents, execute the same staged units sequentially.
 
 Two version-sweep touchpoints (`references/version-reconciliation.md`)
 belong to this step. When the version predicate blocks a reuse — a preprint
